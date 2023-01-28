@@ -1,0 +1,36 @@
+
+plugins {
+    id 'java'
+    alias libs.plugins.springDependencyManagementPlugin
+    alias libs.plugins.springBootPlugin
+}
+
+group = 'org.defendev'
+
+sourceCompatibility = JavaVersion.VERSION_17
+targetCompatibility = JavaVersion.VERSION_17
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test'
+    testImplementation group: 'org.flywaydb', name: 'flyway-core'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+tasks.register('createEasygoSysSchema', org.gradle.api.tasks.testing.Test) {
+    useJUnitPlatform()
+    /*
+     * This is an equivalent to running from command line:
+     *   ./gradlew test --tests "org.defendev.easygo.devops.dbexec.DatabaseMaintananceTest.createEasygoSysSchema"
+     *
+     */
+    setTestNameIncludePatterns(['org.defendev.easygo.devops.dbexec.DatabaseMaintananceTest.createEasygoSysSchema'])
+}
+
+
