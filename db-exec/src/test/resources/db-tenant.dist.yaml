@@ -1,0 +1,14 @@
+
+
+db:
+  oracle:
+    tenant:
+      id: "T1"
+      appUserPasswordUI: "________"
+      appUserPasswordSE: "________"
+      appUserPasswordFA: "________"
+      roUserPasswordUI: "________"
+      roUserPasswordSE: "________"
+      roUserPasswordFA: "________"
+
+
