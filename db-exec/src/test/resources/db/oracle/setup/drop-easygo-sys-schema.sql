@@ -4,7 +4,7 @@
 -- in american english.
 --
 ALTER SESSION SET NLS_LANGUAGE = 'AMERICAN'
-;
+;;;
 
 BEGIN
     EXECUTE IMMEDIATE 'DROP USER "EASYGO_SYS" CASCADE';
@@ -14,5 +14,5 @@ EXCEPTION
             RAISE;
         END IF;
 END;
-;
+;;;
 

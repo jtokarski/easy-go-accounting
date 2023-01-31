@@ -13,6 +13,11 @@ import javax.sql.DataSource;
 @Configuration
 public class DataSourceConfig {
 
+    public static final String DB_PROPERTY_LOCATIONS = "spring.config.location=" +
+        "classpath:db-coordinates.yaml" + "," +
+        "classpath:db-root.yaml" + "," +
+        "classpath:db-tenant.yaml";
+
     @Bean
     public DataSource dbaDataSource(
         @Value("${db.oracle.coordinate.driver}") String driverClassName,

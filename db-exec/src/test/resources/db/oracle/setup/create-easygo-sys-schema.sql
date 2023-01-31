@@ -3,7 +3,8 @@
 -- In case of any errors I want to have a message
 -- in american english.
 --
-ALTER SESSION SET NLS_LANGUAGE = 'AMERICAN';
+ALTER SESSION SET NLS_LANGUAGE = 'AMERICAN'
+;;;
 
 --
 -- Why do we create a USER when we actually want to create
@@ -14,4 +15,5 @@ CREATE USER EASYGO_SYS
     NO AUTHENTICATION
     CONTAINER = CURRENT
     DEFAULT TABLESPACE SYSTEM
-    QUOTA 50M ON SYSTEM;
+    QUOTA 50M ON SYSTEM
+;;;

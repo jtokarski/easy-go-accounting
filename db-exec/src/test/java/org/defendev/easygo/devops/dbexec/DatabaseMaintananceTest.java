@@ -2,9 +2,9 @@ package org.defendev.easygo.devops.dbexec;
 
 import org.apache.commons.text.StringSubstitutor;
 import org.defendev.easygo.devops.config.DataSourceConfig;
-import org.junit.jupiter.api.BeforeAll;
+import org.defendev.easygo.devops.config.DbObjectNamingConfig;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.ConfigDataApplicationContextInitializer;
 import org.springframework.core.io.ClassPathResource;
@@ -18,80 +18,55 @@ import javax.sql.DataSource;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.Map;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 
 
-
-@TestPropertySource(properties = {"spring.config.location=" +
-    "classpath:db-coordinates.yaml," +
-    "classpath:db-root.yaml," +
-    "classpath:db-tenant.yaml"
-})
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@TestPropertySource(properties = { DataSourceConfig.DB_PROPERTY_LOCATIONS })
 @SpringJUnitConfig(
-    classes = {DataSourceConfig.class},
-    initializers = {ConfigDataApplicationContextInitializer.class}
+    classes = { DataSourceConfig.class, DbObjectNamingConfig.class },
+    initializers = { ConfigDataApplicationContextInitializer.class }
 )
 public class DatabaseMaintananceTest {
 
+    @Qualifier("dbaDataSource")
+    @Autowired
+    private DataSource dbaDataSource;
+
+    @Qualifier("dbNamingSubstitutor")
+    @Autowired
     private StringSubstitutor substitutor;
 
 
-    @BeforeAll
-    public void setUpSubstitutor(
-//        String
-    ) {
-        final Map<String, String> replacements = new HashMap<>();
-        replacements.put("abc.aaA", "333");
-        replacements.put("asd.sdF", "444");
-        substitutor = new StringSubstitutor(replacements);
-        substitutor.setEnableUndefinedVariableException(true);
-    }
-
-
-
-
-
-
-
-
     @Test
-    public void createEasygoSysSchema(
-        @Qualifier("dbaDataSource") DataSource dbaDataSource
-    ) {
-        final ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
-        final Map<String, String> replacements = new HashMap<>();
-
-        try {
-            final Resource resource2 = new ClassPathResource("db/oracle/setup/test.sql");
-            final String sql = new String(resource2.getInputStream().readAllBytes(), StandardCharsets.UTF_8);
-            final String sqlExpand = substitutor.replace(sql);
-            final Resource resource3 = new InputStreamResource(
-                new ByteArrayInputStream(sqlExpand.getBytes(StandardCharsets.UTF_8))
-            );
-            populator.addScript(resource3);
-            populator.execute(dbaDataSource);
-        } catch (IOException ex) {
-            throw new IllegalStateException("", ex);
-        }
-        assertThat(178).isEqualTo(178);
+    public void createEasygoSysSchema() {
+        classpathScriptExpandAndPopulateAsDba("db/oracle/setup/create-easygo-sys-schema.sql");
     }
 
     @Test
     public void dropEasygoSysSchema() {
-
-        assertThat(8).isEqualTo(8);
-
+        classpathScriptExpandAndPopulateAsDba("db/oracle/setup/drop-easygo-sys-schema.sql");
     }
 
     @Test
     public void dropTenantSchemas() {
-        assertThat(1).isEqualTo(1);
+        classpathScriptExpandAndPopulateAsDba("db/oracle/setup/drop-tenant-schemas.sql");
+    }
 
+    private void classpathScriptExpandAndPopulateAsDba(String scriptPath) {
+        final ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+        try {
+            final Resource sqlTemplateResource = new ClassPathResource(scriptPath);
+            final String sql = new String(sqlTemplateResource.getInputStream().readAllBytes(), StandardCharsets.UTF_8);
+            final String sqlExpand = substitutor.replace(sql);
+            final Resource sqlExpandResource = new InputStreamResource(
+                    new ByteArrayInputStream(sqlExpand.getBytes(StandardCharsets.UTF_8))
+            );
+            populator.setSeparator(";;;");
+            populator.addScript(sqlExpandResource);
+            populator.execute(dbaDataSource);
+        } catch (IOException ex) {
+            throw new IllegalStateException("Exception occurred while ", ex);
+        }
     }
 
 }
