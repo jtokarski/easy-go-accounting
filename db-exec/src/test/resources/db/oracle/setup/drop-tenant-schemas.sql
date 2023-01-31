@@ -168,7 +168,7 @@ END;
 -- ------------ (SYS) ---------------- --
 -- ----------------------------------- --
 BEGIN
-  EXECUTE IMMEDIATE 'DROP TABLE "EASYG_SYS"."${flywaySchemaHistoryTableName}"';
+  EXECUTE IMMEDIATE 'DROP TABLE "EASYGO_SYS"."${flywaySchemaHistoryTableName}"';
 EXCEPTION
   WHEN OTHERS THEN
     IF (-942 != SQLCODE) THEN
