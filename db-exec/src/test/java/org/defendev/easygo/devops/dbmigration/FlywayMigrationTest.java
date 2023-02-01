@@ -25,7 +25,7 @@ public class FlywayMigrationTest {
     }
 
     @Test
-    public void oracleMigrate(Flyway flyway) {
+    public void oracleMigrate(@Autowired Flyway flyway) {
         flyway.migrate();
     }
 

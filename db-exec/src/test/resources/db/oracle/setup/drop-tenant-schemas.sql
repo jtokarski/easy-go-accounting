@@ -1,6 +1,6 @@
 
 ALTER SESSION SET NLS_LANGUAGE = 'AMERICAN'
-;
+;;;
 
 -- ----------------------------------- --
 -- -------------- FA ----------------- --
@@ -13,7 +13,7 @@ EXCEPTION
       RAISE;
     END IF;
 END;
-;
+;;;
 
 BEGIN
   EXECUTE IMMEDIATE 'DROP USER "${appUserNameFA}" CASCADE';
@@ -23,7 +23,7 @@ EXCEPTION
       RAISE;
     END IF;
 END;
-;
+;;;
 
 BEGIN
   EXECUTE IMMEDIATE 'DROP ROLE "${schemaNameFA}_READONLY_ROLE"';
@@ -33,7 +33,7 @@ EXCEPTION
       RAISE;
     END IF;
 END;
-;
+;;;
 
 BEGIN
   EXECUTE IMMEDIATE 'DROP ROLE "${schemaNameFA}_UPDATE_ROLE"';
@@ -43,7 +43,7 @@ EXCEPTION
       RAISE;
     END IF;
 END;
-;
+;;;
 
 BEGIN
   EXECUTE IMMEDIATE 'DROP USER "${schemaNameFA}" CASCADE';
@@ -53,7 +53,7 @@ EXCEPTION
       RAISE;
     END IF;
 END;
-;
+;;;
 
 
 -- ----------------------------------- --
@@ -67,7 +67,7 @@ EXCEPTION
       RAISE;
     END IF;
 END;
-;
+;;;
 
 BEGIN
   EXECUTE IMMEDIATE 'DROP USER "${appUserNameSE}" CASCADE';
@@ -77,7 +77,7 @@ EXCEPTION
       RAISE;
     END IF;
 END;
-;
+;;;
 
 BEGIN
   EXECUTE IMMEDIATE 'DROP ROLE "${schemaNameSE}_READONLY_ROLE"';
@@ -87,7 +87,7 @@ EXCEPTION
       RAISE;
     END IF;
 END;
-;
+;;;
 
 BEGIN
   EXECUTE IMMEDIATE 'DROP ROLE "${schemaNameSE}_UPDATE_ROLE"';
@@ -97,7 +97,7 @@ EXCEPTION
       RAISE;
     END IF;
 END;
-;
+;;;
 
 BEGIN
   EXECUTE IMMEDIATE 'DROP USER "${schemaNameSE}" CASCADE';
@@ -107,7 +107,7 @@ EXCEPTION
       RAISE;
     END IF;
 END;
-;
+;;;
 
 
 -- ----------------------------------- --
@@ -121,7 +121,7 @@ EXCEPTION
       RAISE;
     END IF;
 END;
-;
+;;;
 
 BEGIN
   EXECUTE IMMEDIATE 'DROP USER "${appUserNameUI}" CASCADE';
@@ -131,7 +131,7 @@ EXCEPTION
       RAISE;
     END IF;
 END;
-;
+;;;
 
 BEGIN
   EXECUTE IMMEDIATE 'DROP ROLE "${schemaNameUI}_READONLY_ROLE"';
@@ -141,7 +141,7 @@ EXCEPTION
       RAISE;
     END IF;
 END;
-;
+;;;
 
 BEGIN
   EXECUTE IMMEDIATE 'DROP ROLE "${schemaNameUI}_UPDATE_ROLE"';
@@ -151,7 +151,7 @@ EXCEPTION
       RAISE;
     END IF;
 END;
-;
+;;;
 
 BEGIN
   EXECUTE IMMEDIATE 'DROP USER "${schemaNameUI}" CASCADE';
@@ -161,7 +161,7 @@ EXCEPTION
       RAISE;
     END IF;
 END;
-;
+;;;
 
 
 -- ----------------------------------- --
@@ -175,6 +175,6 @@ EXCEPTION
       RAISE;
     END IF;
 END;
-;
+;;;
 
 
