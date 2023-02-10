@@ -7,6 +7,8 @@ dependencyResolutionManagement {
             version('oracle-jdbc-bom.version', '21.8.0.0')
             version('apache-commons-text.version', '1.10.0')
             version('flywaydb.version', '9.12.0')
+            version('defendev-common-jdk.version', '0.0.2-SNAPSHOT')
+            version('defendev-common-fixtures.version', '0.0.1-SNAPSHOT')
 
             library('oracleJdbcBom', 'com.oracle.database.jdbc', 'ojdbc-bom')
                 .versionRef('oracle-jdbc-bom.version')
@@ -14,6 +16,10 @@ dependencyResolutionManagement {
                 .versionRef('flywaydb.version')
             library('apacheCommonsText', 'org.apache.commons', 'commons-text')
                 .versionRef('apache-commons-text.version')
+            library('defendevCommonJdk', 'org.defendev', 'common-jdk')
+                .versionRef('defendev-common-jdk.version')
+            library('defendevCommonFixtures', 'org.defendev', 'common-fixtures')
+                .versionRef('defendev-common-fixtures.version')
 
             plugin('springDependencyManagementPlugin', 'io.spring.dependency-management')
                 .versionRef('spring-dependency-management-plugin.version')
@@ -27,6 +33,9 @@ rootProject.name = 'easy-go-accounting'
 
 include 'db-exec'
 project(':db-exec').name = 'db-exec'
+
+include 'domain-financial-accounting'
+project(':domain-financial-accounting').name = 'domain-financial-accounting'
 
 
 

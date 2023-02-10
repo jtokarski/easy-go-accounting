@@ -19,7 +19,10 @@ dependencies {
     testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa'
     testImplementation group: 'com.oracle.database.jdbc', name: 'ojdbc11'
     testImplementation libs.apacheCommonsText
-    testImplementation group: 'org.flywaydb', name: 'flyway-core'
+    testImplementation libs.flywaydb
+    testImplementation libs.defendevCommonJdk
+    testImplementation libs.defendevCommonFixtures
+    testImplementation project(':domain-financial-accounting')
 }
 
 test {

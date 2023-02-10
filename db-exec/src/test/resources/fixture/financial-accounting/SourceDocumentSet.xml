@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<sourceDocumentSet>
+
+    <sourceDocument>
+        <id>1</id>
+        <controlNumber>EXCHGAS-00U1</controlNumber>
+        <documentDateTimeZulu>2019-08-31T14:29:59</documentDateTimeZulu>
+        <description>Exchange Rate Risk Awareness Statement</description>
+    </sourceDocument>
+
+    <sourceDocument>
+        <id>2</id>
+        <controlNumber>EXCHGAS-00U2</controlNumber>
+        <documentDateTimeZulu>2019-09-11T11:12:45</documentDateTimeZulu>
+        <description>Exchange Rate rsk Awareness Stmt</description>
+    </sourceDocument>
+
+    <sourceDocument>
+        <id>3</id>
+        <controlNumber>EXCHGAS-00U3</controlNumber>
+        <documentDateTimeZulu>2019-09-11T09:03:18</documentDateTimeZulu>
+        <description>E.R.R.A.S</description>
+    </sourceDocument>
+
+    <sourceDocument>
+        <id>4</id>
+        <controlNumber>GDPRC-00C1</controlNumber>
+        <documentDateTimeZulu>2019-11-30T10:56:49</documentDateTimeZulu>
+        <description>GDPR consent for retail banking</description>
+    </sourceDocument>
+
+    <sourceDocument>
+        <id>5</id>
+        <controlNumber>GDPRC-00C2</controlNumber>
+        <documentDateTimeZulu>2019-11-30T14:36:57</documentDateTimeZulu>
+        <description>GDPR consent for retail banking</description>
+    </sourceDocument>
+
+    <sourceDocument>
+        <id>6</id>
+        <controlNumber>TCACK-00071</controlNumber>
+        <documentDateTimeZulu>2019-12-07T08:21:33</documentDateTimeZulu>
+        <description>Online Banking - Terms and Conditions Acknoledgement</description>
+    </sourceDocument>
+
+    <sourceDocument>
+        <id>7</id>
+        <controlNumber>TCACK-00072</controlNumber>
+        <documentDateTimeZulu>2019-12-07T08:59:01</documentDateTimeZulu>
+        <description>Online Banking - Terms and Conditions Acknoledgement</description>
+    </sourceDocument>
+
+    <sourceDocument>
+        <id>8</id>
+        <controlNumber>GDPRC-00C3</controlNumber>
+        <documentDateTimeZulu>2019-12-09T19:52:27</documentDateTimeZulu>
+        <description>GDPR consent for retail banking</description>
+    </sourceDocument>
+
+    <sourceDocument>
+        <id>9</id>
+        <controlNumber>AGR_RETA-0401</controlNumber>
+        <documentDateTimeZulu>2019-12-10T13:13:09</documentDateTimeZulu>
+        <description>Retail Bank Account Agreement</description>
+    </sourceDocument>
+
+    <sourceDocument>
+        <id>10</id>
+        <controlNumber>GDPRC-00C4</controlNumber>
+        <documentDateTimeZulu>2019-12-12T11:11:11</documentDateTimeZulu>
+        <description>GDPR consent for retail banking</description>
+    </sourceDocument>
+
+    <sourceDocument>
+        <id>11</id>
+        <controlNumber>AGR_RETA-0402</controlNumber>
+        <documentDateTimeZulu>2019-12-14T15:05:15</documentDateTimeZulu>
+        <description>Retail Bank Account Agreement</description>
+    </sourceDocument>
+
+    <sourceDocument>
+        <id>12</id>
+        <controlNumber>AGR_RETA-0403</controlNumber>
+        <documentDateTimeZulu>2019-12-17T13:09:04</documentDateTimeZulu>
+        <description>Retail Bank Account Agreement</description>
+    </sourceDocument>
+
+    <sourceDocument>
+        <id>13</id>
+        <controlNumber>AGR_RETA-0404</controlNumber>
+        <documentDateTimeZulu>2019-12-19T16:09:59</documentDateTimeZulu>
+        <description>Retail Bank Account Agreement</description>
+    </sourceDocument>
+
+    <sourceDocument>
+        <id>14</id>
+        <controlNumber>GDPRC-00C5</controlNumber>
+        <documentDateTimeZulu>2019-12-30T13:10:13</documentDateTimeZulu>
+        <description>GDPR consent for retail banking</description>
+    </sourceDocument>
+
+    <sourceDocument>
+        <id>15</id>
+        <controlNumber>TCACK-00073</controlNumber>
+        <documentDateTimeZulu>2020-01-04T16:59:59</documentDateTimeZulu>
+        <description>Online Banking - Terms and Conditions Acknoledgement</description>
+    </sourceDocument>
+
+    <sourceDocument>
+        <id>16</id>
+        <controlNumber>AGR_RETA-0405</controlNumber>
+        <documentDateTimeZulu>2020-01-08T07:57:12</documentDateTimeZulu>
+        <description>Retail Bank Account Agreement</description>
+    </sourceDocument>
+
+    <sourceDocument>
+        <id>17</id>
+        <controlNumber>AGR_RETA-0406</controlNumber>
+        <documentDateTimeZulu>2020-01-28T09:31:46</documentDateTimeZulu>
+        <description>Retail Bank Account Agreement</description>
+    </sourceDocument>
+
+    <sourceDocument>
+        <id>18</id>
+        <controlNumber>GDPRC-00C6</controlNumber>
+        <documentDateTimeZulu>2020-01-28T11:49:19</documentDateTimeZulu>
+        <description>GDPR consent for retail banking</description>
+    </sourceDocument>
+
+    <sourceDocument>
+        <id>19</id>
+        <controlNumber>GDPRC-00C7</controlNumber>
+        <documentDateTimeZulu>2020-02-20T16:05:00</documentDateTimeZulu>
+        <description>GDPR consent for retail banking</description>
+    </sourceDocument>
+
+    <sourceDocument>
+        <id>20</id>
+        <controlNumber>GDPRC-00C8</controlNumber>
+        <documentDateTimeZulu>2020-02-20T17:55:45</documentDateTimeZulu>
+        <description>GDPR consent for retail banking</description>
+    </sourceDocument>
+
+    <sourceDocument>
+        <id>21</id>
+        <controlNumber>TCACK-00074</controlNumber>
+        <documentDateTimeZulu>2020-03-16T09:29:57</documentDateTimeZulu>
+        <description>Online Banking - Terms and Conditions Acknoledgement</description>
+    </sourceDocument>
+
+    <sourceDocument>
+        <id>22</id>
+        <controlNumber>TCACK-00075</controlNumber>
+        <documentDateTimeZulu>2020-03-16T10:10:10</documentDateTimeZulu>
+        <description>Online Banking - Terms and Conditions Acknoledgement</description>
+    </sourceDocument>
+
+    <sourceDocument>
+        <id>23</id>
+        <controlNumber>AGR_RETA-0407</controlNumber>
+        <documentDateTimeZulu>2020-04-01T15:55:00</documentDateTimeZulu>
+        <description>Retail Bank Account Agreement</description>
+    </sourceDocument>
+
+    <sourceDocument>
+        <id>24</id>
+        <controlNumber>TCACK-00076</controlNumber>
+        <documentDateTimeZulu>2020-04-02T14:00:59</documentDateTimeZulu>
+        <description>Online Banking - Terms and Conditions Acknoledgement</description>
+    </sourceDocument>
+
+    <sourceDocument>
+        <id>25</id>
+        <controlNumber>GDPRC-00C9</controlNumber>
+        <documentDateTimeZulu>2020-05-02T12:09:09</documentDateTimeZulu>
+        <description>GDPR consent for retail banking</description>
+    </sourceDocument>
+
+    <sourceDocument>
+        <id>26</id>
+        <controlNumber>AGR_RETA-0408</controlNumber>
+        <documentDateTimeZulu>2020-05-27T16:12:13</documentDateTimeZulu>
+        <description>Retail Bank Account Agreement</description>
+    </sourceDocument>
+
+    <sourceDocument>
+        <id>27</id>
+        <controlNumber>AGR_RETA-0409</controlNumber>
+        <documentDateTimeZulu>2020-05-28T14:20:50</documentDateTimeZulu>
+        <description>Retail Bank Account Agreement</description>
+    </sourceDocument>
+
+    <sourceDocument>
+        <id>28</id>
+        <controlNumber>TCACK-00077</controlNumber>
+        <documentDateTimeZulu>2020-06-04T08:49:56</documentDateTimeZulu>
+        <description>Online Banking - Terms and Conditions Acknoledgement</description>
+    </sourceDocument>
+
+    <sourceDocument>
+        <id>29</id>
+        <controlNumber>TCACK-00078</controlNumber>
+        <documentDateTimeZulu>2020-06-07T09:01:01</documentDateTimeZulu>
+        <description>Online Banking - Terms and Conditions Acknoledgement</description>
+    </sourceDocument>
+
+    <sourceDocument>
+        <id>30</id>
+        <controlNumber>TCACK-00079</controlNumber>
+        <documentDateTimeZulu>2020-06-24T09:10:10</documentDateTimeZulu>
+        <description>Online Banking - Terms and Conditions Acknoledgement</description>
+    </sourceDocument>
+
+    <sourceDocument>
+        <id>31</id>
+        <controlNumber>TCACK-00080</controlNumber>
+        <documentDateTimeZulu>2020-06-24T10:11:12</documentDateTimeZulu>
+        <description>Online Banking - Terms and Conditions Acknoledgement</description>
+    </sourceDocument>
+
+</sourceDocumentSet>
