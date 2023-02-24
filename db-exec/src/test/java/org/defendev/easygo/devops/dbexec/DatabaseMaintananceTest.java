@@ -1,6 +1,8 @@
 package org.defendev.easygo.devops.dbexec;
 
 import org.apache.commons.text.StringSubstitutor;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.defendev.easygo.devops.config.DataSourceConfig;
 import org.defendev.easygo.devops.config.DbObjectNamingConfig;
 import org.junit.jupiter.api.Test;
@@ -27,6 +29,8 @@ import java.nio.charset.StandardCharsets;
     initializers = { ConfigDataApplicationContextInitializer.class }
 )
 public class DatabaseMaintananceTest {
+
+    private static final Logger log = LogManager.getLogger();
 
     @Qualifier("dbaDataSource")
     @Autowired
