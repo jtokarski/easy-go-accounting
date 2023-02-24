@@ -1,0 +1,36 @@
+= Easygo accounting application
+
+Web-based, open-source application for *financial accounting*. Implements the axioms of double-entry (Venetian method) accounting.
+
+== Technology stack
+
+The Easygo is built on top of several mainstream database, backend and web-frontend technologies including:
+
+* Oracle Database XE
+* Spring/Spring Boot Framework
+* Angular
+
+== Project Structure
+
+Split into several modules:
+
+=== angular-ui
+
+abc
+
+=== db-exec
+
+bcd
+
+== Installation and Running
+
+=== Prerequisites
+
+You need the following software installed on your machine:
+
+* JDK 17+
+
+* Docker
+
+
+
