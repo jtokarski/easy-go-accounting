@@ -1,0 +1,22 @@
+services:
+  run-oracle-server:
+    container_name: "easygo.oracle-server"
+    image: "gvenzl/oracle-xe:21.3.0"
+    environment:
+      ORACLE_PASSWORD: "oraclepx0"
+    networks:
+      - "easygo-bridge-net"
+    ports:
+      - "0.0.0.0:1521:1521/tcp"
+    volumes:
+      - type: "volume"
+        source: "oracle-data"
+        target: "/opt/oracle/oradata"
+        read_only: false
+networks:
+  easygo-bridge-net:
+    driver: "bridge"
+    name: "easygo-net"
+volumes:
+  oracle-data:
+    name: "easygo.oracle-data-volume"

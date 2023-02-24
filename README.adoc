@@ -6,7 +6,7 @@ Web-based, open-source application for *financial accounting*. Implements the ax
 
 The Easygo is built on top of several mainstream database, backend and web-frontend technologies including:
 
-* Oracle Database XE
+* Oracle XE Database
 * Spring/Spring Boot Framework
 * Angular
 
@@ -32,5 +32,37 @@ You need the following software installed on your machine:
 
 * Docker
 
+=== Start Oracle XE Database server
 
+Inside `docker-infra/compose.yaml`, you can find the `run-oracle-server` service definition for running Oracle XE Database server. First, create the container:
+
+[source,bash]
+----
+$ cd ./docker-infra
+$ docker compose create run-oracle-server
+----
+
+an then start it:
+[source,bash]
+----
+$ docker compose start run-oracle-server
+----
+First start of this container may take ~45 seconds as the database files are being initialized. Next starts should be quicker.
+
+=== Create initial schema
+
+From source root:
+
+[source,bash]
+----
+$ ./gradlew :db-exec:createEasygoSysSchema
+----
+
+=== Migrate
+Database schema migrations are powered by https://flywaydb.org/documentation/[Flyway]. They can be executed with dedicated Gradle task:
+
+[source,bash]
+----
+$ ./gradlew :db-exec:oracleBaselineAndMigrate
+----
 

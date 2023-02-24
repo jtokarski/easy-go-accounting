@@ -39,4 +39,18 @@ tasks.register('createEasygoSysSchema', org.gradle.api.tasks.testing.Test) {
     setTestNameIncludePatterns(['org.defendev.easygo.devops.dbexec.DatabaseMaintananceTest.createEasygoSysSchema'])
 }
 
+def oracleBaselineTask = tasks.register('oracleBaseline', org.gradle.api.tasks.testing.Test) {
+    useJUnitPlatform()
+    setTestNameIncludePatterns(['org.defendev.easygo.devops.dbmigration.FlywayMigrationTest.oracleBaseline'])
+}
 
+def oracleMigrateTask = tasks.register('oracleMigrate', org.gradle.api.tasks.testing.Test) {
+    useJUnitPlatform()
+    setTestNameIncludePatterns(['org.defendev.easygo.devops.dbmigration.FlywayMigrationTest.oracleMigrate'])
+}
+oracleMigrateTask.configure { Test task -> task.mustRunAfter(oracleBaselineTask) }
+
+def w = tasks.register('oracleBaselineAndMigrate', org.gradle.api.DefaultTask) {
+    dependsOn oracleBaselineTask
+    dependsOn oracleMigrateTask
+}
