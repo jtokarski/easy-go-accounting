@@ -72,30 +72,30 @@ GRANT DELETE ON "${schemaNameFA}"."FinancialTransaction" TO "${schemaNameFA}_UPD
 CREATE SYNONYM "${appUserNameFA}"."FinancialTransaction" FOR "${schemaNameFA}"."FinancialTransaction";
 
 
-CREATE TABLE "${schemaNameFA}"."GlAccount" (
+CREATE TABLE "${schemaNameFA}"."GeneralLedgerAccount" (
   "id"              NUMBER(19, 0) GENERATED ALWAYS AS IDENTITY (NOCACHE) NOT NULL,
   "accountName"     VARCHAR2(120 CHAR),
   "accountNumber"   VARCHAR2(50 CHAR),
-   CONSTRAINT PK_GlAccount PRIMARY KEY ("id")
+   CONSTRAINT PK_GeneralLedgerAccount PRIMARY KEY ("id")
 );
-GRANT SELECT ON "${schemaNameFA}"."GlAccount" TO "${schemaNameFA}_READONLY_ROLE";
-GRANT INSERT ON "${schemaNameFA}"."GlAccount" TO "${schemaNameFA}_UPDATE_ROLE";
-GRANT UPDATE ON "${schemaNameFA}"."GlAccount" TO "${schemaNameFA}_UPDATE_ROLE";
-GRANT DELETE ON "${schemaNameFA}"."GlAccount" TO "${schemaNameFA}_UPDATE_ROLE";
-CREATE SYNONYM "${appUserNameFA}"."GlAccount" FOR "${schemaNameFA}"."GlAccount";
+GRANT SELECT ON "${schemaNameFA}"."GeneralLedgerAccount" TO "${schemaNameFA}_READONLY_ROLE";
+GRANT INSERT ON "${schemaNameFA}"."GeneralLedgerAccount" TO "${schemaNameFA}_UPDATE_ROLE";
+GRANT UPDATE ON "${schemaNameFA}"."GeneralLedgerAccount" TO "${schemaNameFA}_UPDATE_ROLE";
+GRANT DELETE ON "${schemaNameFA}"."GeneralLedgerAccount" TO "${schemaNameFA}_UPDATE_ROLE";
+CREATE SYNONYM "${appUserNameFA}"."GeneralLedgerAccount" FOR "${schemaNameFA}"."GeneralLedgerAccount";
 
 
-CREATE TABLE "${schemaNameFA}"."GlPosting" (
+CREATE TABLE "${schemaNameFA}"."GeneralLedgerPosting" (
   "id"                      NUMBER(19, 0) GENERATED ALWAYS AS IDENTITY (NOCACHE) NOT NULL,
   "financialTransactionId"  NUMBER(19, 0) NOT NULL,
-  "glAccountId"             NUMBER(19, 0) NOT NULL,
+  "generalLedgerAccountId"  NUMBER(19, 0) NOT NULL,
   "debitOrCredit"           VARCHAR2(1 CHAR) NOT NULL,
   "amount"                  NUMBER(16, 2) NOT NULL,
-  CONSTRAINT PK_GlPosting PRIMARY KEY ("id"),
-  CONSTRAINT FK_GlPosting_FinancialTransaction_1 FOREIGN KEY ("financialTransactionId")
+  CONSTRAINT PK_GeneralLedgerPosting PRIMARY KEY ("id"),
+  CONSTRAINT FK_GeneralLedgerPosting_FinancialTransaction_1 FOREIGN KEY ("financialTransactionId")
     REFERENCES "${schemaNameFA}"."FinancialTransaction" ("id"),
-  CONSTRAINT FK_GlPosting_GlAccount_2 FOREIGN KEY ("glAccountId")
-    REFERENCES "${schemaNameFA}"."GlAccount" ("id"),
+  CONSTRAINT FK_GeneralLedgerPosting_GeneralLedgerAccount_2 FOREIGN KEY ("generalLedgerAccountId")
+    REFERENCES "${schemaNameFA}"."GeneralLedgerAccount" ("id"),
 --
 -- Simulating ENUMs in Oracle Database. The IN condition here is case-sensitive, so it doesn't allow
 -- uppercase 'D' or 'C'.
@@ -105,52 +105,52 @@ CREATE TABLE "${schemaNameFA}"."GlPosting" (
 --   - [SQL Language Reference / 6 Conditions / IN Condition]
 --     https://docs.oracle.com/en/database/oracle/oracle-database/19/sqlrf/IN-Condition.html#GUID-C7961CB3-8F60-47E0-96EB-BDCF5DB1317C
 --
-  CONSTRAINT CHK_GlPosting_1 CHECK ("debitOrCredit" IN ('d', 'c'))
+  CONSTRAINT CHK_GeneralLedgerPosting_1 CHECK ("debitOrCredit" IN ('d', 'c'))
 );
-GRANT SELECT ON "${schemaNameFA}"."GlPosting" TO "${schemaNameFA}_READONLY_ROLE";
-GRANT INSERT ON "${schemaNameFA}"."GlPosting" TO "${schemaNameFA}_UPDATE_ROLE";
-GRANT UPDATE ON "${schemaNameFA}"."GlPosting" TO "${schemaNameFA}_UPDATE_ROLE";
-GRANT DELETE ON "${schemaNameFA}"."GlPosting" TO "${schemaNameFA}_UPDATE_ROLE";
-CREATE SYNONYM "${appUserNameFA}"."GlPosting" FOR "${schemaNameFA}"."GlPosting";
+GRANT SELECT ON "${schemaNameFA}"."GeneralLedgerPosting" TO "${schemaNameFA}_READONLY_ROLE";
+GRANT INSERT ON "${schemaNameFA}"."GeneralLedgerPosting" TO "${schemaNameFA}_UPDATE_ROLE";
+GRANT UPDATE ON "${schemaNameFA}"."GeneralLedgerPosting" TO "${schemaNameFA}_UPDATE_ROLE";
+GRANT DELETE ON "${schemaNameFA}"."GeneralLedgerPosting" TO "${schemaNameFA}_UPDATE_ROLE";
+CREATE SYNONYM "${appUserNameFA}"."GeneralLedgerPosting" FOR "${schemaNameFA}"."GeneralLedgerPosting";
 
 
-CREATE TABLE "${schemaNameFA}"."SlAccount" (
+CREATE TABLE "${schemaNameFA}"."SubsidiaryLedgerAccount" (
   "id"              NUMBER(19, 0) GENERATED ALWAYS AS IDENTITY (NOCACHE) NOT NULL,
   "accountName"     VARCHAR2(120 CHAR),
   "accountNumber"   VARCHAR2(50 CHAR),
-  CONSTRAINT PK_SlAccount PRIMARY KEY ("id")
+  CONSTRAINT PK_SubsidiaryLedgerAccount PRIMARY KEY ("id")
 );
-GRANT SELECT ON "${schemaNameFA}"."SlAccount" TO "${schemaNameFA}_READONLY_ROLE";
-GRANT INSERT ON "${schemaNameFA}"."SlAccount" TO "${schemaNameFA}_UPDATE_ROLE";
-GRANT UPDATE ON "${schemaNameFA}"."SlAccount" TO "${schemaNameFA}_UPDATE_ROLE";
-GRANT DELETE ON "${schemaNameFA}"."SlAccount" TO "${schemaNameFA}_UPDATE_ROLE";
-CREATE SYNONYM "${appUserNameFA}"."SlAccount" FOR "${schemaNameFA}"."SlAccount";
+GRANT SELECT ON "${schemaNameFA}"."SubsidiaryLedgerAccount" TO "${schemaNameFA}_READONLY_ROLE";
+GRANT INSERT ON "${schemaNameFA}"."SubsidiaryLedgerAccount" TO "${schemaNameFA}_UPDATE_ROLE";
+GRANT UPDATE ON "${schemaNameFA}"."SubsidiaryLedgerAccount" TO "${schemaNameFA}_UPDATE_ROLE";
+GRANT DELETE ON "${schemaNameFA}"."SubsidiaryLedgerAccount" TO "${schemaNameFA}_UPDATE_ROLE";
+CREATE SYNONYM "${appUserNameFA}"."SubsidiaryLedgerAccount" FOR "${schemaNameFA}"."SubsidiaryLedgerAccount";
 
 
-CREATE TABLE "${schemaNameFA}"."SlPosting" (
-  "id"           NUMBER(19, 0) GENERATED ALWAYS AS IDENTITY (NOCACHE) NOT NULL,
-  "glPostingId"  NUMBER(19, 0) NOT NULL,
-  "slAccountId"  NUMBER(19, 0) NOT NULL,
-  "amount"       NUMBER(16, 2) NOT NULL,
-  CONSTRAINT PK_SlPosting PRIMARY KEY ("id"),
-  CONSTRAINT FK_SlPosting_GlPosting_1 FOREIGN KEY ("glPostingId")
-    REFERENCES "${schemaNameFA}"."GlPosting" ("id"),
-  CONSTRAINT FK_SlPosting_SlAccount_2 FOREIGN KEY ("slAccountId")
-    REFERENCES "${schemaNameFA}"."SlAccount" ("id")
+CREATE TABLE "${schemaNameFA}"."SubsidiaryLedgerPosting" (
+  "id"                         NUMBER(19, 0) GENERATED ALWAYS AS IDENTITY (NOCACHE) NOT NULL,
+  "generalLedgerPostingId"     NUMBER(19, 0) NOT NULL,
+  "subsidiaryLedgerAccountId"  NUMBER(19, 0) NOT NULL,
+  "amount"                     NUMBER(16, 2) NOT NULL,
+  CONSTRAINT PK_SubsidiaryLedgerPosting PRIMARY KEY ("id"),
+  CONSTRAINT FK_SubsidiaryLedgerPosting_GeneralLedgerPosting_1 FOREIGN KEY ("generalLedgerPostingId")
+    REFERENCES "${schemaNameFA}"."GeneralLedgerPosting" ("id"),
+  CONSTRAINT FK_SubsidiaryLedgerPosting_SubsidiaryLedgerAccount_2 FOREIGN KEY ("subsidiaryLedgerAccountId")
+    REFERENCES "${schemaNameFA}"."SubsidiaryLedgerAccount" ("id")
 );
-GRANT SELECT ON "${schemaNameFA}"."SlPosting" TO "${schemaNameFA}_READONLY_ROLE";
-GRANT INSERT ON "${schemaNameFA}"."SlPosting" TO "${schemaNameFA}_UPDATE_ROLE";
-GRANT UPDATE ON "${schemaNameFA}"."SlPosting" TO "${schemaNameFA}_UPDATE_ROLE";
-GRANT DELETE ON "${schemaNameFA}"."SlPosting" TO "${schemaNameFA}_UPDATE_ROLE";
-CREATE SYNONYM "${appUserNameFA}"."SlPosting" FOR "${schemaNameFA}"."SlPosting";
+GRANT SELECT ON "${schemaNameFA}"."SubsidiaryLedgerPosting" TO "${schemaNameFA}_READONLY_ROLE";
+GRANT INSERT ON "${schemaNameFA}"."SubsidiaryLedgerPosting" TO "${schemaNameFA}_UPDATE_ROLE";
+GRANT UPDATE ON "${schemaNameFA}"."SubsidiaryLedgerPosting" TO "${schemaNameFA}_UPDATE_ROLE";
+GRANT DELETE ON "${schemaNameFA}"."SubsidiaryLedgerPosting" TO "${schemaNameFA}_UPDATE_ROLE";
+CREATE SYNONYM "${appUserNameFA}"."SubsidiaryLedgerPosting" FOR "${schemaNameFA}"."SubsidiaryLedgerPosting";
 
 
 CREATE TABLE "${schemaNameFA}"."RetailBankingAccount" (
-  "id"           NUMBER(19, 0) GENERATED ALWAYS AS IDENTITY (NOCACHE) NOT NULL,
-  "slAccountId"  NUMBER(19, 0) NOT NULL,
+  "id"                         NUMBER(19, 0) GENERATED ALWAYS AS IDENTITY (NOCACHE) NOT NULL,
+  "subsidiaryLedgerAccountId"  NUMBER(19, 0) NOT NULL,
   CONSTRAINT PK_RetailBankingAccount PRIMARY KEY ("id"),
-  CONSTRAINT FK_RetailBankingAccount_SlAccount_1 FOREIGN KEY ("slAccountId")
-    REFERENCES "${schemaNameFA}"."SlAccount" ("id")
+  CONSTRAINT FK_RetailBankingAccount_SubsidiaryLedgerAccount_1 FOREIGN KEY ("subsidiaryLedgerAccountId")
+    REFERENCES "${schemaNameFA}"."SubsidiaryLedgerAccount" ("id")
 );
 GRANT SELECT ON "${schemaNameFA}"."RetailBankingAccount" TO "${schemaNameFA}_READONLY_ROLE";
 GRANT INSERT ON "${schemaNameFA}"."RetailBankingAccount" TO "${schemaNameFA}_UPDATE_ROLE";
@@ -164,11 +164,11 @@ CREATE SYNONYM "${appUserNameFA}"."RetailBankingAccount" FOR "${schemaNameFA}"."
 
 -- subsidiary ledger account
 -- in Polish "konto analityczne"
--- SlAccount
+-- SubsidiaryLedgerAccount
 
 -- subsidiary ledger
 -- in Polish "księga pomocnicza"
--- SlPosting
+-- SubsidiaryLedgerPosting
 
 
 
