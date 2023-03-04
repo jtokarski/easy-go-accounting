@@ -1,14 +1,15 @@
 
 
-db:
-  oracle:
-    root:
-      userId: "sys AS sysdba"
-      password: "________"
-  mssql:
-    root:
-      userId: "sa"
-      password: "________"
+easygo:
+  dbExec:
+    oracle:
+      root:
+        userId: "sys AS sysdba"
+        password: "________"
+    mssql:
+      root:
+        userId: "sa"
+        password: "________"
 
 
 

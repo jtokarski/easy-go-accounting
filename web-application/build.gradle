@@ -1,0 +1,49 @@
+
+plugins {
+    id 'java'
+    id 'war'
+    alias libs.plugins.springDependencyManagementPlugin
+    alias libs.plugins.springBootPlugin
+}
+
+group = 'org.defendev'
+
+sourceCompatibility = JavaVersion.VERSION_17
+targetCompatibility = JavaVersion.VERSION_17
+
+repositories {
+    mavenCentral()
+}
+
+springBoot {
+    mainClass = 'org.defendev.easygo.web.EasygoWebApplication'
+}
+
+bootWar {
+    enabled = false
+}
+
+tasks.named('bootRun') {
+    def runJarConfig = project.rootDir.toPath().resolve('config/application-runJar.yaml').toString()
+    systemProperty 'spring.config.additional-location', runJarConfig
+}
+
+dependencies {
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web'
+    implementation "org.springframework.boot:spring-boot-starter-log4j2"
+    modules {
+        module("org.springframework.boot:spring-boot-starter-logging") {
+            replacedBy("org.springframework.boot:spring-boot-starter-log4j2", "Use Log4j2 instead of Logback")
+        }
+    }
+    /*
+     * Specifying the 'spring-boot-starter-tomcat' in providedRuntime configuration
+     * doesn't affect the contents boot-War as the tomcat-embed-* Jars will be
+     * included in boot-War anyway.
+     * Rather, it does affect the plain-War causing the tomcat-embed-* Jars
+     * to be excluded from the archive (saving around 4MB of storage).
+     *
+     */
+    providedRuntime group: 'org.springframework.boot', name: 'spring-boot-starter-tomcat'
+    testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test'
+}

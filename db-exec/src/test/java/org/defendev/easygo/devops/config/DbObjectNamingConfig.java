@@ -1,6 +1,8 @@
 package org.defendev.easygo.devops.config;
 
 import org.apache.commons.text.StringSubstitutor;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -11,19 +13,20 @@ import java.util.Map;
 
 
 
-
 @Configuration
 public class DbObjectNamingConfig {
 
+    private static final Logger log = LogManager.getLogger();
+
     @Bean
     public Map<String, String> dbNamingReplacements(
-        @Value("${db.oracle.tenant.id}") String tenantId,
-        @Value("${db.oracle.tenant.roUserPasswordUI}") String roUserPasswordUI,
-        @Value("${db.oracle.tenant.roUserPasswordSE}") String roUserPasswordSE,
-        @Value("${db.oracle.tenant.roUserPasswordFA}") String roUserPasswordFA,
-        @Value("${db.oracle.tenant.appUserPasswordUI}") String appUserPasswordUI,
-        @Value("${db.oracle.tenant.appUserPasswordSE}") String appUserPasswordSE,
-        @Value("${db.oracle.tenant.appUserPasswordFA}") String appUserPasswordFA
+        @Value("${easygo.dbExec.oracle.tenant.id}") String tenantId,
+        @Value("${easygo.dbExec.oracle.tenant.roUserPasswordUI}") String roUserPasswordUI,
+        @Value("${easygo.dbExec.oracle.tenant.roUserPasswordSE}") String roUserPasswordSE,
+        @Value("${easygo.dbExec.oracle.tenant.roUserPasswordFA}") String roUserPasswordFA,
+        @Value("${easygo.dbExec.oracle.tenant.appUserPasswordUI}") String appUserPasswordUI,
+        @Value("${easygo.dbExec.oracle.tenant.appUserPasswordSE}") String appUserPasswordSE,
+        @Value("${easygo.dbExec.oracle.tenant.appUserPasswordFA}") String appUserPasswordFA
     ) {
         final Map<String, String> replacements = new HashMap<>();
         replacements.put("flywaySchemaHistoryTableName", String.format("%s_flyway_schema_history", tenantId));

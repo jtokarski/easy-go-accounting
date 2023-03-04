@@ -3,6 +3,8 @@ package org.defendev.easygo.devops.dbfixture;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.xml.bind.JAXBException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.defendev.common.fixture.loader.FixturesLoader;
 import org.defendev.easygo.devops.config.DataSourceConfig;
 import org.defendev.easygo.devops.config.DbObjectNamingConfig;
@@ -27,6 +29,8 @@ import java.util.List;
     initializers = { ConfigDataApplicationContextInitializer.class }
 )
 public class LoadFinancialAccountingFixturesTest {
+
+    private static final Logger log = LogManager.getLogger();
 
     @PersistenceContext(unitName = "easygoPersistenceUnit")
     private EntityManager entityManager;

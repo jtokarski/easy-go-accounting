@@ -37,5 +37,6 @@ project(':db-exec').name = 'db-exec'
 include 'domain-financial-accounting'
 project(':domain-financial-accounting').name = 'domain-financial-accounting'
 
-
+include 'web-application'
+project(':web-application').name = 'web-application'
 

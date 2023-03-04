@@ -1,0 +1,3 @@
+*
+!/docker-infra/services/run-tomcat-web/context.xml
+!/web-application/build/libs/web-application-plain.war

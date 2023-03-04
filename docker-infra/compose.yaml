@@ -13,6 +13,18 @@ services:
         source: "oracle-data"
         target: "/opt/oracle/oradata"
         read_only: false
+  run-tomcat-web:
+    container_name: "easygo.tomcat-web"
+    image: "easygo/tomcat-web"
+    build:
+      context: "../"
+      dockerfile: "./docker-infra/services/run-tomcat-web/Dockerfile"
+    networks:
+      - "easygo-bridge-net"
+    ports:
+      - "0.0.0.0:8080:8080/tcp"
+    env_file:
+      - "../config/app-db.properties"
 networks:
   easygo-bridge-net:
     driver: "bridge"

@@ -18,6 +18,12 @@ dependencies {
     testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test'
     testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa'
     testImplementation group: 'com.oracle.database.jdbc', name: 'ojdbc11'
+    testImplementation "org.springframework.boot:spring-boot-starter-log4j2"
+    modules {
+        module("org.springframework.boot:spring-boot-starter-logging") {
+            replacedBy("org.springframework.boot:spring-boot-starter-log4j2", "Use Log4j2 instead of Logback")
+        }
+    }
     testImplementation libs.apacheCommonsText
     testImplementation libs.flywaydb
     testImplementation libs.defendevCommonJdk
