@@ -41,10 +41,10 @@ GRANT CREATE SESSION TO "${roUserNameFA}";
 
 
 CREATE TABLE "${schemaNameFA}"."SourceDocument" (
-  "id"                    NUMBER(19, 0) GENERATED ALWAYS AS IDENTITY (NOCACHE) NOT NULL,
-  "controlNumber"         VARCHAR2(100 CHAR),
-  "documentDateTimeZulu"  DATE,
-  "description"           VARCHAR2(500 CHAR),
+  "id"                          NUMBER(19, 0) GENERATED ALWAYS AS IDENTITY (NOCACHE) NOT NULL,
+  "controlNumber"               VARCHAR2(100 CHAR),
+  "documentIssueDateTimeZulu"   DATE,
+  "description"                 VARCHAR2(500 CHAR),
    CONSTRAINT PK_SourceDocument PRIMARY KEY ("id")
 );
 GRANT SELECT ON "${schemaNameFA}"."SourceDocument" TO "${schemaNameFA}_READONLY_ROLE";

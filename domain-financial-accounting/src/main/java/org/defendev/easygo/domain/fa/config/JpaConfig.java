@@ -1,5 +1,7 @@
-package org.defendev.easygo.devops.config;
+package org.defendev.easygo.domain.fa.config;
 
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 import jakarta.persistence.EntityManagerFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -16,9 +18,22 @@ import java.util.Properties;
 
 
 
-public class JpaFinancialAccountingConfig {
+public class JpaConfig {
 
     private static final Logger log = LogManager.getLogger();
+
+    @Bean
+    public DataSource financialAccountingAppDataSource(FinancialAccountingProperties faProps) {
+        final FinancialAccountingProperties.Db.Oracle oracleProps = faProps.getDb().getOracle().get(0);
+        final HikariConfig hikariConfig = new HikariConfig();
+        hikariConfig.setDriverClassName(oracleProps.getDriver());
+        final String jdbcUrl = String.format("jdbc:oracle:thin:@//%s:%s/%s", oracleProps.getHost(),
+            oracleProps.getPort(), oracleProps.getContainerName());
+        hikariConfig.setJdbcUrl(jdbcUrl);
+        hikariConfig.setUsername(oracleProps.getAppUserName());
+        hikariConfig.setPassword(oracleProps.getAppUserPassword());
+        return new HikariDataSource(hikariConfig);
+    }
 
     @Bean
     public FactoryBean<EntityManagerFactory> easygoEmfFactoryBean(

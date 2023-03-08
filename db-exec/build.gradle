@@ -35,6 +35,15 @@ test {
     useJUnitPlatform()
 }
 
+sourceSets {
+    test {
+        resources {
+            srcDir rootDir.toString() + '/config'
+        }
+    }
+}
+
+
 tasks.register('createEasygoSysSchema', org.gradle.api.tasks.testing.Test) {
     useJUnitPlatform()
     /*

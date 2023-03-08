@@ -8,7 +8,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.defendev.common.fixture.loader.FixturesLoader;
 import org.defendev.easygo.devops.dbfixture.wrapper.SourceDocumentSet;
-import org.defendev.easygo.domain.fa.SourceDocument;
+import org.defendev.easygo.domain.fa.model.SourceDocument;
 
 import java.io.InputStream;
 import java.util.List;

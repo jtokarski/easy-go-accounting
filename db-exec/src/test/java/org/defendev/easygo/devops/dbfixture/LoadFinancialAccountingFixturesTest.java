@@ -7,11 +7,12 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.defendev.common.fixture.loader.FixturesLoader;
 import org.defendev.easygo.devops.config.DataSourceConfig;
-import org.defendev.easygo.devops.config.DbObjectNamingConfig;
-import org.defendev.easygo.devops.config.JpaFinancialAccountingConfig;
 import org.defendev.easygo.devops.dbfixture.loader.SourceDocumentFixturesLoader;
-import org.defendev.easygo.domain.fa.SourceDocument;
+import org.defendev.easygo.domain.fa.config.FinancialAccountingProperties;
+import org.defendev.easygo.domain.fa.config.JpaConfig;
+import org.defendev.easygo.domain.fa.model.SourceDocument;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.test.context.ConfigDataApplicationContextInitializer;
 import org.springframework.test.annotation.Commit;
 import org.springframework.test.context.TestPropertySource;
@@ -23,9 +24,11 @@ import java.util.List;
 
 
 
+
 @TestPropertySource(properties = { DataSourceConfig.DB_PROPERTY_LOCATIONS })
+@EnableConfigurationProperties(FinancialAccountingProperties.class)
 @SpringJUnitConfig(
-    classes = { DataSourceConfig.class, DbObjectNamingConfig.class, JpaFinancialAccountingConfig.class },
+    classes = { JpaConfig.class },
     initializers = { ConfigDataApplicationContextInitializer.class }
 )
 public class LoadFinancialAccountingFixturesTest {

@@ -1,4 +1,4 @@
-package org.defendev.easygo.domain.fa;
+package org.defendev.easygo.domain.fa.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -30,8 +30,8 @@ public class SourceDocument implements HasId<Long> {
     private String controlNumber;
 
     @XmlJavaTypeAdapter(LocalDateTimeXmlAdapter.class)
-    @Column(name = "documentDateTimeZulu")
-    private LocalDateTime documentDateTimeZulu;
+    @Column(name = "documentIssueDateTimeZulu")
+    private LocalDateTime documentIssueDateTimeZulu;
 
     @Column(name = "description")
     private String description;
@@ -54,12 +54,12 @@ public class SourceDocument implements HasId<Long> {
         this.controlNumber = controlNumber;
     }
 
-    public LocalDateTime getDocumentDateTimeZulu() {
-        return documentDateTimeZulu;
+    public LocalDateTime getDocumentIssueDateTimeZulu() {
+        return documentIssueDateTimeZulu;
     }
 
-    public void setDocumentDateTimeZulu(LocalDateTime documentDateTimeZulu) {
-        this.documentDateTimeZulu = documentDateTimeZulu;
+    public void setDocumentIssueDateTimeZulu(LocalDateTime documentIssueDateTimeZulu) {
+        this.documentIssueDateTimeZulu = documentIssueDateTimeZulu;
     }
 
     public String getDescription() {
