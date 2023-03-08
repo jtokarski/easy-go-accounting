@@ -45,5 +45,8 @@ dependencies {
      *
      */
     providedRuntime group: 'org.springframework.boot', name: 'spring-boot-starter-tomcat'
+    implementation group: 'com.oracle.database.jdbc', name: 'ojdbc11'
+    implementation libs.defendevCommonJdk
+    implementation project(':domain-financial-accounting')
     testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test'
 }
