@@ -9,3 +9,4 @@ build
 /db-exec/src/test/resources/db-root.yaml
 /db-exec/src/test/resources/db-tenant.yaml
 
+/angular-ui/workspace/node_modules
