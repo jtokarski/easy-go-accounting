@@ -10,3 +10,6 @@ build
 /db-exec/src/test/resources/db-tenant.yaml
 
 /angular-ui/workspace/node_modules
+/angular-ui/workspace/angular-dist
+
+
