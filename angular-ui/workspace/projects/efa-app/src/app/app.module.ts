@@ -8,6 +8,7 @@ import { FinancialAccountingHomeComponent } from './pages/financial-accounting-h
 import { SourceDocumentMainComponent } from './pages/source-document-main/source-document-main.component';
 import { SourceDocumentHomeComponent } from './pages/source-document-main/source-document-home/source-document-home.component';
 import { SourceDocumentBrowseComponent } from './pages/source-document-main/source-document-browse/source-document-browse.component';
+import { SourceDocumentStatisticsComponent } from './pages/source-document-main/source-document-statistics/source-document-statistics.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { SourceDocumentBrowseComponent } from './pages/source-document-main/sour
     FinancialAccountingHomeComponent,
     SourceDocumentMainComponent,
     SourceDocumentHomeComponent,
-    SourceDocumentBrowseComponent
+    SourceDocumentBrowseComponent,
+    SourceDocumentStatisticsComponent
   ],
   imports: [
     BrowserModule,
