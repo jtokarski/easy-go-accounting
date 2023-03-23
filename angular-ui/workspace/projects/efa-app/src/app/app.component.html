@@ -14,10 +14,20 @@
              [ngClass]="{ 'active': isRouteActiveSourceDocuments() }"
           >Source Documents</a>
         </li>
-
       </ul>
     </div>
   </nav>
 </header>
 
-<router-outlet></router-outlet>
+<main>
+  <section class="container">
+    <router-outlet></router-outlet>
+  </section>
+</main>
+
+<footer>
+  <section class="container">
+    Licensed under the Apache License, Version 2.0.
+  </section>
+</footer>
+
