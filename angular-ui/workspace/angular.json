@@ -75,7 +75,8 @@
               "browserTarget": "efa-app:build:production"
             },
             "development": {
-              "browserTarget": "efa-app:build:development"
+              "browserTarget": "efa-app:build:development",
+              "proxyConfig": "proxy.conf.mjs"
             }
           },
           "defaultConfiguration": "development"

@@ -3,6 +3,7 @@ package org.defendev.easygo.domain.fa.service;
 import org.defendev.easygo.domain.fa.model.SourceDocument;
 import org.defendev.easygo.domain.fa.repository.SourceDocumentRepo;
 import org.defendev.easygo.domain.fa.service.dto.SourceDocumentFullDto;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -17,6 +18,7 @@ public class FindSourceDocumentService {
 
     private final SourceDocumentRepo sourceDocumentRepo;
 
+    @Autowired
     public FindSourceDocumentService(SourceDocumentRepo sourceDocumentRepo) {
         this.sourceDocumentRepo = sourceDocumentRepo;
     }

@@ -9,6 +9,7 @@ dependencyResolutionManagement {
             version('flywaydb.version', '9.12.0')
             version('defendev-common-jdk.version', '0.0.2-SNAPSHOT')
             version('defendev-common-fixtures.version', '0.0.1-SNAPSHOT')
+            version('defendev-common-spring6.version', '0.0.1-SNAPSHOT')
 
             library('oracleJdbcBom', 'com.oracle.database.jdbc', 'ojdbc-bom')
                 .versionRef('oracle-jdbc-bom.version')
@@ -20,6 +21,8 @@ dependencyResolutionManagement {
                 .versionRef('defendev-common-jdk.version')
             library('defendevCommonFixtures', 'org.defendev', 'common-fixtures')
                 .versionRef('defendev-common-fixtures.version')
+            library('defendevCommonSpring6', 'org.defendev', 'common-spring6')
+                .versionRef('defendev-common-spring6.version')
 
             plugin('springDependencyManagementPlugin', 'io.spring.dependency-management')
                 .versionRef('spring-dependency-management-plugin.version')

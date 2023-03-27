@@ -1,1 +1,73 @@
-<p>source-document-browse works!</p>
+<ng-container *ngIf="gridDisplayActive">
+  <div class="row">
+    <div class="col-12 d-flex justify-content-between">
+      <div>
+        &nbsp;
+      </div>
+      <div>
+        <label class="form-label me-3">Items per page:</label>
+        <button
+          type="button"
+          class="btn me-2"
+          [ngClass]="{
+            'btn-outline-primary': 10 !== pageSizeFc.value,
+            'btn-primary': 10 === pageSizeFc.value
+          }"
+          (click)="paginationSetPageSize(10)"
+        >10</button>
+        <button
+          type="button"
+          class="btn me-2"
+          [ngClass]="{
+            'btn-outline-primary': 20 !== pageSizeFc.value,
+            'btn-primary': 20 === pageSizeFc.value
+          }"
+          (click)="paginationSetPageSize(20)"
+        >20</button>
+        <button
+          type="button"
+          class="btn"
+          [ngClass]="{
+            'btn-outline-primary': 50 !== pageSizeFc.value,
+            'btn-primary': 50 === pageSizeFc.value
+          }"
+          (click)="paginationSetPageSize(50)"
+        >50</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-2">
+    <div class="col-12">
+      <ag-grid-angular style="width: 100%; height: 500px" class="ag-theme-alpine" [gridOptions]="gridOptions">
+      </ag-grid-angular>
+    </div>
+  </div>
+
+  <div class="row mt-2" [formGroup]="externalPaginationFg">
+    <div class="col-12 d-flex justify-content-between">
+      <div>
+        &nbsp;
+      </div>
+      <div>
+        <div class="input-group">
+          <input
+            type="text"
+            class="form-control GoalsBrowse-currentPageInput"
+            [ngClass]="{
+              'is-invalid': currentPageFc.invalid
+            }"
+            formControlName="currentPage"
+            (focusin)="paginationPageOnFocus($event)"
+          />
+          <button
+            type="button"
+            class="btn btn-outline-primary"
+            [disabled]="currentPageFc.invalid"
+            (click)="paginationGoToPage()"
+          >Go to page</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
