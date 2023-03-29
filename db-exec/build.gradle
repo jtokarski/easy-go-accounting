@@ -35,9 +35,17 @@ dependencies {
     testImplementation project(':domain-financial-accounting')
 }
 
-test {
-    useJUnitPlatform()
-}
+
+/*
+Global configuration of Test tasks i intentionally skipped. In this sub-project tests
+are more of on-demand, maintanence batch jobs than actual unit tests. Therefore
+I don't want them to be ever run at once.
+
+    test {
+        useJUnitPlatform()
+        onlyIf { false }
+    }
+*/
 
 sourceSets {
     test {
@@ -87,6 +95,12 @@ oracleMigrateTask.configure { Test task -> task.mustRunAfter(oracleBaselineTask)
 tasks.register('oracleBaselineAndMigrate', org.gradle.api.DefaultTask) {
     dependsOn oracleBaselineTask
     dependsOn oracleMigrateTask
+    outputs.upToDateWhen { false }
+}
+
+tasks.register('loadFixtures', org.gradle.api.tasks.testing.Test) {
+    useJUnitPlatform()
+    setTestNameIncludePatterns(['org.defendev.easygo.devops.dbfixture.LoadFinancialAccountingFixturesTest.loadFixtures'])
     outputs.upToDateWhen { false }
 }
 

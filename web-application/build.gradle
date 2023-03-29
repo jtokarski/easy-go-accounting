@@ -48,5 +48,6 @@ dependencies {
     implementation group: 'com.oracle.database.jdbc', name: 'ojdbc11'
     implementation libs.defendevCommonJdk
     implementation project(':domain-financial-accounting')
+    implementation project(':angular-ui')
     testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test'
 }

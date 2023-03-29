@@ -1,0 +1,23 @@
+
+plugins {
+    id 'java'
+}
+
+group = 'org.defendev'
+
+sourceCompatibility = JavaVersion.VERSION_17
+targetCompatibility = JavaVersion.VERSION_17
+
+def angularBuildTask = tasks.register('angularBuild', org.gradle.api.tasks.Exec) {
+    workingDir "${project.projectDir}/workspace"
+    commandLine 'npm', 'install'
+    commandLine 'npm', 'run-script', 'ng', '--', 'run', 'efa-app:build:production'
+}
+
+processResources {
+    dependsOn angularBuildTask
+    from('workspace/angular-dist') {
+        into 'view-resources'
+    }
+}
+
