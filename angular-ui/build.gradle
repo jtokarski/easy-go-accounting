@@ -9,16 +9,26 @@ group = 'org.defendev'
 sourceCompatibility = JavaVersion.VERSION_17
 targetCompatibility = JavaVersion.VERSION_17
 
+def npmInstall = tasks.register('npmInstall', org.gradle.api.tasks.Exec) {
+    workingDir "${project.projectDir}/workspace"
+    if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+        commandLine 'cmd', '/c', 'npm install'
+    } else {
+        executable 'npm'
+        args 'install'
+    }
+}
+
 def angularBuildTask = tasks.register('angularBuild', org.gradle.api.tasks.Exec) {
+    dependsOn npmInstall
     workingDir "${project.projectDir}/workspace"
     if (Os.isFamily(Os.FAMILY_WINDOWS)) {
         println 'Building Angular project on Windows OS'
-        commandLine 'cmd', '/c', 'npm install'
         commandLine 'cmd', '/c', 'npm run-script ng -- run efa-app:build:production'
     } else {
         println 'Building Angular project on *nix OS'
-        commandLine 'npm', 'install'
-        commandLine 'npm', 'run-script', 'ng', '--', 'run', 'efa-app:build:production'
+        executable 'npm'
+        args 'run-script', 'ng', '--', 'run', 'efa-app:build:production'
     }
 }
 

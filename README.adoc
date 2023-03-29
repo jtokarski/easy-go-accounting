@@ -107,3 +107,16 @@ $ ./gradlew :db-exec:oracleBaselineAndMigrate
 ----
 
 === Load data fixtures
+
+[source,bash]
+----
+$ ./gradlew :db-exec:loadFixtures
+----
+
+=== Run the application locally
+
+[source,bash]
+----
+$ ./gradlew :web-application:bootRun
+----
+If everything is setup correctly you should be able to access working application under http://localhost:8080/ .
