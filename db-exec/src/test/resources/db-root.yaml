@@ -1,0 +1,14 @@
+
+easygo:
+  dbExec:
+    oracle:
+      root:
+        userId: "sys AS sysdba"
+        password: "oraclepx0"
+    mssql:
+      root:
+        userId: "sa"
+        password: "msMcrDckr.212"
+
+
+

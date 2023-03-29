@@ -1,0 +1,15 @@
+
+
+easygo:
+  dbExec:
+    oracle:
+      tenant:
+        id: "T1"
+        appUserPasswordUI: "kM0iNtrN0gtG5"
+        appUserPasswordSE: "nTrkM0iN7gLy2"
+        appUserPasswordFA: "gkML0Un7y3kMw"
+        roUserPasswordUI: "kM0iNtrN0gtG5"
+        roUserPasswordSE: "nTrkM0iN7gLy2"
+        roUserPasswordFA: "gkML0Un7y3kMw"
+
+

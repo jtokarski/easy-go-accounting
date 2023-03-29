@@ -1,0 +1,17 @@
+
+easygo:
+  dbExec:
+    oracle:
+      coordinate:
+        driver: "oracle.jdbc.OracleDriver"
+        host: "localhost"
+        port: 1521
+        containerName: "xepdb1"
+    mssql:
+      coordinate:
+        driver: "com.microsoft.sqlserver.jdbc.SQLServerDriver"
+        host: "localhost"
+        port: 1433
+
+
+

@@ -4,10 +4,12 @@
 # Ignore Gradle build output directory
 build
 
-
-/db-exec/src/test/resources/db-coordinates.yaml
-/db-exec/src/test/resources/db-root.yaml
-/db-exec/src/test/resources/db-tenant.yaml
+# Finally those should be generated:
+# /config/application-runJar.yaml
+# /config/app-db.properties
+# /db-exec/src/test/resources/db-coordinates.yaml
+# /db-exec/src/test/resources/db-root.yaml
+# /db-exec/src/test/resources/db-tenant.yaml
 
 /angular-ui/workspace/node_modules
 /angular-ui/workspace/angular-dist
