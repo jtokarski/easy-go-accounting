@@ -16,11 +16,23 @@ Split into several modules:
 
 === angular-ui
 
-abc
+Client (front-end) single-page application written in Angular framework.
 
 === db-exec
 
-bcd
+Contains
+
+* the DB setup and migration scripts
+* data fixture files and tools for loading them (for dev and testing purposes)
+
+=== domain-financial-accounting
+
+The domain-layer application code.
+
+=== web-application
+
+Web @Controller(s), endpoint mappings, a @SpringBootApplication and other supporting code necessary
+for running backend web service. Embeds of *domain-financial-accounting* and *angular-ui* modules.
 
 == Installation and Running
 
@@ -30,7 +42,35 @@ You need the following software installed on your machine:
 
 * JDK 17+
 
-* Docker
+* NodeJS v18+
+
+* Docker (on Windows the best choice is probably Docker Desktop)
+
+=== JDK and NodeJS
+
+Make sure you have properly set the `JAVA_HOME` environment variable, and the `%JAVA_HOME%\bin` (on Windows) or
+`${JAVA_HOME}/bin` (on Linux) is added to the `PATH`. Proper installation can be verified by running:
+
+[source,bash]
+----
+$ echo ${JAVA_HOME}
+/opt/jdk-17.0.4+8
+$
+$ java --version
+openjdk 17.0.4 2022-07-19
+OpenJDK Runtime Environment Temurin-17.0.4+8 (build 17.0.4+8)
+OpenJDK 64-Bit Server VM Temurin-17.0.4+8 (build 17.0.4+8, mixed mode, sharing)
+$
+$ javac --version
+javac 17.0.4
+$
+$
+$ node --version
+v18.15.0
+$ npm --version
+9.5.0
+$
+----
 
 === Start Oracle XE Database server
 
@@ -66,3 +106,4 @@ Database schema migrations are powered by https://flywaydb.org/documentation/[Fl
 $ ./gradlew :db-exec:oracleBaselineAndMigrate
 ----
 
+=== Load data fixtures
