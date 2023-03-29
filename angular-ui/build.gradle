@@ -1,3 +1,4 @@
+import org.apache.tools.ant.taskdefs.condition.Os
 
 plugins {
     id 'java'
@@ -10,8 +11,15 @@ targetCompatibility = JavaVersion.VERSION_17
 
 def angularBuildTask = tasks.register('angularBuild', org.gradle.api.tasks.Exec) {
     workingDir "${project.projectDir}/workspace"
-    commandLine 'npm', 'install'
-    commandLine 'npm', 'run-script', 'ng', '--', 'run', 'efa-app:build:production'
+    if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+        println 'Building Angular project on Windows OS'
+        commandLine 'cmd', '/c', 'npm install'
+        commandLine 'cmd', '/c', 'npm run-script ng -- run efa-app:build:production'
+    } else {
+        println 'Building Angular project on *nix OS'
+        commandLine 'npm', 'install'
+        commandLine 'npm', 'run-script', 'ng', '--', 'run', 'efa-app:build:production'
+    }
 }
 
 processResources {
