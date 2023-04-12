@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -36,6 +37,7 @@ public class QuerySourceDocumentService {
         this.sourceDocumentRepo = sourceDocumentRepo;
     }
 
+    @Transactional(readOnly = true)
     public SourceDocumentCollectionResRep querySourceDocuments(SourceDocumentQuery query) {
         final Pageable pageable = (new SourceDocumentPageableSpec(query)).toPageable();
         final SourceDocumentPredicateSpec predicateSpec = new SourceDocumentPredicateSpec(query);
