@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -13,6 +13,8 @@ import { ModuleRegistry } from '@ag-grid-community/core';
 import { InfiniteRowModelModule } from '@ag-grid-community/infinite-row-model';
 
 import { SharedModule } from '@/shared/shared.module';
+
+import { SecurityContextDiscoveryService, discoverSecurityContextFactory } from '@/security/security-context-discovery.service';
 
 import { FinancialAccountingHomeComponent } from './pages/financial-accounting-home/financial-accounting-home.component';
 import { SourceDocumentMainComponent } from './pages/source-document-main/source-document-main.component';
@@ -44,7 +46,14 @@ ModuleRegistry.registerModules([
     AgGridModule,
     SharedModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: APP_INITIALIZER,
+      useFactory: discoverSecurityContextFactory,
+      deps: [SecurityContextDiscoveryService],
+      multi: true,
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

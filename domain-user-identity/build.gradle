@@ -27,7 +27,7 @@ dependencies {
         }
     }
 //    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-annotations'
-//    implementation libs.defendevCommonJdk
+    implementation libs.defendevCommonJdk
 //    implementation libs.defendevCommonFixtures
 //    implementation libs.defendevCommonSpring6
 //    annotationProcessor group: 'org.hibernate.orm', name: 'hibernate-jpamodelgen'
