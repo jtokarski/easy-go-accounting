@@ -1,0 +1,45 @@
+
+plugins {
+    id 'java'
+    alias libs.plugins.springDependencyManagementPlugin
+    alias libs.plugins.springBootPlugin
+}
+
+group = 'org.defendev'
+
+sourceCompatibility = JavaVersion.VERSION_17
+targetCompatibility = JavaVersion.VERSION_17
+
+repositories {
+    mavenCentral()
+}
+
+bootJar {
+    enabled = false
+}
+
+dependencies {
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa'
+    implementation "org.springframework.boot:spring-boot-starter-log4j2"
+    modules {
+        module("org.springframework.boot:spring-boot-starter-logging") {
+            replacedBy("org.springframework.boot:spring-boot-starter-log4j2", "Use Log4j2 instead of Logback")
+        }
+    }
+//    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-annotations'
+//    implementation libs.defendevCommonJdk
+//    implementation libs.defendevCommonFixtures
+//    implementation libs.defendevCommonSpring6
+//    annotationProcessor group: 'org.hibernate.orm', name: 'hibernate-jpamodelgen'
+    testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test'
+}
+
+configurations {
+    testImplementation.extendsFrom compileOnly
+}
+
+test {
+    useJUnitPlatform()
+}
+
+
