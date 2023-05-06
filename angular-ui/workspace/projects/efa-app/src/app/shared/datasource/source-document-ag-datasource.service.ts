@@ -1,34 +1,19 @@
 import { Injectable } from '@angular/core';
-
-import { IDatasource, IGetRowsParams, SortModelItem } from '@ag-grid-community/core';
-
-import {
-  BaseAgDatasource, SortOrder,
-  Operator, NumberPropertyFilter, DateTimePropertyFilter, Filter,
-  Query, QueryPageable, QuerySearchPhrase, QuerySort, QueryFilter,
-  expandUriVariables, ICollectionResRep, IBaseDto
-} from '@defendev/common-angular';
-
-
-import { Observable, Subject } from 'rxjs';
 import { HttpClient, HttpResponse } from "@angular/common/http";
+import { Observable, Subject } from 'rxjs';
+import { IDatasource, IGetRowsParams, SortModelItem } from '@ag-grid-community/core';
+import { BaseAgDatasource, SortOrder, Filter, Query, QueryPageable, QuerySearchPhrase, QuerySort, QueryFilter,
+  ICollectionResRep, IBaseDto } from '@defendev/common-angular';
+import { OBSERVE_RESPONSE_JSON } from '@/shared/observe-response-json';
 
 
-const OBSERVE_RESPONSE_JSON: {
-  observe: 'response';
-  responseType: 'json';
-} = {
-  observe: 'response',
-  responseType: 'json',
-};
-
-export interface SourceDocumentQuery extends Query, QueryPageable, QuerySearchPhrase, QuerySort, QueryFilter {};
+export interface SourceDocumentQuery extends Query, QueryPageable, QuerySearchPhrase, QuerySort, QueryFilter {}
 
 export interface SourceDocumentMinDto extends IBaseDto {
   controlNumber: string;
   // ...
 
-};
+}
 
 
 @Injectable({

@@ -19,8 +19,7 @@ public class SourceDocumentFixturesLoader extends FixturesLoader<SourceDocument,
 
     private static final Logger log = LogManager.getLogger();
 
-    public SourceDocumentFixturesLoader(String resourcePath, EntityManager entityManager,
-                                        Class<SourceDocument> entityClazz)
+    public SourceDocumentFixturesLoader(String resourcePath, EntityManager entityManager)
         throws JAXBException {
         super(resourcePath, entityManager, SourceDocument.class);
     }

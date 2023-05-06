@@ -1,13 +1,6 @@
 
 -- Convention: GQ Id 519
 
---
--- !!!
--- TODO: Rewrite SEQUENCE to GENERATED ALWAYS AS IDENTITY (NOCACHE)
--- !!!
---
---
-
 ALTER SESSION SET NLS_LANGUAGE = 'AMERICAN';
 
 CREATE USER "${schemaNameUI}"
@@ -55,7 +48,7 @@ GRANT CREATE SESSION TO "${roUserNameUI}";
 
 -- UserIdentity
 CREATE TABLE "${schemaNameUI}"."UserIdentity" (
-  "id"           NUMBER(19, 0),
+  "id"           NUMBER(19, 0) GENERATED ALWAYS AS IDENTITY (NOCACHE) NOT NULL,
   "username"     VARCHAR2(255 BYTE),
   "password"     VARCHAR2(255 BYTE),
   CONSTRAINT PK_UserIdentity PRIMARY KEY ("id")
@@ -64,14 +57,5 @@ GRANT SELECT ON "${schemaNameUI}"."UserIdentity" TO "${schemaNameUI}_READONLY_RO
 GRANT INSERT ON "${schemaNameUI}"."UserIdentity" TO "${schemaNameUI}_UPDATE_ROLE";
 GRANT UPDATE ON "${schemaNameUI}"."UserIdentity" TO "${schemaNameUI}_UPDATE_ROLE";
 GRANT DELETE ON "${schemaNameUI}"."UserIdentity" TO "${schemaNameUI}_UPDATE_ROLE";
+CREATE SYNONYM "${appUserNameUI}"."UserIdentity" FOR "${schemaNameUI}"."UserIdentity";
 
-
-CREATE SEQUENCE "${schemaNameUI}"."SEQ_UserIdentity"
-  MINVALUE 1 MAXVALUE 999999999999999999999999999
-  START WITH 1 INCREMENT BY 1
-  CACHE 20
-  NOORDER
-  NOCYCLE;
-GRANT SELECT ON "${schemaNameUI}"."SEQ_UserIdentity" TO "${schemaNameUI}_UPDATE_ROLE";
-
--- todo: CREATE SYNONYM

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<userIdentitySet>
+
+    <userIdentity>
+        <id>1</id>
+        <username>john@example.com</username>
+        <password>john</password>
+    </userIdentity>
+
+    <userIdentity>
+        <id>2</id>
+        <username>eric@example.com</username>
+        <password>eric</password>
+    </userIdentity>
+
+</userIdentitySet>

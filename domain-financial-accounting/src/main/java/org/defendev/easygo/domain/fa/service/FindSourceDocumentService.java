@@ -24,7 +24,7 @@ public class FindSourceDocumentService {
         this.sourceDocumentRepo = sourceDocumentRepo;
     }
 
-    @Transactional(readOnly = true)
+    @Transactional(transactionManager = "financialAccountingJpaTransactionManager", readOnly = true)
     public Optional<SourceDocumentFullDto> findSourceDocument(String externalId) {
         final long id;
         try {

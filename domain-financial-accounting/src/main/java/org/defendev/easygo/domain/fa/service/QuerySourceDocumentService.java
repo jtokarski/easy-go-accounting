@@ -37,7 +37,7 @@ public class QuerySourceDocumentService {
         this.sourceDocumentRepo = sourceDocumentRepo;
     }
 
-    @Transactional(readOnly = true)
+    @Transactional(transactionManager = "financialAccountingJpaTransactionManager", readOnly = true)
     public SourceDocumentCollectionResRep querySourceDocuments(SourceDocumentQuery query) {
         final Pageable pageable = (new SourceDocumentPageableSpec(query)).toPageable();
         final SourceDocumentPredicateSpec predicateSpec = new SourceDocumentPredicateSpec(query);

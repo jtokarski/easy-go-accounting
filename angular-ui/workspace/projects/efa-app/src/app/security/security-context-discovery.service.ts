@@ -1,8 +1,9 @@
 import { Injectable, InjectionToken } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { SecurityContextDto } from '@defendev/common-angular';
 import * as _ from 'lodash';
 import { Observable, timer, map, firstValueFrom, tap } from 'rxjs';
+import { OBSERVE_RESPONSE_JSON } from '@/shared/observe-response-json';
 
 
 
@@ -25,8 +26,17 @@ export class SecurityContextDiscoveryService {
   constructor(private httpClient: HttpClient) { }
 
   public discover(): Observable<SecurityContextDto> {
-    return timer(3000).pipe(
-      map((_) => ({ authentication: { principal: { username: 'anguM0ck' } } } as SecurityContextDto)),
+    const url = '/api/security-context';
+    return this.httpClient.get<SecurityContextDto>(url, OBSERVE_RESPONSE_JSON).pipe(
+      map((response: HttpResponse<SecurityContextDto>) => {
+          if (null == response.body) {
+            /*
+             * todo: handle properly...
+             */
+            return { authentication: { principal: { username: 'failedFailed' } } } as SecurityContextDto;
+          }
+          return response.body;
+      }),
       tap((dto) => this.securityContext = dto),
     );
   }

@@ -1,13 +1,23 @@
 
 easygo:
-  financialAccounting:
+  financial-accounting:
     db:
       oracle:
-        - tenantId: "T1"
+        - tenant-id: "T1"
           driver: "oracle.jdbc.OracleDriver"
           host: "localhost"
           port: 1521
-          containerName: "xepdb1"
-          appUserName: "EASYGO_T1_FA_APPU"
-          appUserPassword: "gkML0Un7y3kMw"
+          container-name: "xepdb1"
+          app-user-name: "EASYGO_T1_FA_APPU"
+          app-user-password: "gkML0Un7y3kMw"
+  user-identity:
+    db:
+      oracle:
+        - tenant-id: "T1"
+          driver: "oracle.jdbc.OracleDriver"
+          host: "localhost"
+          port: 1521
+          container-name: "xepdb1"
+          app-user-name: "EASYGO_T1_UI_APPU"
+          app-user-password: "kM0iNtrN0gtG5"
 
