@@ -5,7 +5,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 
 
-@Import({JpaConfig.class, SpringDataConfig.class})
+@Import({FinancialAccountingJpaConfig.class, SpringDataConfig.class})
 @ComponentScan(basePackages = "org.defendev.easygo.domain.fa.service")
 public class FinancialAccountingConfig {
 }

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ownershipUnitSet>
+
+    <ownershipUnit>
+        <id>101</id>
+        <name>pub</name>
+        <publicRead>true</publicRead>
+    </ownershipUnit>
+
+    <ownershipUnit>
+        <id>102</id>
+        <name>john</name>
+        <publicRead>false</publicRead>
+    </ownershipUnit>
+
+    <ownershipUnit>
+        <id>103</id>
+        <name>eric</name>
+        <publicRead>false</publicRead>
+    </ownershipUnit>
+
+</ownershipUnitSet>

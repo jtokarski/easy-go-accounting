@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Import;
 
 
 
-@Import({ JpaConfig.class, SpringDataConfig.class, PasswordEncoderConfig.class })
+@Import({ UserIdentityJpaConfig.class, SpringDataConfig.class, PasswordEncoderConfig.class })
 @ComponentScan(basePackages = "org.defendev.easygo.domain.useridentity.service")
 public class UserIdentityConfig {
 

@@ -26,6 +26,9 @@ public class SourceDocument implements HasId<Long> {
     @Id
     private Long id;
 
+    @Column(name = "ownershipUnitId", nullable = false)
+    private Long ownershipUnitId;
+
     @Column(name = "controlNumber")
     private String controlNumber;
 
@@ -44,6 +47,14 @@ public class SourceDocument implements HasId<Long> {
     @Override
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getOwnershipUnitId() {
+        return ownershipUnitId;
+    }
+
+    public void setOwnershipUnitId(Long ownershipUnitId) {
+        this.ownershipUnitId = ownershipUnitId;
     }
 
     public String getControlNumber() {

@@ -16,9 +16,7 @@ CREATE USER "${schemaNameSE}"
   DEFAULT TABLESPACE SYSTEM
   QUOTA 50M ON SYSTEM;
 
-GRANT
-  REFERENCES ("id") ON "${schemaNameUI}"."UserIdentity"
-  TO "${schemaNameSE}";
+GRANT REFERENCES ("id") ON "${schemaNameUI}"."UserIdentity" TO "${schemaNameSE}";
 
 -- Roles for accessing Stock Exchange schema
 CREATE ROLE "${schemaNameSE}_READONLY_ROLE";

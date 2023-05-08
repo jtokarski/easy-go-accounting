@@ -8,11 +8,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.defendev.common.fixture.loader.FixturesLoader;
 import org.defendev.easygo.devops.dbfixture.wrapper.UserIdentitySet;
+import org.defendev.easygo.domain.useridentity.model.OwnershipUnit;
 import org.defendev.easygo.domain.useridentity.model.UserIdentity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.io.InputStream;
 import java.util.List;
+import java.util.Set;
 
 
 
@@ -22,11 +24,15 @@ public class UserIdentityFixturesLoader extends FixturesLoader<UserIdentity, Lon
 
     private final PasswordEncoder passwordEncoder;
 
+    private final OwnershipUnitFixturesLoader ownershipUnitFixturesLoader;
+
     public UserIdentityFixturesLoader(String resourcePath, EntityManager entityManager,
-                                      PasswordEncoder passwordEncoder)
-        throws JAXBException {
+                                      PasswordEncoder passwordEncoder,
+                                      OwnershipUnitFixturesLoader ownershipUnitFixturesLoader
+        ) throws JAXBException {
         super(resourcePath, entityManager, UserIdentity.class);
         this.passwordEncoder = passwordEncoder;
+        this.ownershipUnitFixturesLoader = ownershipUnitFixturesLoader;
     }
 
     @Override
@@ -47,6 +53,12 @@ public class UserIdentityFixturesLoader extends FixturesLoader<UserIdentity, Lon
             final String hardcodedPassword = userIdentity.getPassword();
             final String encodedPassword = passwordEncoder.encode(hardcodedPassword);
             userIdentity.setPassword(encodedPassword);
+
+            final Set<OwnershipUnit> ownershipUnitsHardcoded = userIdentity.getOwnershipUnits();
+            final Set<OwnershipUnit> ownershipUnitsLoaded = ownershipUnitFixturesLoader
+                .loadSetByHardcodedIds(ownershipUnitsHardcoded);
+            userIdentity.setOwnershipUnits(ownershipUnitsLoaded);
+
             save(userIdentity);
         }
     }

@@ -1,4 +1,4 @@
-package org.defendev.easygo.domain.fa.config;
+package org.defendev.easygo.domain.useridentity.config;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
@@ -13,19 +13,20 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import javax.sql.DataSource;
 import java.util.Properties;
 
 
 @EnableTransactionManagement
-public class JpaConfig {
+public class UserIdentityJpaConfig {
 
     private static final Logger log = LogManager.getLogger();
 
     @Bean
-    public DataSource financialAccountingAppDataSource(FinancialAccountingProperties faProps) {
-        final FinancialAccountingProperties.Db.Oracle oracleProps = faProps.getDb().getOracle().get(0);
+    public DataSource userIdentityAppDataSource(UserIdentityProperties uiProps) {
+        final UserIdentityProperties.Db.Oracle oracleProps = uiProps.getDb().getOracle().get(0);
         final HikariConfig hikariConfig = new HikariConfig();
         hikariConfig.setDriverClassName(oracleProps.getDriver());
         final String jdbcUrl = String.format("jdbc:oracle:thin:@//%s:%s/%s", oracleProps.getHost(),
@@ -37,13 +38,13 @@ public class JpaConfig {
     }
 
     @Bean
-    public FactoryBean<EntityManagerFactory> financialAccountingEmfFactoryBean(
-        @Qualifier("financialAccountingAppDataSource") DataSource appDataSource
+    public FactoryBean<EntityManagerFactory> userIdentityEmfFactoryBean(
+        @Qualifier("userIdentityAppDataSource") DataSource appDataSource
     ) {
         final LocalContainerEntityManagerFactoryBean emfFactoryBean = new LocalContainerEntityManagerFactoryBean();
-        emfFactoryBean.setPersistenceUnitName("financialAccountingPersistenceUnit");
+        emfFactoryBean.setPersistenceUnitName("userIdentityPersistenceUnit");
         emfFactoryBean.setDataSource(appDataSource);
-        emfFactoryBean.setPackagesToScan("org.defendev.easygo.domain.fa.model");
+        emfFactoryBean.setPackagesToScan("org.defendev.easygo.domain.useridentity.model");
         final HibernateJpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
         emfFactoryBean.setJpaVendorAdapter(jpaVendorAdapter);
         final Properties jpaProperties = new Properties();
@@ -58,19 +59,24 @@ public class JpaConfig {
     }
 
     @Bean
-    public EntityManagerFactory financialAccountingEmf(
-        @Qualifier("financialAccountingEmfFactoryBean") FactoryBean<EntityManagerFactory> emfFactoryBean
+    public EntityManagerFactory userIdentityEmf(
+        @Qualifier("userIdentityEmfFactoryBean") FactoryBean<EntityManagerFactory> emfFactoryBean
     ) throws Exception {
         return emfFactoryBean.getObject();
     }
 
     @Bean
-    public PlatformTransactionManager financialAccountingJpaTransactionManager(
-        @Qualifier("financialAccountingEmf") EntityManagerFactory emf
+    public PlatformTransactionManager userIdentityJpaTransactionManager(
+        @Qualifier("userIdentityEmf") EntityManagerFactory emf
     ) {
         final JpaTransactionManager transactionManager = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(emf);
         return transactionManager;
     }
 
+    @Bean
+    public TransactionTemplate userIdentityTransactionTemplate(
+        @Qualifier("userIdentityJpaTransactionManager") PlatformTransactionManager transactionManager) {
+        return new TransactionTemplate(transactionManager);
+    }
 }

@@ -19,9 +19,13 @@ public class SourceDocumentFixturesLoader extends FixturesLoader<SourceDocument,
 
     private static final Logger log = LogManager.getLogger();
 
-    public SourceDocumentFixturesLoader(String resourcePath, EntityManager entityManager)
+    private final OwnershipUnitFixturesLoader ownershipUnitFixturesLoader;
+
+    public SourceDocumentFixturesLoader(String resourcePath, EntityManager entityManager,
+                                        OwnershipUnitFixturesLoader ownershipUnitFixturesLoader)
         throws JAXBException {
         super(resourcePath, entityManager, SourceDocument.class);
+        this.ownershipUnitFixturesLoader = ownershipUnitFixturesLoader;
     }
 
     @Override
@@ -39,6 +43,11 @@ public class SourceDocumentFixturesLoader extends FixturesLoader<SourceDocument,
         log.info("Parsed resource [{}] size [{}]", resourcePath, sourceDocumentList.size());
 
         for(final SourceDocument sourceDocument : sourceDocumentList) {
+            final Long ownershipUnitIdHardcoded = sourceDocument.getOwnershipUnitId();
+            final Long ownershipUnitIdHardcodedLoaded = ownershipUnitFixturesLoader
+                .getActualId(ownershipUnitIdHardcoded);
+            sourceDocument.setOwnershipUnitId(ownershipUnitIdHardcodedLoaded);
+
             save(sourceDocument);
         }
     }

@@ -5,12 +5,22 @@
         <id>1</id>
         <username>john@example.com</username>
         <password>john</password>
+        <ownershipUnits>
+            <ownershipUnit>
+                <id>102</id>
+            </ownershipUnit>
+        </ownershipUnits>
     </userIdentity>
 
     <userIdentity>
         <id>2</id>
         <username>eric@example.com</username>
         <password>eric</password>
+        <ownershipUnits>
+            <ownershipUnit>
+                <id>103</id>
+            </ownershipUnit>
+        </ownershipUnits>
     </userIdentity>
 
 </userIdentitySet>

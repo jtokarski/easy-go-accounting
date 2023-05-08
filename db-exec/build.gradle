@@ -102,10 +102,7 @@ tasks.register('oracleBaselineAndMigrate', org.gradle.api.DefaultTask) {
 
 tasks.register('loadFixtures', org.gradle.api.tasks.testing.Test) {
     useJUnitPlatform()
-    setTestNameIncludePatterns([
-      'org.defendev.easygo.devops.dbfixture.LoadFinancialAccountingFixturesTest.loadFixtures',
-      'org.defendev.easygo.devops.dbfixture.LoadUserIdentityFixturesTest.loadFixtures'
-    ])
+    setTestNameIncludePatterns(['org.defendev.easygo.devops.dbfixture.LoadEasygoFixturesTest.loadFixtures'])
     outputs.upToDateWhen { false }
 }
 

@@ -59,3 +59,33 @@ GRANT UPDATE ON "${schemaNameUI}"."UserIdentity" TO "${schemaNameUI}_UPDATE_ROLE
 GRANT DELETE ON "${schemaNameUI}"."UserIdentity" TO "${schemaNameUI}_UPDATE_ROLE";
 CREATE SYNONYM "${appUserNameUI}"."UserIdentity" FOR "${schemaNameUI}"."UserIdentity";
 
+
+CREATE TABLE "${schemaNameUI}"."OwnershipUnit" (
+  "id"           NUMBER(19, 0) GENERATED ALWAYS AS IDENTITY (NOCACHE) NOT NULL,
+  "name"         VARCHAR2(255 BYTE),
+  "publicRead"   NUMBER(1, 0) NOT NULL,
+  CONSTRAINT PK_OwnershipUnit PRIMARY KEY ("id"),
+  CONSTRAINT CHK_OwnershipUnit_1 CHECK ("publicRead" IN (0, 1))
+);
+GRANT SELECT ON "${schemaNameUI}"."OwnershipUnit" TO "${schemaNameUI}_READONLY_ROLE";
+GRANT INSERT ON "${schemaNameUI}"."OwnershipUnit" TO "${schemaNameUI}_UPDATE_ROLE";
+GRANT UPDATE ON "${schemaNameUI}"."OwnershipUnit" TO "${schemaNameUI}_UPDATE_ROLE";
+GRANT DELETE ON "${schemaNameUI}"."OwnershipUnit" TO "${schemaNameUI}_UPDATE_ROLE";
+CREATE SYNONYM "${appUserNameUI}"."OwnershipUnit" FOR "${schemaNameUI}"."OwnershipUnit";
+
+
+CREATE TABLE "${schemaNameUI}"."JoinUserIdentityOwnershipUnit" (
+  "userIdentityId" NUMBER(19, 0) NOT NULL,
+  "ownershipUnitId" NUMBER(19, 0) NOT NULL,
+  CONSTRAINT PK_JoinUserIdentityOwnershipUnit PRIMARY KEY ("userIdentityId", "ownershipUnitId"),
+  CONSTRAINT FK_JoinUserIdentityOwnershipUnit_UserIdentity_1 FOREIGN KEY ("userIdentityId")
+    REFERENCES "${schemaNameUI}"."UserIdentity" ("id"),
+  CONSTRAINT FK_JoinUserIdentityOwnershipUnit_OwnershipUnit_2 FOREIGN KEY ("ownershipUnitId")
+    REFERENCES "${schemaNameUI}"."OwnershipUnit" ("id")
+);
+GRANT SELECT ON "${schemaNameUI}"."JoinUserIdentityOwnershipUnit" TO "${schemaNameUI}_READONLY_ROLE";
+GRANT INSERT ON "${schemaNameUI}"."JoinUserIdentityOwnershipUnit" TO "${schemaNameUI}_UPDATE_ROLE";
+GRANT UPDATE ON "${schemaNameUI}"."JoinUserIdentityOwnershipUnit" TO "${schemaNameUI}_UPDATE_ROLE";
+GRANT DELETE ON "${schemaNameUI}"."JoinUserIdentityOwnershipUnit" TO "${schemaNameUI}_UPDATE_ROLE";
+CREATE SYNONYM "${appUserNameUI}"."JoinUserIdentityOwnershipUnit" FOR "${schemaNameUI}"."JoinUserIdentityOwnershipUnit";
+
