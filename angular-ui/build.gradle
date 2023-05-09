@@ -37,5 +37,8 @@ processResources {
     from('workspace/angular-dist') {
         into 'view-resources'
     }
+    from('static') {
+        into 'view-resources/static'
+    }
 }
 

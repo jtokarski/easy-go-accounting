@@ -54,6 +54,9 @@ public class WebSecurity {
 
     private static final Logger log = LogManager.getLogger();
 
+    public static final String SIGN_IN_PATH = "/sign-in";
+
+
 
     @Bean
     public AuthenticationManager globalAuthenticationManager(HttpSecurity http,

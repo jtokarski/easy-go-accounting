@@ -7,9 +7,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 
 
-@RequestMapping(path = {
-    "/"
-})
+@RequestMapping( path = { "/" } )
 @Controller
 public class EfaPageController {
 

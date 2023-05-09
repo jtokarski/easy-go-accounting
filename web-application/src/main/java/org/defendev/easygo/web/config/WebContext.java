@@ -22,7 +22,7 @@ public class WebContext implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry
             .addResourceHandler("/**")
-            .addResourceLocations("classpath:/view-resources/efa-app/")
+            .addResourceLocations("classpath:/view-resources/efa-app/", "classpath:/view-resources/static/")
             .resourceChain(false)
             .addResolver(new MultiSpaResourceResolver());
     }
