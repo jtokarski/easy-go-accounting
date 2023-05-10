@@ -56,7 +56,7 @@ public class WebSecurity {
 
     public static final String SIGN_IN_PATH = "/sign-in";
 
-
+    public static final String SIGN_OUT_PATH = "/sign-out";
 
     @Bean
     public AuthenticationManager globalAuthenticationManager(HttpSecurity http,
@@ -78,6 +78,12 @@ public class WebSecurity {
             .authorizeHttpRequests()
             .requestMatchers(AntPathRequestMatcher.antMatcher("/**")).permitAll()
             .and()
+            .formLogin().loginProcessingUrl(SIGN_IN_PATH)
+            .and()
+            .logout(logoutConfigurer -> logoutConfigurer
+                    .logoutUrl(SIGN_OUT_PATH)
+                    .logoutSuccessUrl("/")
+            )
             .csrf().disable()
             .build();
     }

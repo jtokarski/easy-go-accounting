@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
 import { isRouteActive } from '@defendev/common-angular';
+import { SecurityContextDiscoveryService } from '@/security/security-context-discovery.service';
+
 
 
 @Component({
@@ -12,8 +14,10 @@ export class AppComponent implements OnInit {
 
   public menuCollapsed: boolean = true;
 
-  public constructor(private router: Router) {
-  }
+  public constructor(
+    private router: Router,
+    public securityService: SecurityContextDiscoveryService,
+  ) { }
 
   public ngOnInit(): void {
 

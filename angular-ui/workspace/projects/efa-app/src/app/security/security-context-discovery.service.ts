@@ -23,6 +23,10 @@ export class SecurityContextDiscoveryService {
     return _.cloneDeep(this.securityContext);
   }
 
+  public get isAuthenticated(): boolean {
+    return this.securityContext.authentication.authenticated;
+  }
+
   constructor(private httpClient: HttpClient) { }
 
   public discover(): Observable<SecurityContextDto> {
