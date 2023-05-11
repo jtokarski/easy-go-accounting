@@ -7,8 +7,8 @@ dependencyResolutionManagement {
             version('oracle-jdbc-bom.version', '21.8.0.0')
             version('apache-commons-text.version', '1.10.0')
             version('flywaydb.version', '9.12.0')
-            version('defendev-common-jdk.version', '0.0.2')
-            version('defendev-common-fixtures.version', '0.0.1')
+            version('defendev-common-jdk.version', '0.0.3')
+            version('defendev-common-fixtures.version', '0.0.2')
             version('defendev-common-spring6.version', '0.0.1')
 
             library('oracleJdbcBom', 'com.oracle.database.jdbc', 'ojdbc-bom')

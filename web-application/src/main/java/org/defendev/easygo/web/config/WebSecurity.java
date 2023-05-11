@@ -3,6 +3,7 @@ package org.defendev.easygo.web.config;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 
 import org.springframework.security.web.SecurityFilterChain;
@@ -49,6 +50,7 @@ import org.springframework.security.web.util.matcher.RegexRequestMatcher;
 
 @Import({ PasswordEncoderConfig.class })
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 @Configuration
 public class WebSecurity {
 
@@ -73,10 +75,16 @@ public class WebSecurity {
 
     @Bean
     public SecurityFilterChain buildSecurityFilterChain(HttpSecurity http) throws Exception {
+
+        final LoginUrlAuthenticationEntryPoint authenticationEntryPoint = new LoginUrlAuthenticationEntryPoint(SIGN_IN_PATH);
+
         return http
             .securityMatcher(AntPathRequestMatcher.antMatcher("/**"))
             .authorizeHttpRequests()
             .requestMatchers(AntPathRequestMatcher.antMatcher("/**")).permitAll()
+            .and()
+            .exceptionHandling()
+            .authenticationEntryPoint(authenticationEntryPoint)
             .and()
             .formLogin().loginProcessingUrl(SIGN_IN_PATH)
             .and()
