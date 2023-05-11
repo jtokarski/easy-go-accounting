@@ -3,17 +3,14 @@ import { HttpClient, HttpResponse } from "@angular/common/http";
 import { Observable, Subject } from 'rxjs';
 import { IDatasource, IGetRowsParams, SortModelItem } from '@ag-grid-community/core';
 import { BaseAgDatasource, SortOrder, Filter, Query, QueryPageable, QuerySearchPhrase, QuerySort, QueryFilter,
-  ICollectionResRep, IBaseDto } from '@defendev/common-angular';
+  ICollectionResRep } from '@defendev/common-angular';
 import { OBSERVE_RESPONSE_JSON } from '@/shared/observe-response-json';
+import { SourceDocumentMinDto } from '@/shared/dto/source-document';
 
 
 export interface SourceDocumentQuery extends Query, QueryPageable, QuerySearchPhrase, QuerySort, QueryFilter {}
 
-export interface SourceDocumentMinDto extends IBaseDto {
-  controlNumber: string;
-  // ...
 
-}
 
 
 @Injectable({

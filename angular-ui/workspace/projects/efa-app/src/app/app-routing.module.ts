@@ -4,7 +4,11 @@ import { FinancialAccountingHomeComponent } from '@/pages/financial-accounting-h
 import { SourceDocumentMainComponent } from '@/pages/source-document-main/source-document-main.component';
 import { SourceDocumentHomeComponent } from '@/pages/source-document-main/source-document-home/source-document-home.component';
 import { SourceDocumentBrowseComponent } from '@/pages/source-document-main/source-document-browse/source-document-browse.component';
+import { SourceDocumentDetailsComponent } from '@/pages/source-document-main/source-document-details/source-document-details.component';
 import { SourceDocumentStatisticsComponent } from '@/pages/source-document-main/source-document-statistics/source-document-statistics.component';
+
+
+
 
 
 const routes: Routes = [
@@ -23,6 +27,10 @@ const routes: Routes = [
       {
         path: 'mgmt/browse',
         component: SourceDocumentBrowseComponent,
+      },
+      {
+        path: 'mgmt/details/:externalId',
+        component: SourceDocumentDetailsComponent,
       },
       {
         path: 'stats',

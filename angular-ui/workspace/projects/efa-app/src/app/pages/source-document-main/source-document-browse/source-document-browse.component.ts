@@ -1,22 +1,16 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subject, takeUntil, map, mergeMap, of, timer, Observable, forkJoin, startWith, distinctUntilChanged,
-  filter } from "rxjs";
 import { FormBuilder, AbstractControl, FormControl, FormGroup, ValidatorFn, ValidationErrors } from "@angular/forms";
-import { SourceDocumentAgDatasourceService, SourceDocumentMinDto } from "@/shared/datasource/source-document-ag-datasource.service";
-import {
-  GetRowIdParams,
-  GridApi,
-  GridOptions,
-  GridReadyEvent,
-  IDatasource,
-  PaginationChangedEvent
-} from "@ag-grid-community/core";
-import { GlobalLoadingService } from "@/shared/global-loading/global-loading.service";
-import { toStringNullSafe } from "@defendev/common-angular";
-
+import { Subject, takeUntil, map, mergeMap, of, timer, forkJoin, startWith, distinctUntilChanged,
+  filter } from "rxjs";
 import * as _ from 'lodash';
-
-
+import { SourceDocumentAgDatasourceService } from "@/shared/datasource/source-document-ag-datasource.service";
+import { GetRowIdParams, GridApi, GridOptions, GridReadyEvent, IDatasource, PaginationChangedEvent }
+  from "@ag-grid-community/core";
+import { toStringNullSafe } from "@defendev/common-angular";
+import { GlobalLoadingService } from "@/shared/global-loading/global-loading.service";
+import { SourceDocumentMinDto } from '@/shared/dto/source-document';
+import { SourceDocumentRowActionsComponent } from
+  '@/pages/source-document-main/source-document-browse/source-document-row-actions/source-document-row-actions.component';
 
 
 
@@ -169,8 +163,15 @@ export class SourceDocumentBrowseComponent implements OnInit, OnDestroy {
           headerName: 'Control Number',
           valueGetter: (params) => params.data?.controlNumber,
           sortable: true,
-          flex: 5,
+          flex: 10,
         },
+        {
+          colId: 'rowActions',
+          headerName: '',
+          sortable: false,
+          cellRenderer: SourceDocumentRowActionsComponent,
+          flex: 1,
+        }
       ],
       getRowId: (params: GetRowIdParams<SourceDocumentMinDto>) => (toStringNullSafe(params.data.externalId)),
       pagination: true,
