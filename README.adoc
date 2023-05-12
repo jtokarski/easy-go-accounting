@@ -89,6 +89,7 @@ $ docker compose start run-oracle-server
 ----
 First start of this container may take ~45 seconds as the database files are being initialized. Next starts should be quicker.
 
+[#installation_create_initial_schema]
 === Create initial schema
 
 From source root:
@@ -120,3 +121,26 @@ $ ./gradlew :db-exec:loadFixtures
 $ ./gradlew :web-application:bootRun
 ----
 If everything is setup correctly you should be able to access working application under http://localhost:8080/ .
+
+== Installation troubleshooting
+
+=== In case of broken database schema (SQL related errors in console)
+
+You can try dropping the schemas and recreating from scratch. There are two Gradle tasks to remove *all*
+schemas created previously. Stop application if it's running (Oracle may refuse to drop
+the schema if there is an active connection) and execute:
+
+[source,bash]
+----
+$ ./gradlew :db-exec:dropTenantSchemas :db-exec:dropEasygoSysSchema
+----
+
+// In order to create so called Cross References in AsciiDoc do:
+//   https://docs.asciidoctor.org/asciidoc/latest/blocks/assign-id/
+//   https://docs.asciidoctor.org/asciidoc/latest/macros/xref/#internal-cross-references
+//   https://stackoverflow.com/questions/58512730/links-to-sections-of-same-page-in-asciidoc
+// Similar thing could be achieved with:
+//   link:#installation_create_initial_schema[Create initial schema]
+//
+Then, repeat steps from <<installation_create_initial_schema>>.
+
