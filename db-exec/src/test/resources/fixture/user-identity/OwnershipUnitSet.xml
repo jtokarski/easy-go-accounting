@@ -4,19 +4,19 @@
     <ownershipUnit>
         <id>101</id>
         <name>pub</name>
-        <publicRead>true</publicRead>
+        <anonymousPrivilege>
+            <privilege>preview</privilege>
+        </anonymousPrivilege>
     </ownershipUnit>
 
     <ownershipUnit>
         <id>102</id>
         <name>john</name>
-        <publicRead>false</publicRead>
     </ownershipUnit>
 
     <ownershipUnit>
         <id>103</id>
         <name>eric</name>
-        <publicRead>false</publicRead>
     </ownershipUnit>
 
 </ownershipUnitSet>

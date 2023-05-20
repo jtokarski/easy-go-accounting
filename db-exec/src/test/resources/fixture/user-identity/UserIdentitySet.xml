@@ -6,9 +6,12 @@
         <username>john@example.com</username>
         <password>john</password>
         <ownershipUnits>
-            <ownershipUnit>
-                <id>102</id>
-            </ownershipUnit>
+            <joinUserIdentityOwnershipUnit>
+                <ownershipUnit>
+                    <id>102</id>
+                </ownershipUnit>
+                <privilege>own</privilege>
+            </joinUserIdentityOwnershipUnit>
         </ownershipUnits>
     </userIdentity>
 
@@ -17,9 +20,12 @@
         <username>eric@example.com</username>
         <password>eric</password>
         <ownershipUnits>
-            <ownershipUnit>
-                <id>103</id>
-            </ownershipUnit>
+            <joinUserIdentityOwnershipUnit>
+                <ownershipUnit>
+                    <id>103</id>
+                </ownershipUnit>
+                <privilege>own</privilege>
+            </joinUserIdentityOwnershipUnit>
         </ownershipUnits>
     </userIdentity>
 

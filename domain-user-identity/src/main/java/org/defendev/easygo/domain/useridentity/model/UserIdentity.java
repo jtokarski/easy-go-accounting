@@ -1,20 +1,28 @@
 package org.defendev.easygo.domain.useridentity.model;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.JoinColumn;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
-import jakarta.xml.bind.annotation.XmlElementWrapper;
 import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlElementWrapper;
 import org.defendev.common.domain.HasId;
+import org.defendev.easygo.domain.useridentity.api.Privilege;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
+
+import static org.defendev.common.stream.Streams.stream;
+
 
 
 @XmlAccessorType(value = XmlAccessType.FIELD)
@@ -34,14 +42,9 @@ public class UserIdentity implements HasId<Long> {
     private String password;
 
     @XmlElementWrapper(name = "ownershipUnits")
-    @XmlElement(name = "ownershipUnit")
-    @ManyToMany
-    @JoinTable(
-        name = "JoinUserIdentityOwnershipUnit",
-        joinColumns = @JoinColumn(name = "userIdentityId", referencedColumnName = "id"),
-        inverseJoinColumns = @JoinColumn(name = "ownershipUnitId", referencedColumnName = "id")
-    )
-    private Set<OwnershipUnit> ownershipUnits;
+    @XmlElement(name = "joinUserIdentityOwnershipUnit")
+    @OneToMany(mappedBy = "userIdentity", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<JoinUserIdentityOwnershipUnit> ownershipUnits = new ArrayList<>();
 
     @Override
     public Long getId() {
@@ -69,11 +72,19 @@ public class UserIdentity implements HasId<Long> {
         this.password = password;
     }
 
-    public Set<OwnershipUnit> getOwnershipUnits() {
+    public List<JoinUserIdentityOwnershipUnit> getOwnershipUnits() {
         return ownershipUnits;
     }
 
-    public void setOwnershipUnits(Set<OwnershipUnit> ownershipUnits) {
+    public void setOwnershipUnits(List<JoinUserIdentityOwnershipUnit> ownershipUnits) {
         this.ownershipUnits = ownershipUnits;
     }
+
+    public Map<Privilege, Set<Long>> getPrivilegeToOwnershipUnit() {
+        return stream(ownershipUnits).collect(Collectors.groupingBy(
+            JoinUserIdentityOwnershipUnit::getPrivilege,
+            Collectors.mapping(join -> join.getOwnershipUnit().getId(), Collectors.toSet())
+        ));
+    }
+
 }

@@ -32,6 +32,7 @@ dependencies {
     implementation libs.defendevCommonFixtures
 //    implementation libs.defendevCommonSpring6
 //    annotationProcessor group: 'org.hibernate.orm', name: 'hibernate-jpamodelgen'
+    implementation project(':domain-user-identity-api')
     testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test'
 }
 

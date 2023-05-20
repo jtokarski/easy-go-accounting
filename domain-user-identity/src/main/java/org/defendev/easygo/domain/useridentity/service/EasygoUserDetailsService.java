@@ -27,27 +27,12 @@ public class EasygoUserDetailsService implements UserDetailsService {
     @Autowired
     private UserIdentityRepo userIdentityRepo;
 
-    @Autowired
-    private OwnershipUnitRepo ownershipUnitRepo;
-
     @Transactional(transactionManager = "userIdentityJpaTransactionManager")
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-
         final UserIdentity userIdentity = userIdentityRepo.findByUsername(username)
             .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-
-        final Set<Long> publicReadOwnershipUnitIds = ownershipUnitRepo.findOwnershipUnitByPublicReadTrue()
-            .stream()
-            .map(OwnershipUnit::getId)
-            .collect(Collectors.toSet());
-
-        final Set<Long> ownershipUnitIds = userIdentity.getOwnershipUnits()
-            .stream()
-            .map(OwnershipUnit::getId)
-            .collect(Collectors.toSet());
-
         return new EasygoUserDetails(userIdentity.getId(), userIdentity.getUsername(), userIdentity.getPassword(),
-            ownershipUnitIds, publicReadOwnershipUnitIds);
+            userIdentity.getPrivilegeToOwnershipUnit());
     }
 }
