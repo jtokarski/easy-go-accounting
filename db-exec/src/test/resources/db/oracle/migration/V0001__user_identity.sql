@@ -46,7 +46,49 @@ ALTER USER "${roUserNameUI}" DEFAULT ROLE ALL;
 GRANT CREATE SESSION TO "${roUserNameUI}";
 
 
--- UserIdentity
+CREATE TABLE "${schemaNameUI}"."PrivilegeKey" (
+  "id"           VARCHAR2(255 BYTE),
+  CONSTRAINT PK_PrivilegeKey PRIMARY KEY ("id")
+);
+GRANT SELECT ON "${schemaNameUI}"."PrivilegeKey" TO "${schemaNameUI}_READONLY_ROLE";
+GRANT INSERT ON "${schemaNameUI}"."PrivilegeKey" TO "${schemaNameUI}_UPDATE_ROLE";
+GRANT UPDATE ON "${schemaNameUI}"."PrivilegeKey" TO "${schemaNameUI}_UPDATE_ROLE";
+GRANT DELETE ON "${schemaNameUI}"."PrivilegeKey" TO "${schemaNameUI}_UPDATE_ROLE";
+CREATE SYNONYM "${appUserNameUI}"."PrivilegeKey" FOR "${schemaNameUI}"."PrivilegeKey";
+INSERT ALL
+  INTO "${schemaNameUI}"."PrivilegeKey"("id") VALUES ('preview')
+  INTO "${schemaNameUI}"."PrivilegeKey"("id") VALUES ('read')
+  INTO "${schemaNameUI}"."PrivilegeKey"("id") VALUES ('write')
+  INTO "${schemaNameUI}"."PrivilegeKey"("id") VALUES ('own')
+  SELECT 1 FROM DUAL;
+
+
+CREATE TABLE "${schemaNameUI}"."OwnershipUnit" (
+  "id"           NUMBER(19, 0) GENERATED ALWAYS AS IDENTITY (NOCACHE) NOT NULL,
+  "name"         VARCHAR2(255 BYTE),
+  CONSTRAINT PK_OwnershipUnit PRIMARY KEY ("id")
+);
+GRANT SELECT ON "${schemaNameUI}"."OwnershipUnit" TO "${schemaNameUI}_READONLY_ROLE";
+GRANT INSERT ON "${schemaNameUI}"."OwnershipUnit" TO "${schemaNameUI}_UPDATE_ROLE";
+GRANT UPDATE ON "${schemaNameUI}"."OwnershipUnit" TO "${schemaNameUI}_UPDATE_ROLE";
+GRANT DELETE ON "${schemaNameUI}"."OwnershipUnit" TO "${schemaNameUI}_UPDATE_ROLE";
+CREATE SYNONYM "${appUserNameUI}"."OwnershipUnit" FOR "${schemaNameUI}"."OwnershipUnit";
+
+
+CREATE TABLE "${schemaNameUI}"."OwnershipUnitAnonymousPrivilege" (
+  "ownershipUnitId" NUMBER(19, 0) NOT NULL,
+  "privilegeKey" VARCHAR2(255 BYTE) NOT NULL,
+  CONSTRAINT PK_OwnershipUnitAnonymousPrivilege PRIMARY KEY ("ownershipUnitId", "privilegeKey"),
+  CONSTRAINT FK_OwnershipUnitAnonymousPrivilege_PrivilegeKey_1 FOREIGN KEY ("privilegeKey")
+    REFERENCES "${schemaNameUI}"."PrivilegeKey" ("id")
+);
+GRANT SELECT ON "${schemaNameUI}"."OwnershipUnitAnonymousPrivilege" TO "${schemaNameUI}_READONLY_ROLE";
+GRANT INSERT ON "${schemaNameUI}"."OwnershipUnitAnonymousPrivilege" TO "${schemaNameUI}_UPDATE_ROLE";
+GRANT UPDATE ON "${schemaNameUI}"."OwnershipUnitAnonymousPrivilege" TO "${schemaNameUI}_UPDATE_ROLE";
+GRANT DELETE ON "${schemaNameUI}"."OwnershipUnitAnonymousPrivilege" TO "${schemaNameUI}_UPDATE_ROLE";
+CREATE SYNONYM "${appUserNameUI}"."OwnershipUnitAnonymousPrivilege" FOR "${schemaNameUI}"."OwnershipUnitAnonymousPrivilege";
+
+
 CREATE TABLE "${schemaNameUI}"."UserIdentity" (
   "id"           NUMBER(19, 0) GENERATED ALWAYS AS IDENTITY (NOCACHE) NOT NULL,
   "username"     VARCHAR2(255 BYTE),
@@ -60,28 +102,17 @@ GRANT DELETE ON "${schemaNameUI}"."UserIdentity" TO "${schemaNameUI}_UPDATE_ROLE
 CREATE SYNONYM "${appUserNameUI}"."UserIdentity" FOR "${schemaNameUI}"."UserIdentity";
 
 
-CREATE TABLE "${schemaNameUI}"."OwnershipUnit" (
-  "id"           NUMBER(19, 0) GENERATED ALWAYS AS IDENTITY (NOCACHE) NOT NULL,
-  "name"         VARCHAR2(255 BYTE),
-  "publicRead"   NUMBER(1, 0) NOT NULL,
-  CONSTRAINT PK_OwnershipUnit PRIMARY KEY ("id"),
-  CONSTRAINT CHK_OwnershipUnit_1 CHECK ("publicRead" IN (0, 1))
-);
-GRANT SELECT ON "${schemaNameUI}"."OwnershipUnit" TO "${schemaNameUI}_READONLY_ROLE";
-GRANT INSERT ON "${schemaNameUI}"."OwnershipUnit" TO "${schemaNameUI}_UPDATE_ROLE";
-GRANT UPDATE ON "${schemaNameUI}"."OwnershipUnit" TO "${schemaNameUI}_UPDATE_ROLE";
-GRANT DELETE ON "${schemaNameUI}"."OwnershipUnit" TO "${schemaNameUI}_UPDATE_ROLE";
-CREATE SYNONYM "${appUserNameUI}"."OwnershipUnit" FOR "${schemaNameUI}"."OwnershipUnit";
-
-
 CREATE TABLE "${schemaNameUI}"."JoinUserIdentityOwnershipUnit" (
   "userIdentityId" NUMBER(19, 0) NOT NULL,
   "ownershipUnitId" NUMBER(19, 0) NOT NULL,
+  "privilege" VARCHAR2(255 BYTE) NOT NULL,
   CONSTRAINT PK_JoinUserIdentityOwnershipUnit PRIMARY KEY ("userIdentityId", "ownershipUnitId"),
   CONSTRAINT FK_JoinUserIdentityOwnershipUnit_UserIdentity_1 FOREIGN KEY ("userIdentityId")
     REFERENCES "${schemaNameUI}"."UserIdentity" ("id"),
   CONSTRAINT FK_JoinUserIdentityOwnershipUnit_OwnershipUnit_2 FOREIGN KEY ("ownershipUnitId")
-    REFERENCES "${schemaNameUI}"."OwnershipUnit" ("id")
+    REFERENCES "${schemaNameUI}"."OwnershipUnit" ("id"),
+  CONSTRAINT FK_JoinUserIdentityOwnershipUnit_PrivilegeKey_3 FOREIGN KEY ("privilege")
+    REFERENCES "${schemaNameUI}"."PrivilegeKey" ("id")
 );
 GRANT SELECT ON "${schemaNameUI}"."JoinUserIdentityOwnershipUnit" TO "${schemaNameUI}_READONLY_ROLE";
 GRANT INSERT ON "${schemaNameUI}"."JoinUserIdentityOwnershipUnit" TO "${schemaNameUI}_UPDATE_ROLE";

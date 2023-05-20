@@ -8,13 +8,16 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.defendev.common.fixture.loader.FixturesLoader;
 import org.defendev.easygo.devops.dbfixture.wrapper.UserIdentitySet;
+import org.defendev.easygo.domain.useridentity.model.JoinUserIdentityOwnershipUnit;
 import org.defendev.easygo.domain.useridentity.model.OwnershipUnit;
 import org.defendev.easygo.domain.useridentity.model.UserIdentity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
+
+import static java.util.Objects.nonNull;
 
 
 
@@ -54,10 +57,19 @@ public class UserIdentityFixturesLoader extends FixturesLoader<UserIdentity, Lon
             final String encodedPassword = passwordEncoder.encode(hardcodedPassword);
             userIdentity.setPassword(encodedPassword);
 
-            final Set<OwnershipUnit> ownershipUnitsHardcoded = userIdentity.getOwnershipUnits();
-            final Set<OwnershipUnit> ownershipUnitsLoaded = ownershipUnitFixturesLoader
-                .loadSetByHardcodedIds(ownershipUnitsHardcoded);
-            userIdentity.setOwnershipUnits(ownershipUnitsLoaded);
+            final List<JoinUserIdentityOwnershipUnit> ownershipUnitsHardcoded = userIdentity.getOwnershipUnits();
+            if (nonNull(ownershipUnitsHardcoded)) {
+                final List<JoinUserIdentityOwnershipUnit> ownershipUnitsLoaded = new ArrayList<>();
+                for (final JoinUserIdentityOwnershipUnit join : ownershipUnitsHardcoded) {
+                    final Long hardcodedOwnershipUnitId = join.getOwnershipUnit().getId();
+                    final OwnershipUnit ownershipUnitLoaded = ownershipUnitFixturesLoader
+                        .loadOneByHardcodedId(hardcodedOwnershipUnitId);
+                    join.setUserIdentity(userIdentity);
+                    join.setOwnershipUnit(ownershipUnitLoaded);
+                    ownershipUnitsLoaded.add(join);
+                }
+                userIdentity.setOwnershipUnits(ownershipUnitsLoaded);
+            }
 
             save(userIdentity);
         }
