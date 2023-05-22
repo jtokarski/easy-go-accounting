@@ -33,6 +33,7 @@ dependencies {
     testImplementation libs.flywaydb
     testImplementation libs.defendevCommonJdk
     testImplementation libs.defendevCommonFixtures
+    testImplementation project(':domain-user-identity-api')
     testImplementation project(':domain-user-identity')
     testImplementation project(':domain-financial-accounting')
 }

@@ -1,21 +1,25 @@
 package org.defendev.easygo.domain.fa.service.query;
 
-import java.util.List;
-import static java.util.Objects.nonNull;
-
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.defendev.common.domain.query.Query;
 import org.defendev.common.domain.query.QueryFilter;
+import org.defendev.common.domain.query.QueryOwnedBy;
 import org.defendev.common.domain.query.QueryPageable;
 import org.defendev.common.domain.query.QuerySearchPhrase;
 import org.defendev.common.domain.query.QuerySort;
 import org.defendev.common.domain.query.filter.Filter;
 import org.defendev.common.domain.query.sort.SortOrder;
 
+import java.util.List;
+import java.util.Set;
+
+import static java.util.Objects.nonNull;
 
 
-public class SourceDocumentQuery extends Query implements QueryPageable, QuerySearchPhrase, QueryFilter, QuerySort {
+
+public class SourceDocumentQuery extends Query
+    implements QueryPageable, QuerySearchPhrase, QueryFilter, QuerySort, QueryOwnedBy {
 
     private final int pageNumber;
 
@@ -27,13 +31,21 @@ public class SourceDocumentQuery extends Query implements QueryPageable, QuerySe
 
     private final Filter filter;
 
+    private final boolean resolveOwnershipUnitsForRequestingUser;
+
+    private final Set<String> ownershipUnitExternalIds;
+
+    private final Set<Long> ownershipUnitIds;
+
     @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
     public SourceDocumentQuery(
         @JsonProperty("pageNumber") Integer pageNumber,
         @JsonProperty("pageSize") Integer pageSize,
         @JsonProperty("searchPhrase") String searchPhrase,
         @JsonProperty("sortOrders") List<SortOrder> sortOrders,
-        @JsonProperty("filter") Filter filter
+        @JsonProperty("filter") Filter filter,
+        @JsonProperty("resolveOwnershipUnitsForRequestingUser") boolean resolveOwnershipUnitsForRequestingUser,
+        @JsonProperty("ownershipUnitExternalIds") Set<String> ownershipUnitExternalIds
     ) {
         if (nonNull(pageNumber) && nonNull(pageSize)) {
             this.pageNumber = pageNumber;
@@ -45,6 +57,22 @@ public class SourceDocumentQuery extends Query implements QueryPageable, QuerySe
         this.searchPhrase = searchPhrase;
         this.sortOrders = sortOrders;
         this.filter = filter;
+        this.resolveOwnershipUnitsForRequestingUser = resolveOwnershipUnitsForRequestingUser;
+        this.ownershipUnitExternalIds = ownershipUnitExternalIds;
+        this.ownershipUnitIds = Set.of();
+    }
+
+    private SourceDocumentQuery(int pageNumber, int pageSize, String searchPhrase, List<SortOrder> sortOrders,
+                                Filter filter, boolean resolveOwnershipUnitsForRequestingUser,
+                                Set<String> ownershipUnitExternalIds, Set<Long> ownershipUnitIds) {
+        this.pageNumber = pageNumber;
+        this.pageSize = pageSize;
+        this.searchPhrase = searchPhrase;
+        this.sortOrders = sortOrders;
+        this.filter = filter;
+        this.resolveOwnershipUnitsForRequestingUser = resolveOwnershipUnitsForRequestingUser;
+        this.ownershipUnitExternalIds = ownershipUnitExternalIds;
+        this.ownershipUnitIds = ownershipUnitIds;
     }
 
     @Override
@@ -70,5 +98,24 @@ public class SourceDocumentQuery extends Query implements QueryPageable, QuerySe
     @Override
     public Filter getFilter() {
         return filter;
+    }
+
+    @Override
+    public boolean getResolveOwnershipUnitsForRequestingUser() {
+        return resolveOwnershipUnitsForRequestingUser;
+    }
+
+    @Override
+    public Set<String> getOwnershipUnitExternalIds() {
+        return ownershipUnitExternalIds;
+    }
+
+    public Set<Long> getOwnershipUnitIds() {
+        return ownershipUnitIds;
+    }
+
+    public SourceDocumentQuery withOwnershipUnitIds(Set<Long> ownershipUnitIds) {
+        return new SourceDocumentQuery(pageNumber, pageSize, searchPhrase, sortOrders, filter,
+                resolveOwnershipUnitsForRequestingUser, ownershipUnitExternalIds, ownershipUnitIds);
     }
 }

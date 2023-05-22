@@ -3,12 +3,13 @@ import { HttpClient, HttpResponse } from "@angular/common/http";
 import { Observable, Subject } from 'rxjs';
 import { IDatasource, IGetRowsParams, SortModelItem } from '@ag-grid-community/core';
 import { BaseAgDatasource, SortOrder, Filter, Query, QueryPageable, QuerySearchPhrase, QuerySort, QueryFilter,
-  ICollectionResRep } from '@defendev/common-angular';
+  QueryOwnedBy, ICollectionResRep } from '@defendev/common-angular';
 import { OBSERVE_RESPONSE_JSON } from '@/shared/observe-response-json';
 import { SourceDocumentMinDto } from '@/shared/dto/source-document';
 
 
-export interface SourceDocumentQuery extends Query, QueryPageable, QuerySearchPhrase, QuerySort, QueryFilter {}
+export interface SourceDocumentQuery extends Query, QueryPageable, QuerySearchPhrase, QuerySort, QueryFilter,
+  QueryOwnedBy {}
 
 
 
@@ -61,6 +62,7 @@ export class SourceDocumentAgDatasourceService extends BaseAgDatasource implemen
       pageSize: pageSize,
       sortOrders: sortOrders,
       filter: filter,
+      resolveOwnershipUnitsForRequestingUser: true,
     } as SourceDocumentQuery;
 
     const rows$: Observable<HttpResponse<ICollectionResRep<SourceDocumentMinDto>>> = this.httpClient

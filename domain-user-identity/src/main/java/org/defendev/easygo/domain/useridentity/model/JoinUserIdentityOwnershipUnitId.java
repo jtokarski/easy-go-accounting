@@ -17,6 +17,8 @@ public class JoinUserIdentityOwnershipUnitId implements Serializable {
     @Column(name = "ownershipUnitId")
     private Long ownershipUnitId;
 
+    public JoinUserIdentityOwnershipUnitId() { }
+
     public JoinUserIdentityOwnershipUnitId(Long userIdentityId, Long ownershipUnitId) {
         this.userIdentityId = userIdentityId;
         this.ownershipUnitId = ownershipUnitId;
