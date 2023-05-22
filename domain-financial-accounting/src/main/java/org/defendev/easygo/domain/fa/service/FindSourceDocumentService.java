@@ -5,10 +5,10 @@ import org.apache.logging.log4j.Logger;
 import org.defendev.easygo.domain.fa.model.SourceDocument;
 import org.defendev.easygo.domain.fa.repository.SourceDocumentRepo;
 import org.defendev.easygo.domain.fa.service.dto.SourceDocumentFullDto;
-import org.defendev.easygo.domain.useridentity.service.ExtractLoggedInUserService;
-import org.defendev.easygo.domain.useridentity.service.dto.EasygoUserDetails;
+import org.defendev.easygo.domain.useridentity.api.CheckObjectPrivilegeQuery;
+import org.defendev.easygo.domain.useridentity.api.ICheckObjectPrivilegeService;
+import org.defendev.easygo.domain.useridentity.api.Privilege;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,13 +26,13 @@ public class FindSourceDocumentService {
 
     private final SourceDocumentRepo sourceDocumentRepo;
 
-    private final ExtractLoggedInUserService extractLoggedInUserService;
+    private final ICheckObjectPrivilegeService checkObjectReadPrivilegeService;
 
     @Autowired
     public FindSourceDocumentService(SourceDocumentRepo sourceDocumentRepo,
-                                     ExtractLoggedInUserService extractLoggedInUserService) {
+                                     ICheckObjectPrivilegeService checkObjectReadPrivilegeService) {
         this.sourceDocumentRepo = sourceDocumentRepo;
-        this.extractLoggedInUserService = extractLoggedInUserService;
+        this.checkObjectReadPrivilegeService = checkObjectReadPrivilegeService;
     }
 
     @Transactional(transactionManager = "financialAccountingJpaTransactionManager", readOnly = true)
@@ -47,12 +47,7 @@ public class FindSourceDocumentService {
         final Optional<SourceDocument> sourceDocumentOptional = sourceDocumentRepo.findById(id);
 
         sourceDocumentOptional.ifPresent(sourceDocument -> {
-            final Long ownershipUnitId = sourceDocument.getOwnershipUnitId();
-            final EasygoUserDetails loggedInUser = extractLoggedInUserService.extract();
-            if (!loggedInUser.getOwnershipUnitIds().contains(ownershipUnitId) &&
-                !loggedInUser.getReadOnlyOwnershipUnitIds().contains(ownershipUnitId)) {
-                throw new AccessDeniedException("Not authorized to view this document");
-            }
+            checkObjectReadPrivilegeService.check(new CheckObjectPrivilegeQuery(Privilege.read, sourceDocument));
         });
 
         return sourceDocumentOptional.map(this::mapToFullDto);

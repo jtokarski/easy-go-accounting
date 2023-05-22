@@ -11,6 +11,9 @@ import org.defendev.easygo.domain.fa.model.SourceDocument_;
 import org.defendev.easygo.domain.fa.service.query.SourceDocumentQuery;
 import org.springframework.data.jpa.domain.Specification;
 
+import java.util.Set;
+
+import static java.util.Objects.isNull;
 import static org.defendev.common.stream.Streams.stream;
 
 
@@ -27,6 +30,12 @@ public class SourceDocumentPredicateSpec implements Specification<SourceDocument
     public Predicate toPredicate(Root<SourceDocument> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
 
         Predicate predicate = criteriaBuilder.conjunction();
+
+        final Set<Long> ownershipUnitIds = query.getOwnershipUnitIds();
+        if (isNull(ownershipUnitIds)) {
+            throw new IllegalStateException("Ownership Unit Ids have to be specified");
+        }
+        predicate = criteriaBuilder.and(predicate, root.get(SourceDocument_.ownershipUnitId).in(ownershipUnitIds));
 
         final String searchPhrase = query.getSearchPhrase();
         if (StringUtils.isNotBlank(searchPhrase)) {

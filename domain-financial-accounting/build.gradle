@@ -43,5 +43,12 @@ test {
     useJUnitPlatform()
 }
 
-
+/*
+ * The sourceSets configuration is necessary for IntelliJ IDEA to correctly recognize the classes generated
+ * by JPA-Modelgen. This is probably a bug in IntelliJ (Gradle build from CLI works fine),
+ * so consider REMOVING it in the future. See:
+ *   - https://stackoverflow.com/questions/54218556/how-to-generate-jpa-metamodel-with-gradle-5-x
+ *   - https://stackoverflow.com/questions/49830187/how-to-use-jpa-metamodel-with-gradle-intellij-idea/53651319#53651319
+ */
+sourceSets.main.java.srcDirs += "${buildDir}/generated"
 
