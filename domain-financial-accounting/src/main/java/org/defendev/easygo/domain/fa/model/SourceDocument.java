@@ -10,8 +10,8 @@ import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.defendev.common.domain.HasId;
+import org.defendev.common.domain.useridentity.IOwnedBy;
 import org.defendev.common.xml.bind.LocalDateTimeXmlAdapter;
-import org.defendev.easygo.domain.useridentity.api.IOwnedBy;
 
 import java.time.LocalDateTime;
 
@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 @XmlAccessorType(value = XmlAccessType.FIELD)
 @Table(name = "SourceDocument")
 @Entity
-public class SourceDocument implements HasId<Long>, IOwnedBy {
+public class SourceDocument implements HasId<Long>, IOwnedBy<Long> {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
