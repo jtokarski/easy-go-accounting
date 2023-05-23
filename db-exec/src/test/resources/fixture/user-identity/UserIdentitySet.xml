@@ -12,6 +12,12 @@
                 </ownershipUnit>
                 <privilege>own</privilege>
             </joinUserIdentityOwnershipUnit>
+            <joinUserIdentityOwnershipUnit>
+                <ownershipUnit>
+                    <id>101</id>
+                </ownershipUnit>
+                <privilege>read</privilege>
+            </joinUserIdentityOwnershipUnit>
         </ownershipUnits>
     </userIdentity>
 
@@ -25,6 +31,12 @@
                     <id>103</id>
                 </ownershipUnit>
                 <privilege>own</privilege>
+            </joinUserIdentityOwnershipUnit>
+            <joinUserIdentityOwnershipUnit>
+                <ownershipUnit>
+                    <id>101</id>
+                </ownershipUnit>
+                <privilege>read</privilege>
             </joinUserIdentityOwnershipUnit>
         </ownershipUnits>
     </userIdentity>
