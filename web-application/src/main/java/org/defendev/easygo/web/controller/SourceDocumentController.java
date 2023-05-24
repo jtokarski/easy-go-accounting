@@ -8,7 +8,6 @@ import org.defendev.easygo.domain.fa.service.dto.SourceDocumentCollectionResRep;
 import org.defendev.easygo.domain.fa.service.dto.SourceDocumentFullDto;
 import org.defendev.easygo.domain.fa.service.query.SourceDocumentQuery;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -42,7 +41,6 @@ public class SourceDocumentController extends ApiBaseController {
         this.querySourceDocumentService = querySourceDocumentService;
     }
 
-    @PreAuthorize("isFullyAuthenticated()")
     @RequestMapping(path = SOURCE_DOCUMENT_PATH, method = RequestMethod.GET)
     public ResponseEntity<SourceDocumentFullDto> findSourceDocument(@PathVariable String externalId) {
         final Optional<SourceDocumentFullDto> sourceDocumentOptional = findSourceDocumentService

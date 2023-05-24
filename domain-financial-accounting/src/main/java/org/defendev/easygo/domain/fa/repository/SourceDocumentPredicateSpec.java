@@ -31,12 +31,6 @@ public class SourceDocumentPredicateSpec implements Specification<SourceDocument
 
         Predicate predicate = criteriaBuilder.conjunction();
 
-        final Set<Long> ownershipUnitIds = query.getOwnershipUnitIds();
-        if (isNull(ownershipUnitIds)) {
-            throw new IllegalStateException("Ownership Unit Ids have to be specified");
-        }
-        predicate = criteriaBuilder.and(predicate, root.get(SourceDocument_.ownershipUnitId).in(ownershipUnitIds));
-
         final String searchPhrase = query.getSearchPhrase();
         if (StringUtils.isNotBlank(searchPhrase)) {
             final String searchPhraseLower = "%" + searchPhrase.toLowerCase() + "%";

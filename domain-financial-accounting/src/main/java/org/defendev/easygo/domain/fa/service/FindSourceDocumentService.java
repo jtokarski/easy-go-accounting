@@ -5,9 +5,6 @@ import org.apache.logging.log4j.Logger;
 import org.defendev.easygo.domain.fa.model.SourceDocument;
 import org.defendev.easygo.domain.fa.repository.SourceDocumentRepo;
 import org.defendev.easygo.domain.fa.service.dto.SourceDocumentFullDto;
-import org.defendev.easygo.domain.useridentity.api.CheckObjectPrivilegeQuery;
-import org.defendev.easygo.domain.useridentity.api.ICheckObjectPrivilegeService;
-import org.defendev.easygo.domain.useridentity.api.Privilege;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,13 +23,9 @@ public class FindSourceDocumentService {
 
     private final SourceDocumentRepo sourceDocumentRepo;
 
-    private final ICheckObjectPrivilegeService checkObjectReadPrivilegeService;
-
     @Autowired
-    public FindSourceDocumentService(SourceDocumentRepo sourceDocumentRepo,
-                                     ICheckObjectPrivilegeService checkObjectReadPrivilegeService) {
+    public FindSourceDocumentService(SourceDocumentRepo sourceDocumentRepo) {
         this.sourceDocumentRepo = sourceDocumentRepo;
-        this.checkObjectReadPrivilegeService = checkObjectReadPrivilegeService;
     }
 
     @Transactional(transactionManager = "financialAccountingJpaTransactionManager", readOnly = true)
@@ -45,10 +38,6 @@ public class FindSourceDocumentService {
             return Optional.empty();
         }
         final Optional<SourceDocument> sourceDocumentOptional = sourceDocumentRepo.findById(id);
-
-        sourceDocumentOptional.ifPresent(sourceDocument -> {
-            checkObjectReadPrivilegeService.check(new CheckObjectPrivilegeQuery(Privilege.read, sourceDocument));
-        });
 
         return sourceDocumentOptional.map(this::mapToFullDto);
     }

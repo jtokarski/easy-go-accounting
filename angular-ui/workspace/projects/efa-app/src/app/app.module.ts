@@ -50,14 +50,6 @@ ModuleRegistry.registerModules([
     AgGridModule,
     SharedModule,
   ],
-  providers: [
-    {
-      provide: APP_INITIALIZER,
-      useFactory: discoverSecurityContextFactory,
-      deps: [SecurityContextDiscoveryService],
-      multi: true,
-    }
-  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
