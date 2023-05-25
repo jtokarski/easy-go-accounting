@@ -1,0 +1,62 @@
+= Workshop 2023-05-25: Standalone Security
+
+== Step 1
+
+Starting branch `workshop_1_0` - not secured application.
+Let's refresh the database:
+
+[source,bash]
+----
+$ ./gradlew :db-exec:dropTenantSchemas :db-exec:dropEasygoSysSchema
+$ ./gradlew :db-exec:createEasygoSysSchema :db-exec:oracleBaselineAndMigrate :db-exec:loadFixtures
+----
+
+Run the application - see, everything is unprotected.
+
+== Step 2
+
+Branch `workshop_1_1` - security setup from Spring Boot starter.
+
+Static resources accessible, API endpoints protected (302 redirects).
+
+== Step 3
+
+Branch `workshop_1_2` - form-based authentication, in-memory authentication provider. There will be one user *user* with auto-generated password printed in console at application startup.
+
+* breakpoint `org.defendev.easygo.web.controller.SecurityContextController.getSecurityContext()`
+* breakpoint `org.springframework.security.authentication.ProviderManager.authenticate()` - note the `InMemoryUserDetailsManager`
+* breakpoint `org.springframework.security.web.FilterChainProxy.doFilter()` - see the list of `SecurityFilterChain` (exactly the same interface as in our `WebSecurity` builder!). Note the *ordered* list of filters inside.
+* breakpoint `org.springframework.security.core.context.ThreadLocalSecurityContextHolderStrategy.setDeferredContext()` - at *early* stage of filter chain (being `SecurityContextHolderFilter`), the strategy for obtaining authentication is determined. But it's set up as "_deferred_" Supplier
+* breakpoint `org.springframework.security.web.authentication.AnonymousAuthenticationFilter.defaultWithAnonymous()` - a *late* stage of filter chain (being `AnonymousAuthenticationFilter`) the authentication is being "_defaulted with anonymous_", i.e. setting principal to `anonymousUser` if on previous stages of filter chain *neither*
++
+** getting authentication from session *nor*
+** commencing authentication with username/password
++
+was successful
+* breakpoint `org.springframework.security.web.context.HttpSessionSecurityContextRepository.readSecurityContextFromSession()` - exact place where Spring Security tries to read current authentication from session.
+
+== Step 4
+
+Branch `workshop_1_3` DAO-based (SQL database) authentication.
+
+Now we are adding integration with SQL user store. IAM modelled with JPA.
+
+* breakpoint `org.springframework.security.authentication.ProviderManager.authenticate()` - note the `EasygoUserDetailsService` (our implementation)
+
+== Step 5
+
+Branch `workshop_1_4` - various ways to authorize requests, like
+
+* `@PreAuthorize` annotation ("_methos security_")
+* throwing `AccessDeniedException` in our code
+* just filtering data by principal
+
+Can observe when `AccessDeniedException` is thrown:
+
+* breakpoint `org.springframework.security.web.access.ExceptionTranslationFilter#doFilter()` - the `ExceptionTranslationFilter` is the central place for decision making in Spring Security
+* breakpoint `org.springframework.security.web.access.ExceptionTranslationFilter#handleAccessDeniedException`
+* `org.springframework.security.web.access.AccessDeniedHandlerImpl#handle`
+
+
+
+
