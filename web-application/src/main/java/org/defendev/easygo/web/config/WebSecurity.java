@@ -20,7 +20,9 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 
 
+@Import({ PasswordEncoderConfig.class })
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 @Configuration
 public class WebSecurity {
 
