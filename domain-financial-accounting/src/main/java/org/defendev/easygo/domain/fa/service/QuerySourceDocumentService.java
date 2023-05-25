@@ -11,6 +11,9 @@ import org.defendev.easygo.domain.fa.repository.SourceDocumentRepo;
 import org.defendev.easygo.domain.fa.service.dto.SourceDocumentCollectionResRep;
 import org.defendev.easygo.domain.fa.service.dto.SourceDocumentMinDto;
 import org.defendev.easygo.domain.fa.service.query.SourceDocumentQuery;
+import org.defendev.easygo.domain.useridentity.api.IQueryOwnershipUnitIdsWithPrivilegeService;
+import org.defendev.easygo.domain.useridentity.api.OwnershipUnitIdsWithPrivilegeQuery;
+import org.defendev.easygo.domain.useridentity.api.Privilege;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -32,10 +35,13 @@ public class QuerySourceDocumentService {
 
     private final SourceDocumentRepo sourceDocumentRepo;
 
+    private final IQueryOwnershipUnitIdsWithPrivilegeService privilegeService;
 
     @Autowired
-    public QuerySourceDocumentService(SourceDocumentRepo sourceDocumentRepo) {
+    public QuerySourceDocumentService(SourceDocumentRepo sourceDocumentRepo,
+                                      IQueryOwnershipUnitIdsWithPrivilegeService privilegeService) {
         this.sourceDocumentRepo = sourceDocumentRepo;
+        this.privilegeService = privilegeService;
     }
 
     @Transactional(transactionManager = "financialAccountingJpaTransactionManager", readOnly = true)
@@ -44,8 +50,11 @@ public class QuerySourceDocumentService {
             throw new UnsupportedOperationException("Not implemented");
         }
 
-        final Pageable pageable = (new SourceDocumentPageableSpec(query)).toPageable();
-        final SourceDocumentPredicateSpec predicateSpec = new SourceDocumentPredicateSpec(query);
+        final SourceDocumentQuery queryWithOwnership = query.withOwnershipUnitIds(
+                privilegeService.query(new OwnershipUnitIdsWithPrivilegeQuery(Privilege.preview)));
+
+        final Pageable pageable = (new SourceDocumentPageableSpec(queryWithOwnership)).toPageable();
+        final SourceDocumentPredicateSpec predicateSpec = new SourceDocumentPredicateSpec(queryWithOwnership);
         final Page<SourceDocument> sourceDocumentsPage = sourceDocumentRepo.findAll(predicateSpec, pageable);
         return mapToCollectionResRep(pageable, sourceDocumentsPage);
     }

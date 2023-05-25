@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import java.util.Optional;
 
@@ -41,6 +42,7 @@ public class SourceDocumentController extends ApiBaseController {
         this.querySourceDocumentService = querySourceDocumentService;
     }
 
+    @PreAuthorize("isFullyAuthenticated()")
     @RequestMapping(path = SOURCE_DOCUMENT_PATH, method = RequestMethod.GET)
     public ResponseEntity<SourceDocumentFullDto> findSourceDocument(@PathVariable String externalId) {
         final Optional<SourceDocumentFullDto> sourceDocumentOptional = findSourceDocumentService
