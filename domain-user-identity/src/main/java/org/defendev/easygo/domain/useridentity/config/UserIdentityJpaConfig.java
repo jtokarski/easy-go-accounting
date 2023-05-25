@@ -51,8 +51,8 @@ public class UserIdentityJpaConfig {
         jpaProperties.put("hibernate.dialect", "org.hibernate.dialect.Oracle12cDialect");
         jpaProperties.put("hibernate.hbm2ddl.auto", "none");
         jpaProperties.put("hibernate.globally_quoted_identifiers", Boolean.TRUE);
-        jpaProperties.put("hibernate.show_sql", Boolean.FALSE);
-        jpaProperties.put("hibernate.format_sql", Boolean.FALSE);
+        jpaProperties.put("hibernate.show_sql", Boolean.TRUE);
+        jpaProperties.put("hibernate.format_sql", Boolean.TRUE);
         jpaProperties.put("hibernate.use_sql_comments", Boolean.FALSE);
         emfFactoryBean.setJpaProperties(jpaProperties);
         return emfFactoryBean;
