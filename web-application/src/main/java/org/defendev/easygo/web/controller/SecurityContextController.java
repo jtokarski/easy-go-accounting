@@ -5,6 +5,7 @@ import org.apache.logging.log4j.Logger;
 import org.defendev.common.domain.useridentity.service.api.IDiscloseSecurityContextService;
 import org.defendev.common.domain.useridentity.service.dto.ISecurityContextDto;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,8 +24,14 @@ public class SecurityContextController extends ApiBaseController {
     }
 
     @RequestMapping(path = {"security-context"}, method = RequestMethod.GET)
-    public ResponseEntity<ISecurityContextDto> getSecurityContext() {
-        return ResponseEntity.ok(discloseSecurityContextService.getSecurityContext());
+    public ResponseEntity<ISecurityContextDto> getSecurityContext(CsrfToken csrfToken) {
+        /*
+         * The way of passing CSRF token to client application inspired by:
+         *   https://docs.spring.io/spring-security/reference/servlet/exploits/csrf.html#csrf-integration-javascript-other
+         */
+        return ResponseEntity.ok()
+            .header(csrfToken.getHeaderName(), csrfToken.getToken())
+            .body(discloseSecurityContextService.getSecurityContext());
     }
 
 }

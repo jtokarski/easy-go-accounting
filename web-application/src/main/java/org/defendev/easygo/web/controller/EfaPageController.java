@@ -14,7 +14,7 @@ public class EfaPageController {
     @RequestMapping(path = {""}, method = RequestMethod.GET)
     public ModelAndView efaPage() {
         final ModelAndView mav = new ModelAndView();
-        mav.setViewName("/index.html");
+        mav.setViewName("efa-app.index.html");
         return mav;
     }
 

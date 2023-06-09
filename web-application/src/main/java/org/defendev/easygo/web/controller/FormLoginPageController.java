@@ -19,7 +19,7 @@ public class FormLoginPageController {
     @RequestMapping(path = WebSecurity.SIGN_IN_PATH, method = RequestMethod.GET)
     public ModelAndView loginPage() {
         final ModelAndView mav = new ModelAndView();
-        mav.setViewName("/loginPage.html");
+        mav.setViewName("static/loginPage.th.html");
         return mav;
     }
 

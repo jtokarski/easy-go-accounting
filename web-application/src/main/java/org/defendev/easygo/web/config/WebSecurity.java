@@ -6,6 +6,7 @@ import org.defendev.easygo.domain.useridentity.config.PasswordEncoderConfig;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -63,10 +64,9 @@ public class WebSecurity {
             .formLogin().loginProcessingUrl(SIGN_IN_PATH)
             .and()
             .logout(logoutConfigurer -> logoutConfigurer
-                    .logoutUrl(SIGN_OUT_PATH)
-                    .logoutSuccessUrl("/")
-            )
-            .csrf().disable()
+                .logoutRequestMatcher(AntPathRequestMatcher.antMatcher(HttpMethod.GET, SIGN_OUT_PATH))
+                .logoutSuccessUrl("/")
+            ).csrf().ignoringRequestMatchers("/**").and()
             .build();
     }
 

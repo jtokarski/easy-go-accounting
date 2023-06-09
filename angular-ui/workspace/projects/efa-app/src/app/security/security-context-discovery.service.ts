@@ -6,6 +6,7 @@ import { Observable, timer, map, firstValueFrom, tap } from 'rxjs';
 import { OBSERVE_RESPONSE_JSON } from '@/shared/observe-response-json';
 
 
+export const X_CSRF_TOKEN = 'X-CSRF-TOKEN';
 
 export function discoverSecurityContextFactory(service: SecurityContextDiscoveryService) {
   return () => firstValueFrom(service.discover());
@@ -17,31 +18,39 @@ export function discoverSecurityContextFactory(service: SecurityContextDiscovery
 })
 export class SecurityContextDiscoveryService {
 
-  private securityContext!: SecurityContextDto;
+  private _securityContext!: SecurityContextDto;
+
+  private _csrfToken!: string;
 
   public get context(): SecurityContextDto {
-    return _.cloneDeep(this.securityContext);
+    return _.cloneDeep(this._securityContext);
   }
 
   public get isAuthenticated(): boolean {
-    return this.securityContext.authentication.authenticated;
+    return this._securityContext.authentication.authenticated;
+  }
+
+  public get csrfToken(): string {
+    return this._csrfToken;
   }
 
   constructor(private httpClient: HttpClient) { }
 
-  public discover(): Observable<SecurityContextDto> {
+  public discover(): Observable<void> {
     const url = '/api/security-context';
     return this.httpClient.get<SecurityContextDto>(url, OBSERVE_RESPONSE_JSON).pipe(
-      map((response: HttpResponse<SecurityContextDto>) => {
+      tap((response: HttpResponse<SecurityContextDto>) => {
           if (null == response.body) {
             /*
              * todo: handle properly...
              */
             return { authentication: { principal: { username: 'failedFailed' } } } as SecurityContextDto;
           }
-          return response.body;
+        this._csrfToken = response.headers.get(X_CSRF_TOKEN) || '';
+        this._securityContext = response.body;
+        return response;
       }),
-      tap((dto) => this.securityContext = dto),
+      map(_ => {}),
     );
   }
 

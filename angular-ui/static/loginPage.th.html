@@ -20,6 +20,7 @@
               <label for="password" class="form-label">Password</label>
               <input type="password" name="password" class="form-control" id="password" />
             </div>
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
             <div class="mt-5">
               <button type="submit" class="btn btn-primary d-block w-100">Sign In</button>
             </div>
