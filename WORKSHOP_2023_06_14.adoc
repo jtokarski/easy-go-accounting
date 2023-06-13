@@ -1,0 +1,15 @@
+= Workshop 2023-06-14: Web Security with OAuth2/OpenId Connect
+
+== Assumptions
+
+OAuth2 is a robust standard that covers variety of different usage scenarios. This *is not* out goal to explore all of them. Also, this is not our goal to adopt all features available in OAuth2/OpenId Connect. Instead, we will be working on the following specific scenario:
+
+* incorporate *Authorization Code Flow* (grant type), which is most common for Web applications
+* using Azure Active Directory as Authorization Server
+* our Java application will be acting as Confidential Client. For that it will be registered in Azure
+* neither *access token* nor *ID token* will be exposed outside the Java application. The Frontend (Angular) application will rely on session maintained by `JSESSIONID`
+* authentication is the only thing that we want to take from OAuth2/OIDC. We will not be implementing *Resource Server* endpoints in our application.
+
+
+
+== Step 1
