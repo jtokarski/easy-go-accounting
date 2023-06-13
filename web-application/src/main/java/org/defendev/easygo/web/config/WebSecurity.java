@@ -15,11 +15,15 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.client.registration.ClientRegistration;
+import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
+import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
+import org.springframework.security.oauth2.core.AuthorizationGrantType;
+import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
+import org.springframework.security.oauth2.core.oidc.IdTokenClaimNames;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-
-
 
 
 
@@ -34,6 +38,8 @@ public class WebSecurity {
     public static final String SIGN_IN_PATH = "/sign-in";
 
     public static final String SIGN_OUT_PATH = "/sign-out";
+
+    public static final String OAUTH2_REGISTRATION_ID_AZURE = "azure";
 
     @Bean
     public AuthenticationManager globalAuthenticationManager(HttpSecurity http,
@@ -63,12 +69,33 @@ public class WebSecurity {
             .and()
             .formLogin().loginProcessingUrl(SIGN_IN_PATH)
             .and()
-            .logout(logoutConfigurer -> logoutConfigurer
+            .oauth2Login()
+            .and()
+            .logout()
                 .logoutRequestMatcher(AntPathRequestMatcher.antMatcher(HttpMethod.GET, SIGN_OUT_PATH))
                 .logoutSuccessUrl("/")
-            ).csrf().ignoringRequestMatchers("/**").and()
+            .and()
+            .csrf().ignoringRequestMatchers("/**").and()
             .build();
     }
 
+    @Bean
+    public ClientRegistrationRepository buildClientRegistrationRepository(WebApplicationProperties webProps) {
+        final ClientRegistration azureRegistration = ClientRegistration.withRegistrationId(OAUTH2_REGISTRATION_ID_AZURE)
+            .clientId(webProps.getOidc().getAzure().getClientId())
+            .clientSecret(webProps.getOidc().getAzure().getClientSecret())
+            .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
+            .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
+            .redirectUri("{baseUrl}/login/oauth2/code/{registrationId}")
+            .scope("openid", "profile", "email", "address", "phone")
+            .authorizationUri(webProps.getOidc().getAzure().getAuthorizationUri())
+            .tokenUri(webProps.getOidc().getAzure().getTokenUri())
+            .userInfoUri(webProps.getOidc().getAzure().getUserInfoUri())
+            .userNameAttributeName(IdTokenClaimNames.SUB)
+            .jwkSetUri(webProps.getOidc().getAzure().getJwkSetUri())
+            .clientName("Azure")
+            .build();
+        return new InMemoryClientRegistrationRepository(azureRegistration);
+    }
 
 }
