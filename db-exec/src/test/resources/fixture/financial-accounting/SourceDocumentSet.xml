@@ -214,7 +214,7 @@
         <controlNumber>AGR_RETA-0409</controlNumber>
         <documentIssueDateTimeZulu>2020-05-28T14:20:50</documentIssueDateTimeZulu>
         <description>Retail Bank Account Agreement</description>
-        <ownershipUnitId>102</ownershipUnitId>
+        <ownershipUnitId>104</ownershipUnitId>
     </sourceDocument>
 
     <sourceDocument>
@@ -222,7 +222,7 @@
         <controlNumber>TCACK-00077</controlNumber>
         <documentIssueDateTimeZulu>2020-06-04T08:49:56</documentIssueDateTimeZulu>
         <description>Online Banking - Terms and Conditions Acknoledgement</description>
-        <ownershipUnitId>102</ownershipUnitId>
+        <ownershipUnitId>104</ownershipUnitId>
     </sourceDocument>
 
     <sourceDocument>
@@ -230,7 +230,7 @@
         <controlNumber>TCACK-00078</controlNumber>
         <documentIssueDateTimeZulu>2020-06-07T09:01:01</documentIssueDateTimeZulu>
         <description>Online Banking - Terms and Conditions Acknoledgement</description>
-        <ownershipUnitId>102</ownershipUnitId>
+        <ownershipUnitId>104</ownershipUnitId>
     </sourceDocument>
 
     <sourceDocument>

@@ -93,6 +93,8 @@ CREATE TABLE "${schemaNameUI}"."UserIdentity" (
   "id"           NUMBER(19, 0) GENERATED ALWAYS AS IDENTITY (NOCACHE) NOT NULL,
   "username"     VARCHAR2(255 BYTE),
   "password"     VARCHAR2(255 BYTE),
+  "oidcProvider" VARCHAR2(255 BYTE),
+  "oidcSub"      VARCHAR2(255 BYTE),
   CONSTRAINT PK_UserIdentity PRIMARY KEY ("id")
 );
 GRANT SELECT ON "${schemaNameUI}"."UserIdentity" TO "${schemaNameUI}_READONLY_ROLE";

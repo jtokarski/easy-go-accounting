@@ -41,6 +41,12 @@ public class UserIdentity implements HasId<Long> {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "oidcProvider")
+    private String oidcProvider;
+
+    @Column(name = "oidcSub")
+    private String oidcSub;
+
     @XmlElementWrapper(name = "ownershipUnits")
     @XmlElement(name = "joinUserIdentityOwnershipUnit")
     @OneToMany(mappedBy = "userIdentity", cascade = CascadeType.ALL, orphanRemoval = true)

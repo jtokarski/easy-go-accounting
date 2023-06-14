@@ -3,6 +3,7 @@ package org.defendev.easygo.web.config;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.defendev.easygo.domain.useridentity.config.PasswordEncoderConfig;
+import org.defendev.easygo.domain.useridentity.service.EasygoOAuth2UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -55,7 +56,9 @@ public class WebSecurity {
     }
 
     @Bean
-    public SecurityFilterChain buildSecurityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain buildSecurityFilterChain(HttpSecurity http,
+                                                        EasygoOAuth2UserService easygoOAuth2UserService)
+        throws Exception {
 
         final LoginUrlAuthenticationEntryPoint authenticationEntryPoint = new LoginUrlAuthenticationEntryPoint(SIGN_IN_PATH);
 
@@ -70,6 +73,9 @@ public class WebSecurity {
             .formLogin().loginProcessingUrl(SIGN_IN_PATH)
             .and()
             .oauth2Login()
+                .userInfoEndpoint()
+                    .oidcUserService(easygoOAuth2UserService)
+            .and()
             .and()
             .logout()
                 .logoutRequestMatcher(AntPathRequestMatcher.antMatcher(HttpMethod.GET, SIGN_OUT_PATH))
