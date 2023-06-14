@@ -5,11 +5,74 @@
 OAuth2 is a robust standard that covers variety of different usage scenarios. This *is not* out goal to explore all of them. Also, this is not our goal to adopt all features available in OAuth2/OpenId Connect. Instead, we will be working on the following specific scenario:
 
 * incorporate *Authorization Code Flow* (grant type), which is most common for Web applications
+
 * using Azure Active Directory as Authorization Server
+
 * our Java application will be acting as Confidential Client. For that it will be registered in Azure
+
 * neither *access token* nor *ID token* will be exposed outside the Java application. The Frontend (Angular) application will rely on session maintained by `JSESSIONID`
+
 * authentication is the only thing that we want to take from OAuth2/OIDC. We will not be implementing *Resource Server* endpoints in our application.
 
-
-
 == Step 1
+
+Starting from branch `workshop_2_0` - application with Standalone Security.
+
+Let's refresh the database:
+
+[source,bash]
+----
+$ ./gradlew :db-exec:dropTenantSchemas :db-exec:dropEasygoSysSchema
+$ ./gradlew :db-exec:createEasygoSysSchema :db-exec:oracleBaselineAndMigrate :db-exec:loadFixtures
+----
+
+Run the application - the form-login works with SQL user database.
+
+== Step 2
+
+Branch `workshop_2_1` - basic setup of OAuth2/OIDC integration with external provider (Azure Active Directory).
+
+* breakpoint `org.springframework.security.web.FilterChainProxy.doFilter()` - notice new OAuth2 filters added in our `SecurityFilterChain`
+
+Let's go through the _Sign-in with Azure_ flow and observe consecutive elements of OIDC protocol.
+
+* breakpoints in
++
+** `org.springframework.security.oauth2.client.endpoint.DefaultAuthorizationCodeTokenResponseClient.getResponse()` and
+** `org.springframework.security.oauth2.client.endpoint.DefaultAuthorizationCodeTokenResponseClient.getTokenResponse()`
++
+observe the exchange of *Authorization Code* for *Access Token*. Also, note the embedded *ID Token*. Try to decode both tokens as JWTs and examine their content - https://jwt.io/[jwt.io] can be used for that.
+
+* breakpoints in
++
+** `org.springframework.security.oauth2.jwt.NimbusJwtDecoder.JwkSetUriJwtDecoderBuilder.RestOperationsResourceRetriever.getResponse()`
++
+** `org.springframework.security.oauth2.jwt.NimbusJwtDecoder.JwkSetUriJwtDecoderBuilder.RestOperationsResourceRetriever.retrieveResource()`
++
+observe the retrieval of public keys from JWKS, used later for JWT signature verification.
+
+* breakpoints in
++
+** `org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService.getResponse()` and
++
+** `org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService.loadUser()`
++
+observe the request to *User Info Endpoint*, authorized with *Access Token* to retrieve the details of the user.
+
+* breakpoint in `org.defendev.easygo.domain.useridentity.service.DiscloseSecurityContextService.getSecurityContext()` - notice the principal of class `DefaultOidcUser`
+
+== Step 3
+
+Branch `workshop_2_2` - integration of OAuth2/OIDC login into established application security setup. Achieved mainly by:
+
+* implementing `EasygoOAuth2UserService` (i.e. custom `OAuth2UserService`)
++
+* implementing `EasygoOidcUser` (i.e. custom `OidcUser`)
+
+Note, that the former username/password login based on SQL user database still works fine.
+
+== Step 4
+
+Branch `workshop_2_3` - adding next OIDC provider (Google). This is to demonstrate the easiness of using multiple providers, which is the benefit of well-defined protocol standard.
+
+
