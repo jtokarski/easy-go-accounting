@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import static org.defendev.easygo.web.config.WebSecurity.OAUTH2_REGISTRATION_ID_AZURE;
+import static org.defendev.easygo.web.config.WebSecurity.OAUTH2_REGISTRATION_ID_GOOGLE;
 import static org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter.DEFAULT_AUTHORIZATION_REQUEST_BASE_URI;
 
 
@@ -24,6 +25,8 @@ public class FormLoginPageController {
         final ModelAndView mav = new ModelAndView();
         final String azureSignInLink = DEFAULT_AUTHORIZATION_REQUEST_BASE_URI + "/" + OAUTH2_REGISTRATION_ID_AZURE;
         mav.getModel().put("azureSignInLink", azureSignInLink);
+        final String googleSignInLink = DEFAULT_AUTHORIZATION_REQUEST_BASE_URI + "/" + OAUTH2_REGISTRATION_ID_GOOGLE;
+        mav.getModel().put("googleSignInLink", googleSignInLink);
         mav.setViewName("static/loginPage.th.html");
         return mav;
     }

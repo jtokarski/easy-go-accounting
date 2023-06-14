@@ -41,6 +41,8 @@ public class EasygoOAuth2UserService extends OidcUserService {
         final String provider;
         if (issuerHost.contains("microsoft")) {
             provider = "azure";
+        } else if (issuerHost.contains("google")) {
+            provider = "google";
         } else {
             provider = "-";
         }

@@ -10,6 +10,8 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
+
 
 
 public class EasygoOidcUser extends DefaultOidcUser implements IEasygoUserDetails {
@@ -24,7 +26,9 @@ public class EasygoOidcUser extends DefaultOidcUser implements IEasygoUserDetail
 
     @Override
     public String getUsername() {
-        return getPreferredUsername();
+        return isNotBlank(getPreferredUsername()) ?
+            getPreferredUsername()
+            : getEmail();
     }
 
     @Override

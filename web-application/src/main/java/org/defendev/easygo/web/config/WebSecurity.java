@@ -14,6 +14,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.oauth2.client.CommonOAuth2Provider;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
@@ -41,6 +42,8 @@ public class WebSecurity {
     public static final String SIGN_OUT_PATH = "/sign-out";
 
     public static final String OAUTH2_REGISTRATION_ID_AZURE = "azure";
+
+    public static final String OAUTH2_REGISTRATION_ID_GOOGLE = "google";
 
     @Bean
     public AuthenticationManager globalAuthenticationManager(HttpSecurity http,
@@ -87,6 +90,11 @@ public class WebSecurity {
 
     @Bean
     public ClientRegistrationRepository buildClientRegistrationRepository(WebApplicationProperties webProps) {
+        final ClientRegistration googleRegistration = CommonOAuth2Provider.GOOGLE.getBuilder(OAUTH2_REGISTRATION_ID_GOOGLE)
+            .clientId(webProps.getOidc().getGoogle().getClientId())
+            .clientSecret(webProps.getOidc().getGoogle().getClientSecret())
+            .build();
+
         final ClientRegistration azureRegistration = ClientRegistration.withRegistrationId(OAUTH2_REGISTRATION_ID_AZURE)
             .clientId(webProps.getOidc().getAzure().getClientId())
             .clientSecret(webProps.getOidc().getAzure().getClientSecret())
@@ -101,7 +109,7 @@ public class WebSecurity {
             .jwkSetUri(webProps.getOidc().getAzure().getJwkSetUri())
             .clientName("Azure")
             .build();
-        return new InMemoryClientRegistrationRepository(azureRegistration);
+        return new InMemoryClientRegistrationRepository(azureRegistration, googleRegistration);
     }
 
 }
