@@ -10,7 +10,7 @@ import java.util.Set;
 
 
 
-public class EasygoUserDetails extends User {
+public class EasygoUserDetails extends User implements IEasygoUserDetails {
 
     private long id;
 
@@ -27,6 +27,7 @@ public class EasygoUserDetails extends User {
         return id;
     }
 
+    @Override
     public Map<Privilege, Set<Long>> getPrivilegeToOwnershipUnit() {
         return privilegeToOwnershipUnit;
     }

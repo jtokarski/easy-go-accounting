@@ -5,7 +5,7 @@ import org.apache.logging.log4j.Logger;
 import org.defendev.easygo.domain.useridentity.api.IQueryOwnershipUnitIdsWithPrivilegeService;
 import org.defendev.easygo.domain.useridentity.api.OwnershipUnitIdsWithPrivilegeQuery;
 import org.defendev.easygo.domain.useridentity.api.Privilege;
-import org.defendev.easygo.domain.useridentity.service.dto.EasygoUserDetails;
+import org.defendev.easygo.domain.useridentity.service.dto.IEasygoUserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -35,7 +35,7 @@ public class QueryOwnershipUnitIdsWithPrivilegeService implements IQueryOwnershi
     public Set<Long> query(OwnershipUnitIdsWithPrivilegeQuery query) {
         final Map<Privilege, Set<Long>> anonymousPrivilegeToOwnershipUnit = queryAnonymousPrivilegeService
             .queryPrivilegeToOwnershipUnit();
-        final EasygoUserDetails userDetails = extractLoggedInUserService.extract();
+        final IEasygoUserDetails userDetails = extractLoggedInUserService.extract();
         final Map<Privilege, Set<Long>> privilegeToOwnershipUnit = nonNull(userDetails) ?
             userDetails.getPrivilegeToOwnershipUnit()
             : Map.of();
