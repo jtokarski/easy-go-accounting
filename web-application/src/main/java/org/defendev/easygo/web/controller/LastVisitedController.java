@@ -29,6 +29,9 @@ public class LastVisitedController extends ApiBaseController {
     public ResponseEntity<Map<String, String>> getLastVisited(HttpServletRequest request) {
         final HttpSession session = request.getSession();
         final ZonedDateTime savedLastVisited = (ZonedDateTime) session.getAttribute(LAST_VISITED_KEY);
+
+        // todo: time-travel
+
         final ZonedDateTime now = ZonedDateTime.now();
         session.setAttribute(LAST_VISITED_KEY, now);
         final Map<String, String> dto = Map.of(LAST_VISITED_KEY,

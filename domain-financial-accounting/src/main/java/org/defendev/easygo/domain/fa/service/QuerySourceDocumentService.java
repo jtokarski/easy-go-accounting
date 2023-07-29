@@ -45,6 +45,12 @@ public class QuerySourceDocumentService {
     }
 
     @Transactional(transactionManager = "financialAccountingJpaTransactionManager", readOnly = true)
+    /*
+     *
+     * todo: method return type QueryResult<SourceDocumentCollectionResRep>
+     * todo: method name -> execute()
+     *
+     */
     public SourceDocumentCollectionResRep querySourceDocuments(SourceDocumentQuery query) {
         if (!query.getResolveOwnershipUnitsForRequestingUser()) {
             throw new UnsupportedOperationException("Not implemented");

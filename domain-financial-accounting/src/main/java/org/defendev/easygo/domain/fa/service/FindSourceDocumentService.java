@@ -36,6 +36,12 @@ public class FindSourceDocumentService {
     }
 
     @Transactional(transactionManager = "financialAccountingJpaTransactionManager", readOnly = true)
+    /*
+     *
+     * todo: the return type should rather be a QueryResult not Optional!
+     * todo: method name -> execute()
+     *
+     */
     public Optional<SourceDocumentFullDto> findSourceDocument(String externalId) {
         final long id;
 
