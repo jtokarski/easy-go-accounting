@@ -16,7 +16,7 @@ CREATE USER "${schemaNameSE}"
   DEFAULT TABLESPACE SYSTEM
   QUOTA 50M ON SYSTEM;
 
-GRANT REFERENCES ("id") ON "${schemaNameUI}"."UserIdentity" TO "${schemaNameSE}";
+GRANT REFERENCES ("id") ON "${schemaNameIAM}"."UserIdentity" TO "${schemaNameSE}";
 
 -- Roles for accessing Stock Exchange schema
 CREATE ROLE "${schemaNameSE}_READONLY_ROLE";
@@ -78,7 +78,7 @@ CREATE TABLE "${schemaNameSE}"."Trader" (
   CONSTRAINT PK_Trader PRIMARY KEY ("id"),
   CONSTRAINT FK_Trader_UserIdentity_1
     FOREIGN KEY ("userIdentityId")
-    REFERENCES "${schemaNameUI}"."UserIdentity" ("id")
+    REFERENCES "${schemaNameIAM}"."UserIdentity" ("id")
 );
 GRANT SELECT ON "${schemaNameSE}"."Trader" TO "${schemaNameSE}_READONLY_ROLE";
 GRANT INSERT ON "${schemaNameSE}"."Trader" TO "${schemaNameSE}_UPDATE_ROLE";

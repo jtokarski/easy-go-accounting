@@ -2,8 +2,8 @@ package org.defendev.easygo.web.config;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.defendev.easygo.domain.useridentity.config.PasswordEncoderConfig;
-import org.defendev.easygo.domain.useridentity.service.EasygoOAuth2UserService;
+import org.defendev.easygo.domain.iam.config.PasswordEncoderConfig;
+import org.defendev.easygo.domain.iam.service.EasygoOAuth2UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;

@@ -40,11 +40,11 @@ project(':angular-ui').name = 'angular-ui'
 include 'db-exec'
 project(':db-exec').name = 'db-exec'
 
-include 'domain-user-identity-api'
-project(':domain-user-identity-api').name = 'domain-user-identity-api'
+include 'domain-iam-api'
+project(':domain-iam-api').name = 'domain-iam-api'
 
-include 'domain-user-identity'
-project(':domain-user-identity').name = 'domain-user-identity'
+include 'domain-iam'
+project(':domain-iam').name = 'domain-iam'
 
 include 'domain-financial-accounting'
 project(':domain-financial-accounting').name = 'domain-financial-accounting'

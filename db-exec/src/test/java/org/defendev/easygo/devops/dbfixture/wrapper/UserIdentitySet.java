@@ -4,7 +4,7 @@ import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
-import org.defendev.easygo.domain.useridentity.model.UserIdentity;
+import org.defendev.easygo.domain.iam.model.UserIdentity;
 
 import java.util.List;
 

@@ -12,9 +12,9 @@ import org.defendev.easygo.devops.dbfixture.loader.SourceDocumentFixturesLoader;
 import org.defendev.easygo.devops.dbfixture.loader.UserIdentityFixturesLoader;
 import org.defendev.easygo.domain.fa.config.FinancialAccountingJpaConfig;
 import org.defendev.easygo.domain.fa.config.FinancialAccountingProperties;
-import org.defendev.easygo.domain.useridentity.config.PasswordEncoderConfig;
-import org.defendev.easygo.domain.useridentity.config.UserIdentityJpaConfig;
-import org.defendev.easygo.domain.useridentity.config.UserIdentityProperties;
+import org.defendev.easygo.domain.iam.config.PasswordEncoderConfig;
+import org.defendev.easygo.domain.iam.config.IamJpaConfig;
+import org.defendev.easygo.domain.iam.config.IamProperties;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -32,9 +32,9 @@ import java.util.List;
 
 
 @TestPropertySource(properties = { DataSourceConfig.DB_PROPERTY_LOCATIONS })
-@EnableConfigurationProperties({ UserIdentityProperties.class, FinancialAccountingProperties.class })
+@EnableConfigurationProperties({ IamProperties.class, FinancialAccountingProperties.class })
 @SpringJUnitConfig(
-    classes = { UserIdentityJpaConfig.class, PasswordEncoderConfig.class, FinancialAccountingJpaConfig.class },
+    classes = { IamJpaConfig.class, PasswordEncoderConfig.class, FinancialAccountingJpaConfig.class },
     initializers = { ConfigDataApplicationContextInitializer.class }
 )
 public class LoadEasygoFixturesTest {
@@ -44,12 +44,12 @@ public class LoadEasygoFixturesTest {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @PersistenceContext(unitName = "userIdentityPersistenceUnit")
-    private EntityManager userIdentityEm;
+    @PersistenceContext(unitName = "iamPersistenceUnit")
+    private EntityManager iamEm;
 
-    @Qualifier("userIdentityTransactionTemplate")
+    @Qualifier("iamTransactionTemplate")
     @Autowired
-    private TransactionTemplate userIdentityTransactionTemplate;
+    private TransactionTemplate iamTransactionTemplate;
 
     @PersistenceContext(unitName = "financialAccountingPersistenceUnit")
     private EntityManager financialAccountingEm;
@@ -64,18 +64,18 @@ public class LoadEasygoFixturesTest {
         final List<FixturesLoader<?, ?>> loaders = new ArrayList<>();
 
         final  OwnershipUnitFixturesLoader ownershipUnitFixturesLoader = new OwnershipUnitFixturesLoader(
-            "fixture/user-identity/OwnershipUnitSet.xml", userIdentityEm);
+            "fixture/identity-access-management/OwnershipUnitSet.xml", iamEm);
         loaders.add(ownershipUnitFixturesLoader);
 
         final UserIdentityFixturesLoader userIdentityFixturesLoader = new UserIdentityFixturesLoader(
-            "fixture/user-identity/UserIdentitySet.xml", userIdentityEm, passwordEncoder, ownershipUnitFixturesLoader);
+            "fixture/identity-access-management/UserIdentitySet.xml", iamEm, passwordEncoder, ownershipUnitFixturesLoader);
         loaders.add(userIdentityFixturesLoader);
 
         final SourceDocumentFixturesLoader sourceDocumentFixturesLoader = new SourceDocumentFixturesLoader(
             "fixture/financial-accounting/SourceDocumentSet.xml", financialAccountingEm, ownershipUnitFixturesLoader);
         loaders.add(sourceDocumentFixturesLoader);
 
-        userIdentityTransactionTemplate.execute(status -> {
+        iamTransactionTemplate.execute(status -> {
             try {
                 ownershipUnitFixturesLoader.readFromResourceAndPersist();
                 userIdentityFixturesLoader.readFromResourceAndPersist();

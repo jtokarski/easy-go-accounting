@@ -111,10 +111,10 @@ END;
 
 
 -- ----------------------------------- --
--- -------------- UI ----------------- --
+-- -------------- IAM ---------------- --
 -- ----------------------------------- --
 BEGIN
-  EXECUTE IMMEDIATE 'DROP USER "${roUserNameUI}" CASCADE';
+  EXECUTE IMMEDIATE 'DROP USER "${roUserNameIAM}" CASCADE';
 EXCEPTION
   WHEN OTHERS THEN
     IF (-1918 != SQLCODE) THEN
@@ -124,7 +124,7 @@ END;
 ;;;
 
 BEGIN
-  EXECUTE IMMEDIATE 'DROP USER "${appUserNameUI}" CASCADE';
+  EXECUTE IMMEDIATE 'DROP USER "${appUserNameIAM}" CASCADE';
 EXCEPTION
   WHEN OTHERS THEN
     IF (-1918 != SQLCODE) THEN
@@ -134,7 +134,7 @@ END;
 ;;;
 
 BEGIN
-  EXECUTE IMMEDIATE 'DROP ROLE "${schemaNameUI}_READONLY_ROLE"';
+  EXECUTE IMMEDIATE 'DROP ROLE "${schemaNameIAM}_READONLY_ROLE"';
 EXCEPTION
   WHEN OTHERS THEN
     IF (-1919 != SQLCODE) THEN
@@ -144,7 +144,7 @@ END;
 ;;;
 
 BEGIN
-  EXECUTE IMMEDIATE 'DROP ROLE "${schemaNameUI}_UPDATE_ROLE"';
+  EXECUTE IMMEDIATE 'DROP ROLE "${schemaNameIAM}_UPDATE_ROLE"';
 EXCEPTION
   WHEN OTHERS THEN
     IF (-1919 != SQLCODE) THEN
@@ -154,7 +154,7 @@ END;
 ;;;
 
 BEGIN
-  EXECUTE IMMEDIATE 'DROP USER "${schemaNameUI}" CASCADE';
+  EXECUTE IMMEDIATE 'DROP USER "${schemaNameIAM}" CASCADE';
 EXCEPTION
   WHEN OTHERS THEN
     IF (-1918 != SQLCODE) THEN

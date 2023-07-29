@@ -8,9 +8,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.defendev.common.fixture.loader.FixturesLoader;
 import org.defendev.easygo.devops.dbfixture.wrapper.UserIdentitySet;
-import org.defendev.easygo.domain.useridentity.model.JoinUserIdentityOwnershipUnit;
-import org.defendev.easygo.domain.useridentity.model.OwnershipUnit;
-import org.defendev.easygo.domain.useridentity.model.UserIdentity;
+import org.defendev.easygo.domain.iam.model.JoinUserIdentityOwnershipUnit;
+import org.defendev.easygo.domain.iam.model.OwnershipUnit;
+import org.defendev.easygo.domain.iam.model.UserIdentity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.io.InputStream;

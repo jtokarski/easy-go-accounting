@@ -7,7 +7,7 @@ CREATE USER "${schemaNameFA}"
   DEFAULT TABLESPACE SYSTEM
   QUOTA 50M ON SYSTEM;
 
-GRANT REFERENCES ("id") ON "${schemaNameUI}"."OwnershipUnit" TO "${schemaNameFA}";
+GRANT REFERENCES ("id") ON "${schemaNameIAM}"."OwnershipUnit" TO "${schemaNameFA}";
 
 -- Roles for accessing Financial Accounting schema
 CREATE ROLE "${schemaNameFA}_READONLY_ROLE";
@@ -50,7 +50,7 @@ CREATE TABLE "${schemaNameFA}"."SourceDocument" (
   "description"                 VARCHAR2(500 CHAR),
   CONSTRAINT PK_SourceDocument PRIMARY KEY ("id"),
   CONSTRAINT FK_SourceDocument_OwnershipUnit_1 FOREIGN KEY ("ownershipUnitId")
-    REFERENCES "${schemaNameUI}"."OwnershipUnit" ("id")
+    REFERENCES "${schemaNameIAM}"."OwnershipUnit" ("id")
 );
 GRANT SELECT ON "${schemaNameFA}"."SourceDocument" TO "${schemaNameFA}_READONLY_ROLE";
 GRANT INSERT ON "${schemaNameFA}"."SourceDocument" TO "${schemaNameFA}_UPDATE_ROLE";

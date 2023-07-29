@@ -20,18 +20,20 @@ bootJar {
 
 dependencies {
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security'
+    implementation group: 'org.springframework.security', name: 'spring-security-oauth2-client'
     implementation "org.springframework.boot:spring-boot-starter-log4j2"
     modules {
         module("org.springframework.boot:spring-boot-starter-logging") {
             replacedBy("org.springframework.boot:spring-boot-starter-log4j2", "Use Log4j2 instead of Logback")
         }
     }
-    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-annotations'
+//    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-annotations'
     implementation libs.defendevCommonJdk
     implementation libs.defendevCommonFixtures
-    implementation libs.defendevCommonSpring6
+//    implementation libs.defendevCommonSpring6
+//    annotationProcessor group: 'org.hibernate.orm', name: 'hibernate-jpamodelgen'
     implementation project(':domain-iam-api')
-    annotationProcessor group: 'org.hibernate.orm', name: 'hibernate-jpamodelgen'
     testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test'
 }
 
@@ -43,12 +45,4 @@ test {
     useJUnitPlatform()
 }
 
-/*
- * The sourceSets configuration is necessary for IntelliJ IDEA to correctly recognize the classes generated
- * by JPA-Modelgen. This is probably a bug in IntelliJ (Gradle build from CLI works fine),
- * so consider REMOVING it in the future. See:
- *   - https://stackoverflow.com/questions/54218556/how-to-generate-jpa-metamodel-with-gradle-5-x
- *   - https://stackoverflow.com/questions/49830187/how-to-use-jpa-metamodel-with-gradle-intellij-idea/53651319#53651319
- */
-sourceSets.main.java.srcDirs += "${buildDir}/generated"
 

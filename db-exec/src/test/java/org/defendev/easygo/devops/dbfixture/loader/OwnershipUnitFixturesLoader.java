@@ -8,7 +8,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.defendev.common.fixture.loader.FixturesLoader;
 import org.defendev.easygo.devops.dbfixture.wrapper.OwnershipUnitSet;
-import org.defendev.easygo.domain.useridentity.model.OwnershipUnit;
+import org.defendev.easygo.domain.iam.model.OwnershipUnit;
 
 import java.io.InputStream;
 import java.util.List;
