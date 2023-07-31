@@ -1,4 +1,4 @@
-package org.defendev.easygo.domain.fa.service.dto;
+package org.defendev.easygo.domain.fa.api;
 
 import java.time.ZonedDateTime;
 

@@ -3,8 +3,8 @@ package org.defendev.easygo.domain.fa.repository;
 
 import org.defendev.common.domain.query.sort.SortOrder;
 import org.defendev.common.spring6.data.jpa.domain.PageableSpecification;
+import org.defendev.easygo.domain.fa.api.SourceDocumentQuery;
 import org.defendev.easygo.domain.fa.model.SourceDocument_;
-import org.defendev.easygo.domain.fa.service.query.SourceDocumentQuery;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;

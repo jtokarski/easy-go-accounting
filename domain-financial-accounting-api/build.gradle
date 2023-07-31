@@ -1,0 +1,25 @@
+
+plugins {
+    id 'java'
+    alias libs.plugins.springDependencyManagementPlugin
+    alias libs.plugins.springBootPlugin
+}
+
+group = 'org.defendev'
+
+sourceCompatibility = JavaVersion.VERSION_17
+targetCompatibility = JavaVersion.VERSION_17
+
+repositories {
+    mavenCentral()
+}
+
+bootJar {
+    enabled = false
+}
+
+dependencies {
+    implementation libs.defendevCommonJdk
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-annotations'
+}
+

@@ -1,4 +1,4 @@
-package org.defendev.easygo.domain.fa.service.dto;
+package org.defendev.easygo.domain.fa.api;
 
 import org.defendev.common.domain.resrep.CollectionMeta;
 import org.defendev.common.domain.resrep.ICollectionResRep;

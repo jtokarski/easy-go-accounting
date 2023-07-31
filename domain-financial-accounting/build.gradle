@@ -26,10 +26,10 @@ dependencies {
             replacedBy("org.springframework.boot:spring-boot-starter-log4j2", "Use Log4j2 instead of Logback")
         }
     }
-    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-annotations'
     implementation libs.defendevCommonJdk
     implementation libs.defendevCommonFixtures
     implementation libs.defendevCommonSpring6
+    implementation project(':domain-financial-accounting-api')
     implementation project(':domain-iam-api')
     annotationProcessor group: 'org.hibernate.orm', name: 'hibernate-jpamodelgen'
     testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test'

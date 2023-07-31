@@ -2,8 +2,8 @@ package org.defendev.easygo.web.controller;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.defendev.common.domain.useridentity.service.api.IDiscloseSecurityContextService;
-import org.defendev.common.domain.useridentity.service.dto.ISecurityContextDto;
+import org.defendev.common.domain.iam.service.api.IDiscloseSecurityContextService;
+import org.defendev.common.domain.iam.service.dto.ISecurityContextDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;

@@ -1,9 +1,8 @@
-package org.defendev.easygo.domain.fa.service.dto;
+package org.defendev.easygo.domain.fa.api;
 
 import java.time.ZonedDateTime;
 
-
-public class SourceDocumentMinDto implements ISourceDocumentMinDto {
+public class SourceDocumentFullDto implements ISourceDocumentFullDto{
 
     private final String externalId;
 
@@ -11,24 +10,29 @@ public class SourceDocumentMinDto implements ISourceDocumentMinDto {
 
     private final ZonedDateTime documentIssueDateTime;
 
-    public SourceDocumentMinDto(String externalId, String controlNumber, ZonedDateTime documentIssueDateTime) {
+    private final String description;
+
+    public SourceDocumentFullDto(String externalId, String controlNumber, ZonedDateTime documentIssueDateTime,
+                                 String description) {
         this.externalId = externalId;
         this.controlNumber = controlNumber;
         this.documentIssueDateTime = documentIssueDateTime;
+        this.description = description;
     }
 
-    @Override
     public String getExternalId() {
         return externalId;
     }
 
-    @Override
     public String getControlNumber() {
         return controlNumber;
     }
 
-    @Override
     public ZonedDateTime getDocumentIssueDateTime() {
         return documentIssueDateTime;
+    }
+
+    public String getDescription() {
+        return description;
     }
 }

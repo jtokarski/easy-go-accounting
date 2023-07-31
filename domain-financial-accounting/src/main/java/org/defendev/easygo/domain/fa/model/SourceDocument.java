@@ -10,7 +10,7 @@ import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.defendev.common.domain.HasId;
-import org.defendev.common.domain.useridentity.IOwnedBy;
+import org.defendev.common.domain.iam.IOwnedBy;
 import org.defendev.common.xml.bind.LocalDateTimeXmlAdapter;
 
 import java.time.LocalDateTime;

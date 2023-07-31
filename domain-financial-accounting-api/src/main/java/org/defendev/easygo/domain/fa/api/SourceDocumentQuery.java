@@ -1,4 +1,4 @@
-package org.defendev.easygo.domain.fa.service.query;
+package org.defendev.easygo.domain.fa.api;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;

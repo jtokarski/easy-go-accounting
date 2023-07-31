@@ -6,9 +6,9 @@ import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import org.apache.commons.lang3.StringUtils;
 import org.defendev.common.domain.query.filter.Filter;
+import org.defendev.easygo.domain.fa.api.SourceDocumentQuery;
 import org.defendev.easygo.domain.fa.model.SourceDocument;
 import org.defendev.easygo.domain.fa.model.SourceDocument_;
-import org.defendev.easygo.domain.fa.service.query.SourceDocumentQuery;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.util.Set;

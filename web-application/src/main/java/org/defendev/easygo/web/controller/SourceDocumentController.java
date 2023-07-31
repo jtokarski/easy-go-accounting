@@ -2,11 +2,13 @@ package org.defendev.easygo.web.controller;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.defendev.easygo.domain.fa.service.FindSourceDocumentService;
-import org.defendev.easygo.domain.fa.service.QuerySourceDocumentService;
-import org.defendev.easygo.domain.fa.service.dto.SourceDocumentCollectionResRep;
-import org.defendev.easygo.domain.fa.service.dto.SourceDocumentFullDto;
-import org.defendev.easygo.domain.fa.service.query.SourceDocumentQuery;
+import org.defendev.common.domain.query.result.QueryResult;
+import org.defendev.easygo.domain.fa.api.IFindSourceDocumentService;
+import org.defendev.easygo.domain.fa.api.IQuerySourceDocumentService;
+import org.defendev.easygo.domain.fa.api.SourceDocumentCollectionResRep;
+import org.defendev.easygo.domain.fa.api.SourceDocumentFindQuery;
+import org.defendev.easygo.domain.fa.api.SourceDocumentFullDto;
+import org.defendev.easygo.domain.fa.api.SourceDocumentQuery;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -14,9 +16,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
-import java.util.Optional;
-
 
 
 
@@ -32,12 +31,12 @@ public class SourceDocumentController extends ApiBaseController {
 
     public static final String SOURCE_DOCUMENT_PATH = SOURCE_DOCUMENT_PATH_SEGMENT + "/" + EXTERNAL_ID_PATH_SEGMENT;
 
-    private final FindSourceDocumentService findSourceDocumentService;
+    private final IFindSourceDocumentService findSourceDocumentService;
 
-    private final QuerySourceDocumentService querySourceDocumentService;
+    private final IQuerySourceDocumentService querySourceDocumentService;
 
-    public SourceDocumentController(FindSourceDocumentService findSourceDocumentService,
-                                    QuerySourceDocumentService querySourceDocumentService) {
+    public SourceDocumentController(IFindSourceDocumentService findSourceDocumentService,
+                                    IQuerySourceDocumentService querySourceDocumentService) {
         this.findSourceDocumentService = findSourceDocumentService;
         this.querySourceDocumentService = querySourceDocumentService;
     }
@@ -45,10 +44,10 @@ public class SourceDocumentController extends ApiBaseController {
     @PreAuthorize("isFullyAuthenticated()")
     @RequestMapping(path = SOURCE_DOCUMENT_PATH, method = RequestMethod.GET)
     public ResponseEntity<SourceDocumentFullDto> findSourceDocument(@PathVariable String externalId) {
-        final Optional<SourceDocumentFullDto> sourceDocumentOptional = findSourceDocumentService
-            .findSourceDocument(externalId);
-        if (sourceDocumentOptional.isPresent()) {
-            return ResponseEntity.ok(sourceDocumentOptional.get());
+        final QueryResult<SourceDocumentFullDto> result = findSourceDocumentService
+            .execute(new SourceDocumentFindQuery(externalId));
+        if (result.isSuccess()) {
+            return ResponseEntity.ok(result.getData());
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -56,7 +55,7 @@ public class SourceDocumentController extends ApiBaseController {
 
     @RequestMapping(path = SOURCE_DOCUMENTS_BROWSE_PATH, method = RequestMethod.POST)
     public ResponseEntity<SourceDocumentCollectionResRep> browseSourceDocuments(@RequestBody SourceDocumentQuery query) {
-        final SourceDocumentCollectionResRep collectionResRep = querySourceDocumentService.querySourceDocuments(query);
+        final SourceDocumentCollectionResRep collectionResRep = querySourceDocumentService.execute(query).getData();
         return ResponseEntity.ok(collectionResRep);
     }
 

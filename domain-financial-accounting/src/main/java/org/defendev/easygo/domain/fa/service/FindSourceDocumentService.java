@@ -2,9 +2,12 @@ package org.defendev.easygo.domain.fa.service;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.defendev.common.domain.query.result.QueryResult;
+import org.defendev.easygo.domain.fa.api.IFindSourceDocumentService;
+import org.defendev.easygo.domain.fa.api.SourceDocumentFindQuery;
+import org.defendev.easygo.domain.fa.api.SourceDocumentFullDto;
 import org.defendev.easygo.domain.fa.model.SourceDocument;
 import org.defendev.easygo.domain.fa.repository.SourceDocumentRepo;
-import org.defendev.easygo.domain.fa.service.dto.SourceDocumentFullDto;
 import org.defendev.easygo.domain.iam.api.CheckObjectPrivilegeQuery;
 import org.defendev.easygo.domain.iam.api.ICheckObjectPrivilegeService;
 import org.defendev.easygo.domain.iam.api.Privilege;
@@ -18,9 +21,8 @@ import static org.defendev.common.time.TimeUtil.ZULU_ZONE_ID;
 
 
 
-
 @Service
-public class FindSourceDocumentService {
+public class FindSourceDocumentService implements IFindSourceDocumentService {
 
     private static final Logger log = LogManager.getLogger();
 
@@ -36,19 +38,13 @@ public class FindSourceDocumentService {
     }
 
     @Transactional(transactionManager = "financialAccountingJpaTransactionManager", readOnly = true)
-    /*
-     *
-     * todo: the return type should rather be a QueryResult not Optional!
-     * todo: method name -> execute()
-     *
-     */
-    public Optional<SourceDocumentFullDto> findSourceDocument(String externalId) {
+    public QueryResult<SourceDocumentFullDto> execute(SourceDocumentFindQuery query) {
         final long id;
 
         try {
-            id = Long.parseLong(externalId, 10);
+            id = Long.parseLong(query.getExternalId(), 10);
         } catch (NumberFormatException nfe) {
-            return Optional.empty();
+            return QueryResult.notFound();
         }
         final Optional<SourceDocument> sourceDocumentOptional = sourceDocumentRepo.findById(id);
 
@@ -56,7 +52,9 @@ public class FindSourceDocumentService {
             checkObjectReadPrivilegeService.check(new CheckObjectPrivilegeQuery(Privilege.read, sourceDocument));
         });
 
-        return sourceDocumentOptional.map(this::mapToFullDto);
+        return sourceDocumentOptional.map(this::mapToFullDto)
+            .map(dto -> QueryResult.success(dto))
+            .orElseGet(() -> QueryResult.notFound());
     }
 
     private SourceDocumentFullDto mapToFullDto(SourceDocument entity) {

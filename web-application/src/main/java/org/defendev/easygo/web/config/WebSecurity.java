@@ -3,7 +3,6 @@ package org.defendev.easygo.web.config;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.defendev.easygo.domain.iam.config.PasswordEncoderConfig;
-import org.defendev.easygo.domain.iam.service.EasygoOAuth2UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -17,6 +16,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.oauth2.client.CommonOAuth2Provider;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserService;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
@@ -60,7 +60,7 @@ public class WebSecurity {
 
     @Bean
     public SecurityFilterChain buildSecurityFilterChain(HttpSecurity http,
-                                                        EasygoOAuth2UserService easygoOAuth2UserService)
+                                                        OidcUserService easygoOAuth2UserService)
         throws Exception {
 
         final LoginUrlAuthenticationEntryPoint authenticationEntryPoint = new LoginUrlAuthenticationEntryPoint(SIGN_IN_PATH);

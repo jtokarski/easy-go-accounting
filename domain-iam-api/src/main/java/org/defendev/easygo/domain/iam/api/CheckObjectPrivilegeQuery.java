@@ -1,7 +1,7 @@
 package org.defendev.easygo.domain.iam.api;
 
+import org.defendev.common.domain.iam.IOwnedBy;
 import org.defendev.common.domain.query.Query;
-import org.defendev.common.domain.useridentity.IOwnedBy;
 
 
 

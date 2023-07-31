@@ -46,6 +46,9 @@ project(':domain-iam-api').name = 'domain-iam-api'
 include 'domain-iam'
 project(':domain-iam').name = 'domain-iam'
 
+include 'domain-financial-accounting-api'
+project(':domain-financial-accounting-api').name = 'domain-financial-accounting-api'
+
 include 'domain-financial-accounting'
 project(':domain-financial-accounting').name = 'domain-financial-accounting'
 

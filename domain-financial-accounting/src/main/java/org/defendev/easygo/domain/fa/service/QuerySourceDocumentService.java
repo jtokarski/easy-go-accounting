@@ -2,15 +2,17 @@ package org.defendev.easygo.domain.fa.service;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.defendev.common.domain.query.result.QueryResult;
 import org.defendev.common.domain.resrep.CollectionMeta;
 import org.defendev.common.domain.resrep.ICollectionMeta;
+import org.defendev.easygo.domain.fa.api.IQuerySourceDocumentService;
+import org.defendev.easygo.domain.fa.api.SourceDocumentCollectionResRep;
+import org.defendev.easygo.domain.fa.api.SourceDocumentMinDto;
+import org.defendev.easygo.domain.fa.api.SourceDocumentQuery;
 import org.defendev.easygo.domain.fa.model.SourceDocument;
 import org.defendev.easygo.domain.fa.repository.SourceDocumentPageableSpec;
 import org.defendev.easygo.domain.fa.repository.SourceDocumentPredicateSpec;
 import org.defendev.easygo.domain.fa.repository.SourceDocumentRepo;
-import org.defendev.easygo.domain.fa.service.dto.SourceDocumentCollectionResRep;
-import org.defendev.easygo.domain.fa.service.dto.SourceDocumentMinDto;
-import org.defendev.easygo.domain.fa.service.query.SourceDocumentQuery;
 import org.defendev.easygo.domain.iam.api.IQueryOwnershipUnitIdsWithPrivilegeService;
 import org.defendev.easygo.domain.iam.api.OwnershipUnitIdsWithPrivilegeQuery;
 import org.defendev.easygo.domain.iam.api.Privilege;
@@ -29,7 +31,7 @@ import static org.defendev.common.time.TimeUtil.ZULU_ZONE_ID;
 
 
 @Service
-public class QuerySourceDocumentService {
+public class QuerySourceDocumentService implements IQuerySourceDocumentService {
 
     private static final Logger log = LogManager.getLogger();
 
@@ -45,13 +47,7 @@ public class QuerySourceDocumentService {
     }
 
     @Transactional(transactionManager = "financialAccountingJpaTransactionManager", readOnly = true)
-    /*
-     *
-     * todo: method return type QueryResult<SourceDocumentCollectionResRep>
-     * todo: method name -> execute()
-     *
-     */
-    public SourceDocumentCollectionResRep querySourceDocuments(SourceDocumentQuery query) {
+    public QueryResult<SourceDocumentCollectionResRep> execute(SourceDocumentQuery query) {
         if (!query.getResolveOwnershipUnitsForRequestingUser()) {
             throw new UnsupportedOperationException("Not implemented");
         }
@@ -62,7 +58,8 @@ public class QuerySourceDocumentService {
         final Pageable pageable = (new SourceDocumentPageableSpec(queryWithOwnership)).toPageable();
         final SourceDocumentPredicateSpec predicateSpec = new SourceDocumentPredicateSpec(queryWithOwnership);
         final Page<SourceDocument> sourceDocumentsPage = sourceDocumentRepo.findAll(predicateSpec, pageable);
-        return mapToCollectionResRep(pageable, sourceDocumentsPage);
+        final SourceDocumentCollectionResRep resRep = mapToCollectionResRep(pageable, sourceDocumentsPage);
+        return QueryResult.success(resRep);
     }
 
     private SourceDocumentCollectionResRep mapToCollectionResRep(Pageable pageable,
