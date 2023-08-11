@@ -37,7 +37,7 @@ export class SecurityContextDiscoveryService {
   constructor(private httpClient: HttpClient) { }
 
   public discover(): Observable<void> {
-    const url = '/api/security-context';
+    const url = 'api/security-context';
     return this.httpClient.get<SecurityContextDto>(url, OBSERVE_RESPONSE_JSON).pipe(
       tap((response: HttpResponse<SecurityContextDto>) => {
           if (null == response.body) {

@@ -32,7 +32,7 @@ export class SourceDocumentDetailsComponent implements OnInit, OnDestroy {
       map( (params: ParamMap) => params.get('externalId') as string ),
       mergeMap( (externalId: string) => {
         this.externalId = externalId;
-        const url = `/api/source-document/${externalId}`;
+        const url = `api/source-document/${externalId}`;
         const dto$: Observable<HttpResponse<SourceDocumentFullDto>> = this.httpClient.get<SourceDocumentFullDto>(url,
           OBSERVE_RESPONSE_JSON);
         return dto$;

@@ -21,7 +21,7 @@ export class FinancialAccountingHomeComponent implements OnInit, OnDestroy {
   public constructor(private httpClient: HttpClient) { }
 
   public ngOnInit(): void {
-    const url = `/api/last-visited`;
+    const url = `api/last-visited`;
     this.dto$ = this.httpClient.get<LastVisitedDto>(url, OBSERVE_RESPONSE_JSON)
       .pipe(
         takeUntil(this.destroyedSubject),

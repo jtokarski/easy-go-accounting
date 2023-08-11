@@ -1,9 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context>
 
-    <Environment name="easygo.db.oracle.appUserNameFA" value="${EASYGO_DB_ORACLE_appUserNameFA}"
-                 type="java.lang.String" override="false" />
-    <Environment name="easygo.db.oracle.appUserPasswordFA" value="${EASYGO_DB_ORACLE_appUserPasswordFA}"
-                 type="java.lang.String" override="false" />
+    <Environment name="easygo.financial-accounting.db.oracle[0].app-user-name"
+      value="${EASYGO_FA_DB_ORACLE_APP_USER_NAME}" type="java.lang.String" override="false" />
+    <Environment name="easygo.financial-accounting.db.oracle[0].app-user-password"
+      value="${EASYGO_FA_DB_ORACLE_APP_USER_PASSWORD}" type="java.lang.String" override="false" />
+    <Environment name="easygo.financial-accounting.db.oracle[0].container-name"
+      value="${EASYGO_FA_DB_ORACLE_CONTAINER_NAME}" type="java.lang.String" override="false" />
+    <Environment name="easygo.financial-accounting.db.oracle[0].driver"
+      value="oracle.jdbc.OracleDriver" type="java.lang.String" override="false" />
+    <Environment name="easygo.financial-accounting.db.oracle[0].host"
+      value="${EASYGO_FA_DB_ORACLE_HOST}" type="java.lang.String" override="false" />
+    <Environment name="easygo.financial-accounting.db.oracle[0].port"
+      value="${EASYGO_FA_DB_ORACLE_PORT}" type="java.lang.String" override="false" />
+    <Environment name="easygo.financial-accounting.db.oracle[0].tenant-id"
+      value="${EASYGO_FA_DB_ORACLE_TENANT_ID}" type="java.lang.String" override="false" />
+
+    <Environment name="easygo.iam.db.oracle[0].app-user-name"
+      value="${EASYGO_IAM_DB_ORACLE_APP_USER_NAME}" type="java.lang.String" override="false" />
+    <Environment name="easygo.iam.db.oracle[0].app-user-password"
+      value="${EASYGO_IAM_DB_ORACLE_APP_USER_PASSWORD}" type="java.lang.String" override="false" />
+    <Environment name="easygo.iam.db.oracle[0].container-name"
+      value="${EASYGO_IAM_DB_ORACLE_CONTAINER_NAME}" type="java.lang.String" override="false" />
+    <Environment name="easygo.iam.db.oracle[0].driver"
+      value="oracle.jdbc.OracleDriver" type="java.lang.String" override="false" />
+    <Environment name="easygo.iam.db.oracle[0].host"
+      value="${EASYGO_IAM_DB_ORACLE_HOST}" type="java.lang.String" override="false" />
+    <Environment name="easygo.iam.db.oracle[0].port"
+      value="${EASYGO_IAM_DB_ORACLE_PORT}" type="java.lang.String" override="false" />
+    <Environment name="easygo.iam.db.oracle[0].tenant-id"
+      value="${EASYGO_IAM_DB_ORACLE_TENANT_ID}" type="java.lang.String" override="false" />
+
+    <Environment name="easygo.web-application.oidc.azure.authorization-uri"
+      value="${EASYGO_WEBAPP_OIDC_AZURE_AUTHORIZATION_URI}" type="java.lang.String" override="false" />
+    <Environment name="easygo.web-application.oidc.azure.client-id"
+      value="${EASYGO_WEBAPP_OIDC_AZURE_CLIENT_ID}" type="java.lang.String" override="false" />
+    <Environment name="easygo.web-application.oidc.azure.client-secret"
+      value="${EASYGO_WEBAPP_OIDC_AZURE_CLIENT_SECRET}" type="java.lang.String" override="false" />
+    <Environment name="easygo.web-application.oidc.azure.jwk-set-uri"
+      value="${EASYGO_WEBAPP_OIDC_AZURE_JWK_SET_URI}" type="java.lang.String" override="false" />
+    <Environment name="easygo.web-application.oidc.azure.token-uri"
+      value="${EASYGO_WEBAPP_OIDC_AZURE_TOKEN_URI}" type="java.lang.String" override="false" />
+    <Environment name="easygo.web-application.oidc.azure.user-info-uri"
+      value="${EASYGO_WEBAPP_OIDC_AZURE_USER_INFO_URI}" type="java.lang.String" override="false" />
+
+    <Environment name="easygo.web-application.oidc.google.client-id"
+      value="${EASYGO_WEBAPP_OIDC_GOOGLE_CLIENT_ID}" type="java.lang.String" override="false" />
+    <Environment name="easygo.web-application.oidc.google.client-secret"
+      value="${EASYGO_WEBAPP_OIDC_GOOGLE_CLIENT_SECRET}" type="java.lang.String" override="false" />
 
 </Context>

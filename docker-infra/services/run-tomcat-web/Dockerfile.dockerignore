@@ -1,3 +1,5 @@
 *
 !/docker-infra/services/run-tomcat-web/context.xml
+!/docker-infra/services/run-tomcat-web/server.xml
+!/web-application/src/main/resources/easygoKs
 !/web-application/build/libs/web-application-plain.war

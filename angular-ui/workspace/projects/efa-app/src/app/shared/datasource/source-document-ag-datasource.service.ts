@@ -57,7 +57,7 @@ export class SourceDocumentAgDatasourceService extends BaseAgDatasource implemen
       textPropertyFilters: [],
     };
 
-    const url = '/api/source-document/_browse';
+    const url = 'api/source-document/_browse';
     const query = {
       pageNumber: pageNumber,
       pageSize: pageSize,

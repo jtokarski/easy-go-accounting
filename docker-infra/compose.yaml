@@ -13,16 +13,20 @@ services:
         source: "oracle-data"
         target: "/opt/oracle/oradata"
         read_only: false
+    deploy:
+      resources:
+        limits:
+          memory: 1G
   run-tomcat-web:
-    container_name: "easygo.tomcat-web"
     image: "easygo/tomcat-web"
     build:
       context: "../"
       dockerfile: "./docker-infra/services/run-tomcat-web/Dockerfile"
+    container_name: "easygo.tomcat-web"
     networks:
       - "easygo-bridge-net"
     ports:
-      - "0.0.0.0:8080:8080/tcp"
+      - "0.0.0.0:80:8080/tcp"
     env_file:
       - "../config/app-db.properties"
 networks:

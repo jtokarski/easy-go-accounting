@@ -8,6 +8,16 @@ spring:
     view-names: "*.th.html"
     suffix: ""
 
+server:
+  servlet:
+    context-path: "/easygo-web"
+  ssl:
+    enabled: true
+    key-store: "classpath:easygoKs"
+    key-store-type: "PKCS12"
+    key-store-password: "store123p"
+    key-alias: "easygoKey"
+  port: 8080
 
 management:
   endpoint:
