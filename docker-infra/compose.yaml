@@ -16,7 +16,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 1G
+          memory: 2G
   run-tomcat-web:
     image: "easygo/tomcat-web"
     build:
