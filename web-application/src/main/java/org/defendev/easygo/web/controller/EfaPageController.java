@@ -7,14 +7,23 @@ import org.springframework.web.servlet.ModelAndView;
 
 
 
-@RequestMapping( path = { "/" } )
+@RequestMapping(path = {
+    "/",
+    "/srcdoc",
+    "/srcdoc/mgmt/browse",
+    "/srcdoc/mgmt/details/{externalId}",
+    "/srcdoc/stats"
+})
 @Controller
 public class EfaPageController {
 
     @RequestMapping(path = {""}, method = RequestMethod.GET)
     public ModelAndView efaPage() {
         final ModelAndView mav = new ModelAndView();
-        mav.setViewName("efa-app.index.html");
+        /* todo: the slash at the beginning (/efa-app.index.html) is needed because the InternalResourceViewResolver
+         *   is used (see WebContext). Probably deserves a rewrite to Thymeleaf anyway.
+         */
+        mav.setViewName("/efa-app.index.html");
         return mav;
     }
 
