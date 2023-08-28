@@ -23,7 +23,7 @@ public class EfaPageController {
         /* todo: the slash at the beginning (/efa-app.index.html) is needed because the InternalResourceViewResolver
          *   is used (see WebContext). Probably deserves a rewrite to Thymeleaf anyway.
          */
-        mav.setViewName("/efa-app.index.html");
+        mav.setViewName("efa-app/efa-app.index.th");
         return mav;
     }
 

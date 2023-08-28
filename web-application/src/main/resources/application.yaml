@@ -5,8 +5,8 @@ spring:
     open-in-view: false
   thymeleaf:
     prefix: "classpath:/view-resources/"
-    view-names: "*.th.html"
-    suffix: ""
+    view-names: "*.th"
+    suffix: ".html"
 
 server:
   servlet:

@@ -50,5 +50,5 @@ test {
  *   - https://stackoverflow.com/questions/54218556/how-to-generate-jpa-metamodel-with-gradle-5-x
  *   - https://stackoverflow.com/questions/49830187/how-to-use-jpa-metamodel-with-gradle-intellij-idea/53651319#53651319
  */
-sourceSets.main.java.srcDirs += "${buildDir}/generated"
+// sourceSets.main.java.srcDirs += "${buildDir}/generated"
 

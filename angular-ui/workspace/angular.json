@@ -25,7 +25,7 @@
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "outputPath": "angular-dist/efa-app",
-            "index": "projects/efa-app/src/efa-app.index.html",
+            "index": "projects/efa-app/src/efa-app.index.th.html",
             "main": "projects/efa-app/src/main.ts",
             "polyfills": [
               "zone.js"

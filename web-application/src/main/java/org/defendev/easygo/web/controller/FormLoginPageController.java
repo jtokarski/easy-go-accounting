@@ -30,7 +30,7 @@ public class FormLoginPageController {
         final String googleSignInLink = removeStart(DEFAULT_AUTHORIZATION_REQUEST_BASE_URI, "/") + "/" +
             OAUTH2_REGISTRATION_ID_GOOGLE;
         mav.getModel().put("googleSignInLink", googleSignInLink);
-        mav.setViewName("static/loginPage.th.html");
+        mav.setViewName("static/loginPage.th");
         return mav;
     }
 
