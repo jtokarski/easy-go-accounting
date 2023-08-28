@@ -6,8 +6,10 @@ plugins {
 
 group = 'org.defendev'
 
-sourceCompatibility = JavaVersion.VERSION_17
-targetCompatibility = JavaVersion.VERSION_17
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
 
 def npmInstall = tasks.register('npmInstall', org.gradle.api.tasks.Exec) {
     workingDir "${project.projectDir}/workspace"
