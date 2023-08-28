@@ -84,7 +84,6 @@ public class WebSecurity {
                 .logoutRequestMatcher(AntPathRequestMatcher.antMatcher(HttpMethod.GET, SIGN_OUT_PATH))
                 .logoutSuccessUrl("/")
             .and()
-            .csrf().ignoringRequestMatchers("/**").and()
             .build();
     }
 
