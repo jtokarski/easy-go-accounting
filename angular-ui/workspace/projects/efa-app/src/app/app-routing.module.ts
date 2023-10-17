@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FinancialAccountingHomeComponent } from '@/pages/financial-accounting-home/financial-accounting-home.component';
-import { SourceDocumentMainComponent } from '@/pages/source-document-main/source-document-main.component';
-import { SourceDocumentHomeComponent } from '@/pages/source-document-main/source-document-home/source-document-home.component';
-import { SourceDocumentBrowseComponent } from '@/pages/source-document-main/source-document-browse/source-document-browse.component';
-import { SourceDocumentDetailsComponent } from '@/pages/source-document-main/source-document-details/source-document-details.component';
-import { SourceDocumentStatisticsComponent } from '@/pages/source-document-main/source-document-statistics/source-document-statistics.component';
+import { DocumentMainComponent } from '@/pages/document-main/document-main.component';
+import { DocumentHomeComponent } from '@/pages/document-main/document-home/document-home.component';
+import { DocumentBrowseComponent } from '@/pages/document-main/document-browse/document-browse.component';
+import { DocumentDetailsComponent } from '@/pages/document-main/document-details/document-details.component';
+import { DocumentStatisticsComponent } from '@/pages/document-main/document-statistics/document-statistics.component';
 
 
 
@@ -17,24 +17,24 @@ const routes: Routes = [
     component: FinancialAccountingHomeComponent,
   },
   {
-    path: 'srcdoc',
-    component: SourceDocumentMainComponent,
+    path: 'document',
+    component: DocumentMainComponent,
     children: [
       {
         path: '',
-        component: SourceDocumentHomeComponent,
+        component: DocumentHomeComponent,
       },
       {
         path: 'mgmt/browse',
-        component: SourceDocumentBrowseComponent,
+        component: DocumentBrowseComponent,
       },
       {
         path: 'mgmt/details/:externalId',
-        component: SourceDocumentDetailsComponent,
+        component: DocumentDetailsComponent,
       },
       {
         path: 'stats',
-        component: SourceDocumentStatisticsComponent,
+        component: DocumentStatisticsComponent,
       }
     ],
   },

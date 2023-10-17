@@ -26,6 +26,10 @@ tasks.named('bootRun') {
     systemProperty 'spring.config.additional-location', runJarConfig
 }
 
+//tasks.withType(JavaCompile) {
+//    options.compilerArgs += ['-Xlint:deprecation']
+//}
+
 dependencies {
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security'

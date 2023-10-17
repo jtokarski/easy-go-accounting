@@ -8,14 +8,14 @@ dependencyResolutionManagement {
 
     versionCatalogs {
         libs {
-            version('spring-boot.version', '3.0.2')
-            version('spring-dependency-management-plugin.version', '1.1.0')
+            version('spring-boot.version', '3.1.4')
+            version('spring-dependency-management-plugin.version', '1.1.3')
             version('oracle-jdbc-bom.version', '21.8.0.0')
             version('apache-commons-text.version', '1.10.0')
             version('flywaydb.version', '9.12.0')
-            version('defendev-common-jdk.version', '0.0.4')
+            version('defendev-common-jdk.version', '0.0.6')
             version('defendev-common-fixtures.version', '0.0.2')
-            version('defendev-common-spring6.version', '0.0.1')
+            version('defendev-common-spring6.version', '0.0.2')
 
             library('oracleJdbcBom', 'com.oracle.database.jdbc', 'ojdbc-bom')
                 .versionRef('oracle-jdbc-bom.version')

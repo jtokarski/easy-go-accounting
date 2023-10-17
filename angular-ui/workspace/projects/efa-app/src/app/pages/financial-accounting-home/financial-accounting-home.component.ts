@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpClient, HttpResponse } from "@angular/common/http";
 import { Observable, map, Subject, takeUntil } from "rxjs";
 import { OBSERVE_RESPONSE_JSON } from "@/shared/observe-response-json";
-import { SourceDocumentFullDto } from "@/shared/dto/source-document";
+import { DocumentFullDto } from "@/shared/dto/document";
 import { LastVisitedDto } from '@/shared/dto/last-visited';
 
 

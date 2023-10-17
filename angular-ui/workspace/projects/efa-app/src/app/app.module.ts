@@ -17,12 +17,12 @@ import { SharedModule } from '@/shared/shared.module';
 import { SecurityContextDiscoveryService, discoverSecurityContextFactory } from '@/security/security-context-discovery.service';
 
 import { FinancialAccountingHomeComponent } from './pages/financial-accounting-home/financial-accounting-home.component';
-import { SourceDocumentMainComponent } from './pages/source-document-main/source-document-main.component';
-import { SourceDocumentHomeComponent } from './pages/source-document-main/source-document-home/source-document-home.component';
-import { SourceDocumentBrowseComponent } from './pages/source-document-main/source-document-browse/source-document-browse.component';
-import { SourceDocumentStatisticsComponent } from './pages/source-document-main/source-document-statistics/source-document-statistics.component';
-import { SourceDocumentDetailsComponent } from './pages/source-document-main/source-document-details/source-document-details.component';
-import { SourceDocumentRowActionsComponent } from './pages/source-document-main/source-document-browse/source-document-row-actions/source-document-row-actions.component';
+import { DocumentMainComponent } from './pages/document-main/document-main.component';
+import { DocumentHomeComponent } from './pages/document-main/document-home/document-home.component';
+import { DocumentBrowseComponent } from './pages/document-main/document-browse/document-browse.component';
+import { DocumentStatisticsComponent } from './pages/document-main/document-statistics/document-statistics.component';
+import { DocumentDetailsComponent } from './pages/document-main/document-details/document-details.component';
+import { DocumentRowActionsComponent } from './pages/document-main/document-browse/document-row-actions/document-row-actions.component';
 
 
 
@@ -34,12 +34,12 @@ ModuleRegistry.registerModules([
   declarations: [
     AppComponent,
     FinancialAccountingHomeComponent,
-    SourceDocumentMainComponent,
-    SourceDocumentHomeComponent,
-    SourceDocumentBrowseComponent,
-    SourceDocumentStatisticsComponent,
-    SourceDocumentDetailsComponent,
-    SourceDocumentRowActionsComponent
+    DocumentMainComponent,
+    DocumentHomeComponent,
+    DocumentBrowseComponent,
+    DocumentStatisticsComponent,
+    DocumentDetailsComponent,
+    DocumentRowActionsComponent,
   ],
   imports: [
     BrowserModule,

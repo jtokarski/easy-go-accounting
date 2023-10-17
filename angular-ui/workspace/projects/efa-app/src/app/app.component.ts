@@ -36,13 +36,13 @@ export class AppComponent implements OnInit {
     this.collapseMenu();
   }
 
-  public navigateToSourceDocuments() {
-    this.router.navigate(['srcdoc']);
+  public navigateToDocuments() {
+    this.router.navigate(['document']);
     this.collapseMenu();
   }
 
-  public isRouteActiveSourceDocuments() {
-    return isRouteActive(this.router, 'srcdoc');
+  public isRouteActiveDocuments() {
+    return isRouteActive(this.router, 'document');
   }
 
 }

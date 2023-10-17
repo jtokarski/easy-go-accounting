@@ -42,21 +42,21 @@ GRANT CREATE SESSION TO "${roUserNameFA}";
 
 
 
-CREATE TABLE "${schemaNameFA}"."SourceDocument" (
+CREATE TABLE "${schemaNameFA}"."Document" (
   "id"                          NUMBER(19, 0) GENERATED ALWAYS AS IDENTITY (NOCACHE) NOT NULL,
   "ownershipUnitId"             NUMBER(19, 0) NOT NULL,
   "controlNumber"               VARCHAR2(100 CHAR),
   "documentIssueDateTimeZulu"   DATE,
   "description"                 VARCHAR2(500 CHAR),
-  CONSTRAINT PK_SourceDocument PRIMARY KEY ("id"),
-  CONSTRAINT FK_SourceDocument_OwnershipUnit_1 FOREIGN KEY ("ownershipUnitId")
+  CONSTRAINT PK_Document PRIMARY KEY ("id"),
+  CONSTRAINT FK_Document_OwnershipUnit_1 FOREIGN KEY ("ownershipUnitId")
     REFERENCES "${schemaNameIAM}"."OwnershipUnit" ("id")
 );
-GRANT SELECT ON "${schemaNameFA}"."SourceDocument" TO "${schemaNameFA}_READONLY_ROLE";
-GRANT INSERT ON "${schemaNameFA}"."SourceDocument" TO "${schemaNameFA}_UPDATE_ROLE";
-GRANT UPDATE ON "${schemaNameFA}"."SourceDocument" TO "${schemaNameFA}_UPDATE_ROLE";
-GRANT DELETE ON "${schemaNameFA}"."SourceDocument" TO "${schemaNameFA}_UPDATE_ROLE";
-CREATE SYNONYM "${appUserNameFA}"."SourceDocument" FOR "${schemaNameFA}"."SourceDocument";
+GRANT SELECT ON "${schemaNameFA}"."Document" TO "${schemaNameFA}_READONLY_ROLE";
+GRANT INSERT ON "${schemaNameFA}"."Document" TO "${schemaNameFA}_UPDATE_ROLE";
+GRANT UPDATE ON "${schemaNameFA}"."Document" TO "${schemaNameFA}_UPDATE_ROLE";
+GRANT DELETE ON "${schemaNameFA}"."Document" TO "${schemaNameFA}_UPDATE_ROLE";
+CREATE SYNONYM "${appUserNameFA}"."Document" FOR "${schemaNameFA}"."Document";
 
 
 CREATE TABLE "${schemaNameFA}"."FinancialTransaction" (
@@ -67,8 +67,8 @@ CREATE TABLE "${schemaNameFA}"."FinancialTransaction" (
   "recordedDateTimeZulu"     DATE,
   "transactionDateTimeZulu"  DATE,
   CONSTRAINT PK_FinancialTransaction PRIMARY KEY ("id"),
-  CONSTRAINT FK_FinancialTransaction_SourceDocument_1 FOREIGN KEY ("sourceDocumentId")
-    REFERENCES "${schemaNameFA}"."SourceDocument" ("id")
+  CONSTRAINT FK_FinancialTransaction_Document_1 FOREIGN KEY ("sourceDocumentId")
+    REFERENCES "${schemaNameFA}"."Document" ("id")
 );
 GRANT SELECT ON "${schemaNameFA}"."FinancialTransaction" TO "${schemaNameFA}_READONLY_ROLE";
 GRANT INSERT ON "${schemaNameFA}"."FinancialTransaction" TO "${schemaNameFA}_UPDATE_ROLE";

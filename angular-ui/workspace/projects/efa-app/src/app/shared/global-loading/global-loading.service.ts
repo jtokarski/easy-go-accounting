@@ -5,8 +5,8 @@ import { AsyncTasksTreeNode, AsyncTasksTreeAggregateNode, buildRecursiveRootView
 
 
 type EfaAsyncTasksTracker = AsyncTasksTreeAggregateNode & {
-  sourceDocumentMain: AsyncTasksTreeNode & {
-    sourceDocumentBrowse: AsyncTasksTreeNode & { }
+  documentMain: AsyncTasksTreeNode & {
+    documentBrowse: AsyncTasksTreeNode & { }
   }
 }
 
@@ -20,9 +20,9 @@ export class GlobalLoadingService {
   constructor() {
     this.tracker = {
       _: new AsyncTasksLocalTracker(),
-      sourceDocumentMain: {
+      documentMain: {
         _: new AsyncTasksLocalTracker(),
-        sourceDocumentBrowse: {
+        documentBrowse: {
           _: new AsyncTasksLocalTracker(),
         }
       },

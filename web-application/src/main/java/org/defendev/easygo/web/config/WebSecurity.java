@@ -10,7 +10,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.oauth2.client.CommonOAuth2Provider;
@@ -31,7 +31,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Import({ PasswordEncoderConfig.class })
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableMethodSecurity(prePostEnabled = true)
 @Configuration
 public class WebSecurity {
 
@@ -67,23 +67,25 @@ public class WebSecurity {
 
         return http
             .securityMatcher(AntPathRequestMatcher.antMatcher("/**"))
-            .authorizeHttpRequests()
-            .requestMatchers(AntPathRequestMatcher.antMatcher("/**")).permitAll()
-            .and()
-            .exceptionHandling()
-            .authenticationEntryPoint(authenticationEntryPoint)
-            .and()
-            .formLogin().loginProcessingUrl(SIGN_IN_PATH)
-            .and()
-            .oauth2Login()
-                .userInfoEndpoint()
-                    .oidcUserService(easygoOAuth2UserService)
-            .and()
-            .and()
-            .logout()
-                .logoutRequestMatcher(AntPathRequestMatcher.antMatcher(HttpMethod.GET, SIGN_OUT_PATH))
-                .logoutSuccessUrl("/")
-            .and()
+            .authorizeHttpRequests(
+                customizer -> customizer.requestMatchers(AntPathRequestMatcher.antMatcher("/**")).permitAll()
+            )
+            .exceptionHandling(
+                customizer -> customizer.authenticationEntryPoint(authenticationEntryPoint)
+            )
+            .formLogin(
+                customizer -> customizer.loginProcessingUrl(SIGN_IN_PATH)
+            )
+            .oauth2Login(
+                customizer -> customizer.userInfoEndpoint(
+                    userInfoEndpointCustomizer -> userInfoEndpointCustomizer.oidcUserService(easygoOAuth2UserService)
+                )
+            )
+            .logout(
+                customizer -> customizer
+                    .logoutRequestMatcher(AntPathRequestMatcher.antMatcher(HttpMethod.GET, SIGN_OUT_PATH))
+                    .logoutSuccessUrl("/")
+            )
             .build();
     }
 

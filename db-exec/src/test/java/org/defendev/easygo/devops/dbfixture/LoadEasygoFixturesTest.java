@@ -8,7 +8,7 @@ import org.apache.logging.log4j.Logger;
 import org.defendev.common.fixture.loader.FixturesLoader;
 import org.defendev.easygo.devops.config.DataSourceConfig;
 import org.defendev.easygo.devops.dbfixture.loader.OwnershipUnitFixturesLoader;
-import org.defendev.easygo.devops.dbfixture.loader.SourceDocumentFixturesLoader;
+import org.defendev.easygo.devops.dbfixture.loader.DocumentFixturesLoader;
 import org.defendev.easygo.devops.dbfixture.loader.UserIdentityFixturesLoader;
 import org.defendev.easygo.domain.fa.config.FinancialAccountingJpaConfig;
 import org.defendev.easygo.domain.fa.config.FinancialAccountingProperties;
@@ -71,9 +71,9 @@ public class LoadEasygoFixturesTest {
             "fixture/identity-access-management/UserIdentitySet.xml", iamEm, passwordEncoder, ownershipUnitFixturesLoader);
         loaders.add(userIdentityFixturesLoader);
 
-        final SourceDocumentFixturesLoader sourceDocumentFixturesLoader = new SourceDocumentFixturesLoader(
-            "fixture/financial-accounting/SourceDocumentSet.xml", financialAccountingEm, ownershipUnitFixturesLoader);
-        loaders.add(sourceDocumentFixturesLoader);
+        final DocumentFixturesLoader documentFixturesLoader = new DocumentFixturesLoader(
+            "fixture/financial-accounting/DocumentSet.xml", financialAccountingEm, ownershipUnitFixturesLoader);
+        loaders.add(documentFixturesLoader);
 
         iamTransactionTemplate.execute(status -> {
             try {
@@ -87,7 +87,7 @@ public class LoadEasygoFixturesTest {
 
         financialAccountingTransactionTemplate.execute(status -> {
             try {
-                sourceDocumentFixturesLoader.readFromResourceAndPersist();
+                documentFixturesLoader.readFromResourceAndPersist();
             } catch (JAXBException e) {
                 throw new RuntimeException(e);
             }
