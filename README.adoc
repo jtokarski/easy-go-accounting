@@ -114,13 +114,24 @@ $ ./gradlew :db-exec:oracleBaselineAndMigrate
 $ ./gradlew :db-exec:loadFixtures
 ----
 
+=== Execute complete build
+This includes `npm install` and `ng build` of the Angular UI.
+
+----
+$ ./gradlew build
+----
+
 === Run the application locally
 
 [source,bash]
 ----
-$ ./gradlew :web-application:bootRun
+$ ./gradlew -PskipAngularBuild=true -PskipNpmInstall=true :web-application:bootRun
 ----
-If everything is setup correctly you should be able to access working application under http://localhost:8080/ .
+If everything is setup correctly you should be able to access working application
+under https://localhost:8080/easygo-web/ .
+You should be able to log in with +
+Username: *john@example.com* +
+Password: *john* 
 
 == Installation troubleshooting
 
