@@ -12,6 +12,10 @@ java {
 }
 
 def npmInstall = tasks.register('npmInstall', org.gradle.api.tasks.Exec) {
+    onlyIf {
+        def skipNpmInstall = Boolean.parseBoolean(providers.gradleProperty('skipNpmInstall').getOrElse(''))
+        !skipNpmInstall
+    }
     workingDir "${project.projectDir}/workspace"
     if (Os.isFamily(Os.FAMILY_WINDOWS)) {
         commandLine 'cmd', '/c', 'npm install'
@@ -23,6 +27,10 @@ def npmInstall = tasks.register('npmInstall', org.gradle.api.tasks.Exec) {
 
 def angularBuildTask = tasks.register('angularBuild', org.gradle.api.tasks.Exec) {
     dependsOn npmInstall
+    onlyIf {
+        def skipAngularBuild = Boolean.parseBoolean(providers.gradleProperty('skipAngularBuild').getOrElse(''))
+        !skipAngularBuild
+    }
     workingDir "${project.projectDir}/workspace"
     if (Os.isFamily(Os.FAMILY_WINDOWS)) {
         println 'Building Angular project on Windows OS'

@@ -20,4 +20,16 @@ easygo:
           container-name: "xepdb1"
           app-user-name: "EASYGO_T1_IAM_APPU"
           app-user-password: "kM0iNtrN0gtG5"
+  web-application:
+    oidc:
+      azure:
+        client-id: "00000000-0000-0000-0000-000000000000"
+        client-secret: "-~aaa~aaaaaaaaaaaaaaaaaa.aaaaaaaaaaaaa_a"
+        authorization-uri: "https://login.microsoftonline.com/00000000-0000-0000-0000-000000000000/oauth2/v2.0/authorize"
+        token-uri: "https://login.microsoftonline.com/00000000-0000-0000-0000-000000000000/oauth2/v2.0/token"
+        user-info-uri: "https://graph.microsoft.com/oidc/userinfo"
+        jwk-set-uri: "https://login.microsoftonline.com/00000000-0000-0000-0000-000000000000/discovery/v2.0/keys"
+      google:
+        client-id: "000000000000-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.apps.googleusercontent.com"
+        client-secret: "aaaaaa-aaaaaaaaaaaaaaaaaaaaaaaaaaaa"
 
