@@ -25,6 +25,7 @@ import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
 import org.springframework.security.oauth2.core.oidc.IdTokenClaimNames;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 
@@ -63,7 +64,10 @@ public class WebSecurity {
                                                         OidcUserService easygoOAuth2UserService)
         throws Exception {
 
-        final LoginUrlAuthenticationEntryPoint authenticationEntryPoint = new LoginUrlAuthenticationEntryPoint(SIGN_IN_PATH);
+        final LoginUrlAuthenticationEntryPoint authnEntryPoint = new LoginUrlAuthenticationEntryPoint(SIGN_IN_PATH);
+        final SimpleUrlAuthenticationFailureHandler authnFailureHandler = new SimpleUrlAuthenticationFailureHandler(
+            SIGN_IN_PATH);
+        authnFailureHandler.setUseForward(false);
 
         return http
             .securityMatcher(AntPathRequestMatcher.antMatcher("/**"))
@@ -71,10 +75,12 @@ public class WebSecurity {
                 customizer -> customizer.requestMatchers(AntPathRequestMatcher.antMatcher("/**")).permitAll()
             )
             .exceptionHandling(
-                customizer -> customizer.authenticationEntryPoint(authenticationEntryPoint)
+                customizer -> customizer.authenticationEntryPoint(authnEntryPoint)
             )
             .formLogin(
-                customizer -> customizer.loginProcessingUrl(SIGN_IN_PATH)
+                customizer -> customizer
+                    .loginProcessingUrl(SIGN_IN_PATH)
+                    .failureHandler(authnFailureHandler)
             )
             .oauth2Login(
                 customizer -> customizer.userInfoEndpoint(
