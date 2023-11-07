@@ -128,7 +128,7 @@ $ ./gradlew build
 $ ./gradlew -PskipAngularBuild=true -PskipNpmInstall=true :web-application:bootRun
 ----
 If everything is setup correctly you should be able to access working application
-under https://localhost:8080/easygo-web/ .
+under https://localhost:8443/easygo-web/ .
 You should be able to log in with +
 Username: *john@example.com* +
 Password: *john* 

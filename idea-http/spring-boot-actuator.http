@@ -1,0 +1,22 @@
+
+### GET Spring Boot Actuator (discovery)
+# @no-redirect
+GET https://localhost:8443/easygo-web/actuator
+
+### GET Actuator - beans
+# @no-redirect
+GET https://localhost:8443/easygo-web/actuator/beans
+
+### GET Actuator - env
+# @no-redirect
+GET https://localhost:8443/easygo-web/actuator/env
+
+### GET Actuator - health
+# @no-redirect
+GET https://localhost:8443/easygo-web/actuator/health
+
+### GET Actuator - info
+# @no-redirect
+GET https://localhost:8443/easygo-web/actuator/info
+
+

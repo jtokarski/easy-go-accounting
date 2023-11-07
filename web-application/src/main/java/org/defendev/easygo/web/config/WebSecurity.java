@@ -27,7 +27,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-
+import org.springframework.security.web.util.matcher.RegexRequestMatcher;
 
 
 @Import({ PasswordEncoderConfig.class })
@@ -72,7 +72,13 @@ public class WebSecurity {
         return http
             .securityMatcher(AntPathRequestMatcher.antMatcher("/**"))
             .authorizeHttpRequests(
-                customizer -> customizer.requestMatchers(AntPathRequestMatcher.antMatcher("/**")).permitAll()
+                customizer -> customizer
+                    .requestMatchers("/", SIGN_IN_PATH, "/api/security-context", "/api/document/_browse").permitAll()
+                    .requestMatchers(RegexRequestMatcher.regexMatcher(
+                        "/[a-zA-Z0-9-\\.]+\\.(png|svg|gif|ico|js|css|ttf|woff2)")).permitAll()
+                    .requestMatchers("/actuator", "/actuator/beans", "/actuator/env", "/actuator/health",
+                        "/actuator/info").permitAll()
+                    .requestMatchers(AntPathRequestMatcher.antMatcher("/**")).fullyAuthenticated()
             )
             .exceptionHandling(
                 customizer -> customizer.authenticationEntryPoint(authnEntryPoint)

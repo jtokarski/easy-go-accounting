@@ -7,6 +7,9 @@ spring:
     prefix: "classpath:/view-resources/"
     view-names: "*.th"
     suffix: ".html"
+  mvc:
+    servlet:
+      load-on-startup: 1
 
 server:
   servlet:
@@ -17,10 +20,43 @@ server:
     key-store-type: "PKCS12"
     key-store-password: "store123p"
     key-alias: "easygoKey"
-  port: 8080
+  port: 8443
 
 management:
+  health:
+    defaults:
+      enabled: false
+    db:
+      enabled: true
+    ping:
+      enabled: true
+  info:
+    defaults:
+      enabled: false
+    git:
+      enabled: true
+      mode: simple
+    env:
+      enabled: true
+    build:
+      enabled: true
+  endpoints:
+    web:
+      discovery:
+        enabled: true
+      exposure:
+        include: beans,env,health,info
+    enabled-by-default: false
   endpoint:
+    beans:
+      enabled: true
+    env:
+      enabled: true
+      show-values: always
     health:
       show-details: always
       show-components: always
+      enabled: true
+    info:
+      enabled: true
+

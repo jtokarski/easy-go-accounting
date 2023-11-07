@@ -4,6 +4,7 @@ plugins {
     id 'war'
     alias libs.plugins.springDependencyManagementPlugin
     alias libs.plugins.springBootPlugin
+    alias libs.plugins.gitPropertiesPlugin
 }
 
 group = 'org.defendev'
@@ -15,6 +16,7 @@ java {
 
 springBoot {
     mainClass = 'org.defendev.easygo.web.EasygoWebApplication'
+    buildInfo()
 }
 
 bootWar {
