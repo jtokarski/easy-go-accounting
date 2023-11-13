@@ -4,7 +4,8 @@
     <document>
         <id>1</id>
         <controlNumber>EXCHGAS-00U1</controlNumber>
-        <documentIssueDateTimeZulu>2019-08-31T14:29:59</documentIssueDateTimeZulu>
+        <type>STATEMENT</type>
+        <issueDateTimeZulu>2019-08-31T14:29:59</issueDateTimeZulu>
         <description>Exchange Rate Risk Awareness Statement</description>
         <ownershipUnitId>102</ownershipUnitId>
     </document>
@@ -12,7 +13,8 @@
     <document>
         <id>2</id>
         <controlNumber>EXCHGAS-00U2</controlNumber>
-        <documentIssueDateTimeZulu>2019-09-11T11:12:45</documentIssueDateTimeZulu>
+        <type>STATEMENT</type>
+        <issueDateTimeZulu>2019-09-11T11:12:45</issueDateTimeZulu>
         <description>Exchange Rate rsk Awareness Stmt</description>
         <ownershipUnitId>102</ownershipUnitId>
     </document>
@@ -20,7 +22,8 @@
     <document>
         <id>3</id>
         <controlNumber>EXCHGAS-00U3</controlNumber>
-        <documentIssueDateTimeZulu>2019-09-11T09:03:18</documentIssueDateTimeZulu>
+        <type>STATEMENT</type>
+        <issueDateTimeZulu>2019-09-11T09:03:18</issueDateTimeZulu>
         <description>E.R.R.A.S</description>
         <ownershipUnitId>102</ownershipUnitId>
     </document>
@@ -28,7 +31,8 @@
     <document>
         <id>4</id>
         <controlNumber>GDPRC-00C1</controlNumber>
-        <documentIssueDateTimeZulu>2019-11-30T10:56:49</documentIssueDateTimeZulu>
+        <type>AGREEMENT</type>
+        <issueDateTimeZulu>2019-11-30T10:56:49</issueDateTimeZulu>
         <description>GDPR consent for retail banking</description>
         <ownershipUnitId>103</ownershipUnitId>
     </document>
@@ -36,7 +40,8 @@
     <document>
         <id>5</id>
         <controlNumber>GDPRC-00C2</controlNumber>
-        <documentIssueDateTimeZulu>2019-11-30T14:36:57</documentIssueDateTimeZulu>
+        <type>AGREEMENT</type>
+        <issueDateTimeZulu>2019-11-30T14:36:57</issueDateTimeZulu>
         <description>GDPR consent for retail banking</description>
         <ownershipUnitId>102</ownershipUnitId>
     </document>
@@ -44,7 +49,8 @@
     <document>
         <id>6</id>
         <controlNumber>TCACK-00071</controlNumber>
-        <documentIssueDateTimeZulu>2019-12-07T08:21:33</documentIssueDateTimeZulu>
+        <type>STATEMENT</type>
+        <issueDateTimeZulu>2019-12-07T08:21:33</issueDateTimeZulu>
         <description>Online Banking - Terms and Conditions Acknoledgement</description>
         <ownershipUnitId>102</ownershipUnitId>
     </document>
@@ -52,7 +58,8 @@
     <document>
         <id>7</id>
         <controlNumber>TCACK-00072</controlNumber>
-        <documentIssueDateTimeZulu>2019-12-07T08:59:01</documentIssueDateTimeZulu>
+        <type>STATEMENT</type>
+        <issueDateTimeZulu>2019-12-07T08:59:01</issueDateTimeZulu>
         <description>Online Banking - Terms and Conditions Acknoledgement</description>
         <ownershipUnitId>102</ownershipUnitId>
     </document>
@@ -60,7 +67,8 @@
     <document>
         <id>8</id>
         <controlNumber>GDPRC-00C3</controlNumber>
-        <documentIssueDateTimeZulu>2019-12-09T19:52:27</documentIssueDateTimeZulu>
+        <type>STATEMENT</type>
+        <issueDateTimeZulu>2019-12-09T19:52:27</issueDateTimeZulu>
         <description>GDPR consent for retail banking</description>
         <ownershipUnitId>102</ownershipUnitId>
     </document>
@@ -68,7 +76,8 @@
     <document>
         <id>9</id>
         <controlNumber>AGR_RETA-0401</controlNumber>
-        <documentIssueDateTimeZulu>2019-12-10T13:13:09</documentIssueDateTimeZulu>
+        <type>AGREEMENT</type>
+        <issueDateTimeZulu>2019-12-10T13:13:09</issueDateTimeZulu>
         <description>Retail Bank Account Agreement</description>
         <ownershipUnitId>102</ownershipUnitId>
     </document>
@@ -76,7 +85,8 @@
     <document>
         <id>10</id>
         <controlNumber>GDPRC-00C4</controlNumber>
-        <documentIssueDateTimeZulu>2019-12-12T11:11:11</documentIssueDateTimeZulu>
+        <type>STATEMENT</type>
+        <issueDateTimeZulu>2019-12-12T11:11:11</issueDateTimeZulu>
         <description>GDPR consent for retail banking</description>
         <ownershipUnitId>102</ownershipUnitId>
     </document>
@@ -84,7 +94,8 @@
     <document>
         <id>11</id>
         <controlNumber>AGR_RETA-0402</controlNumber>
-        <documentIssueDateTimeZulu>2019-12-14T15:05:15</documentIssueDateTimeZulu>
+        <type>AGREEMENT</type>
+        <issueDateTimeZulu>2019-12-14T15:05:15</issueDateTimeZulu>
         <description>Retail Bank Account Agreement</description>
         <ownershipUnitId>102</ownershipUnitId>
     </document>
@@ -92,7 +103,8 @@
     <document>
         <id>12</id>
         <controlNumber>AGR_RETA-0403</controlNumber>
-        <documentIssueDateTimeZulu>2019-12-17T13:09:04</documentIssueDateTimeZulu>
+        <type>AGREEMENT</type>
+        <issueDateTimeZulu>2019-12-17T13:09:04</issueDateTimeZulu>
         <description>Retail Bank Account Agreement</description>
         <ownershipUnitId>102</ownershipUnitId>
     </document>
@@ -100,7 +112,8 @@
     <document>
         <id>13</id>
         <controlNumber>AGR_RETA-0404</controlNumber>
-        <documentIssueDateTimeZulu>2019-12-19T16:09:59</documentIssueDateTimeZulu>
+        <type>AGREEMENT</type>
+        <issueDateTimeZulu>2019-12-19T16:09:59</issueDateTimeZulu>
         <description>Retail Bank Account Agreement</description>
         <ownershipUnitId>102</ownershipUnitId>
     </document>
@@ -108,7 +121,8 @@
     <document>
         <id>14</id>
         <controlNumber>GDPRC-00C5</controlNumber>
-        <documentIssueDateTimeZulu>2019-12-30T13:10:13</documentIssueDateTimeZulu>
+        <type>STATEMENT</type>
+        <issueDateTimeZulu>2019-12-30T13:10:13</issueDateTimeZulu>
         <description>GDPR consent for retail banking</description>
         <ownershipUnitId>102</ownershipUnitId>
     </document>
@@ -116,7 +130,8 @@
     <document>
         <id>15</id>
         <controlNumber>TCACK-00073</controlNumber>
-        <documentIssueDateTimeZulu>2020-01-04T16:59:59</documentIssueDateTimeZulu>
+        <type>STATEMENT</type>
+        <issueDateTimeZulu>2020-01-04T16:59:59</issueDateTimeZulu>
         <description>Online Banking - Terms and Conditions Acknoledgement</description>
         <ownershipUnitId>102</ownershipUnitId>
     </document>
@@ -124,7 +139,8 @@
     <document>
         <id>16</id>
         <controlNumber>AGR_RETA-0405</controlNumber>
-        <documentIssueDateTimeZulu>2020-01-08T07:57:12</documentIssueDateTimeZulu>
+        <type>AGREEMENT</type>
+        <issueDateTimeZulu>2020-01-08T07:57:12</issueDateTimeZulu>
         <description>Retail Bank Account Agreement</description>
         <ownershipUnitId>102</ownershipUnitId>
     </document>
@@ -132,7 +148,8 @@
     <document>
         <id>17</id>
         <controlNumber>AGR_RETA-0406</controlNumber>
-        <documentIssueDateTimeZulu>2020-01-28T09:31:46</documentIssueDateTimeZulu>
+        <type>AGREEMENT</type>
+        <issueDateTimeZulu>2020-01-28T09:31:46</issueDateTimeZulu>
         <description>Retail Bank Account Agreement</description>
         <ownershipUnitId>102</ownershipUnitId>
     </document>
@@ -140,7 +157,8 @@
     <document>
         <id>18</id>
         <controlNumber>GDPRC-00C6</controlNumber>
-        <documentIssueDateTimeZulu>2020-01-28T11:49:19</documentIssueDateTimeZulu>
+        <type>AGREEMENT</type>
+        <issueDateTimeZulu>2020-01-28T11:49:19</issueDateTimeZulu>
         <description>GDPR consent for retail banking</description>
         <ownershipUnitId>102</ownershipUnitId>
     </document>
@@ -148,7 +166,8 @@
     <document>
         <id>19</id>
         <controlNumber>GDPRC-00C7</controlNumber>
-        <documentIssueDateTimeZulu>2020-02-20T16:05:00</documentIssueDateTimeZulu>
+        <type>AGREEMENT</type>
+        <issueDateTimeZulu>2020-02-20T16:05:00</issueDateTimeZulu>
         <description>GDPR consent for retail banking</description>
         <ownershipUnitId>102</ownershipUnitId>
     </document>
@@ -156,7 +175,8 @@
     <document>
         <id>20</id>
         <controlNumber>GDPRC-00C8</controlNumber>
-        <documentIssueDateTimeZulu>2020-02-20T17:55:45</documentIssueDateTimeZulu>
+        <type>AGREEMENT</type>
+        <issueDateTimeZulu>2020-02-20T17:55:45</issueDateTimeZulu>
         <description>GDPR consent for retail banking</description>
         <ownershipUnitId>102</ownershipUnitId>
     </document>
@@ -164,7 +184,8 @@
     <document>
         <id>21</id>
         <controlNumber>TCACK-00074</controlNumber>
-        <documentIssueDateTimeZulu>2020-03-16T09:29:57</documentIssueDateTimeZulu>
+        <type>STATEMENT</type>
+        <issueDateTimeZulu>2020-03-16T09:29:57</issueDateTimeZulu>
         <description>Online Banking - Terms and Conditions Acknoledgement</description>
         <ownershipUnitId>102</ownershipUnitId>
     </document>
@@ -172,7 +193,8 @@
     <document>
         <id>22</id>
         <controlNumber>TCACK-00075</controlNumber>
-        <documentIssueDateTimeZulu>2020-03-16T10:10:10</documentIssueDateTimeZulu>
+        <type>STATEMENT</type>
+        <issueDateTimeZulu>2020-03-16T10:10:10</issueDateTimeZulu>
         <description>Online Banking - Terms and Conditions Acknoledgement</description>
         <ownershipUnitId>102</ownershipUnitId>
     </document>
@@ -180,7 +202,8 @@
     <document>
         <id>23</id>
         <controlNumber>AGR_RETA-0407</controlNumber>
-        <documentIssueDateTimeZulu>2020-04-01T15:55:00</documentIssueDateTimeZulu>
+        <type>AGREEMENT</type>
+        <issueDateTimeZulu>2020-04-01T15:55:00</issueDateTimeZulu>
         <description>Retail Bank Account Agreement</description>
         <ownershipUnitId>102</ownershipUnitId>
     </document>
@@ -188,7 +211,8 @@
     <document>
         <id>24</id>
         <controlNumber>TCACK-00076</controlNumber>
-        <documentIssueDateTimeZulu>2020-04-02T14:00:59</documentIssueDateTimeZulu>
+        <type>STATEMENT</type>
+        <issueDateTimeZulu>2020-04-02T14:00:59</issueDateTimeZulu>
         <description>Online Banking - Terms and Conditions Acknoledgement</description>
         <ownershipUnitId>102</ownershipUnitId>
     </document>
@@ -196,7 +220,8 @@
     <document>
         <id>25</id>
         <controlNumber>GDPRC-00C9</controlNumber>
-        <documentIssueDateTimeZulu>2020-05-02T12:09:09</documentIssueDateTimeZulu>
+        <type>STATEMENT</type>
+        <issueDateTimeZulu>2020-05-02T12:09:09</issueDateTimeZulu>
         <description>GDPR consent for retail banking</description>
         <ownershipUnitId>102</ownershipUnitId>
     </document>
@@ -204,7 +229,8 @@
     <document>
         <id>26</id>
         <controlNumber>AGR_RETA-0408</controlNumber>
-        <documentIssueDateTimeZulu>2020-05-27T16:12:13</documentIssueDateTimeZulu>
+        <type>AGREEMENT</type>
+        <issueDateTimeZulu>2020-05-27T16:12:13</issueDateTimeZulu>
         <description>Retail Bank Account Agreement</description>
         <ownershipUnitId>102</ownershipUnitId>
     </document>
@@ -212,7 +238,8 @@
     <document>
         <id>27</id>
         <controlNumber>AGR_RETA-0409</controlNumber>
-        <documentIssueDateTimeZulu>2020-05-28T14:20:50</documentIssueDateTimeZulu>
+        <type>AGREEMENT</type>
+        <issueDateTimeZulu>2020-05-28T14:20:50</issueDateTimeZulu>
         <description>Retail Bank Account Agreement</description>
         <ownershipUnitId>104</ownershipUnitId>
     </document>
@@ -220,7 +247,8 @@
     <document>
         <id>28</id>
         <controlNumber>TCACK-00077</controlNumber>
-        <documentIssueDateTimeZulu>2020-06-04T08:49:56</documentIssueDateTimeZulu>
+        <type>STATEMENT</type>
+        <issueDateTimeZulu>2020-06-04T08:49:56</issueDateTimeZulu>
         <description>Online Banking - Terms and Conditions Acknoledgement</description>
         <ownershipUnitId>104</ownershipUnitId>
     </document>
@@ -228,7 +256,8 @@
     <document>
         <id>29</id>
         <controlNumber>TCACK-00078</controlNumber>
-        <documentIssueDateTimeZulu>2020-06-07T09:01:01</documentIssueDateTimeZulu>
+        <type>STATEMENT</type>
+        <issueDateTimeZulu>2020-06-07T09:01:01</issueDateTimeZulu>
         <description>Online Banking - Terms and Conditions Acknoledgement</description>
         <ownershipUnitId>104</ownershipUnitId>
     </document>
@@ -236,7 +265,8 @@
     <document>
         <id>30</id>
         <controlNumber>TCACK-00079</controlNumber>
-        <documentIssueDateTimeZulu>2020-06-24T09:10:10</documentIssueDateTimeZulu>
+        <type>STATEMENT</type>
+        <issueDateTimeZulu>2020-06-24T09:10:10</issueDateTimeZulu>
         <description>Online Banking - Terms and Conditions Acknoledgement</description>
         <ownershipUnitId>102</ownershipUnitId>
     </document>
@@ -244,7 +274,8 @@
     <document>
         <id>31</id>
         <controlNumber>TCACK-00080</controlNumber>
-        <documentIssueDateTimeZulu>2020-06-24T10:11:12</documentIssueDateTimeZulu>
+        <type>STATEMENT</type>
+        <issueDateTimeZulu>2020-06-24T10:11:12</issueDateTimeZulu>
         <description>Online Banking - Terms and Conditions Acknoledgement</description>
         <ownershipUnitId>102</ownershipUnitId>
     </document>
@@ -252,7 +283,8 @@
     <document>
         <id>32</id>
         <controlNumber>MAN-00001</controlNumber>
-        <documentIssueDateTimeZulu>2016-02-11T12:25:49</documentIssueDateTimeZulu>
+        <type>OTHER</type>
+        <issueDateTimeZulu>2016-02-11T12:25:49</issueDateTimeZulu>
         <description>Accounting manual - general</description>
         <ownershipUnitId>101</ownershipUnitId>
     </document>
@@ -260,7 +292,8 @@
     <document>
         <id>33</id>
         <controlNumber>MAN-00002</controlNumber>
-        <documentIssueDateTimeZulu>2016-03-15T16:16:11</documentIssueDateTimeZulu>
+        <type>OTHER</type>
+        <issueDateTimeZulu>2016-03-15T16:16:11</issueDateTimeZulu>
         <description>Manual on application of GAAP</description>
         <ownershipUnitId>101</ownershipUnitId>
     </document>
@@ -268,7 +301,8 @@
     <document>
         <id>34</id>
         <controlNumber>MAN-00003</controlNumber>
-        <documentIssueDateTimeZulu>2016-03-23T10:55:08</documentIssueDateTimeZulu>
+        <type>OTHER</type>
+        <issueDateTimeZulu>2016-03-23T10:55:08</issueDateTimeZulu>
         <description>Manual on preparing financial statement</description>
         <ownershipUnitId>101</ownershipUnitId>
     </document>
@@ -276,7 +310,8 @@
     <document>
         <id>35</id>
         <controlNumber>MAN-00004</controlNumber>
-        <documentIssueDateTimeZulu>2016-07-25T09:38:02</documentIssueDateTimeZulu>
+        <type>OTHER</type>
+        <issueDateTimeZulu>2016-07-25T09:38:02</issueDateTimeZulu>
         <description>Accounting - internal procedures</description>
         <ownershipUnitId>101</ownershipUnitId>
     </document>

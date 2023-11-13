@@ -107,13 +107,13 @@ CREATE SYNONYM "${appUserNameIAM}"."UserIdentity" FOR "${schemaNameIAM}"."UserId
 CREATE TABLE "${schemaNameIAM}"."JoinUserIdentityOwnershipUnit" (
   "userIdentityId" NUMBER(19, 0) NOT NULL,
   "ownershipUnitId" NUMBER(19, 0) NOT NULL,
-  "privilege" VARCHAR2(255 BYTE) NOT NULL,
+  "privilegeKey" VARCHAR2(255 BYTE) NOT NULL,
   CONSTRAINT PK_JoinUserIdentityOwnershipUnit PRIMARY KEY ("userIdentityId", "ownershipUnitId"),
   CONSTRAINT FK_JoinUserIdentityOwnershipUnit_UserIdentity_1 FOREIGN KEY ("userIdentityId")
     REFERENCES "${schemaNameIAM}"."UserIdentity" ("id"),
   CONSTRAINT FK_JoinUserIdentityOwnershipUnit_OwnershipUnit_2 FOREIGN KEY ("ownershipUnitId")
     REFERENCES "${schemaNameIAM}"."OwnershipUnit" ("id"),
-  CONSTRAINT FK_JoinUserIdentityOwnershipUnit_PrivilegeKey_3 FOREIGN KEY ("privilege")
+  CONSTRAINT FK_JoinUserIdentityOwnershipUnit_PrivilegeKey_3 FOREIGN KEY ("privilegeKey")
     REFERENCES "${schemaNameIAM}"."PrivilegeKey" ("id")
 );
 GRANT SELECT ON "${schemaNameIAM}"."JoinUserIdentityOwnershipUnit" TO "${schemaNameIAM}_READONLY_ROLE";

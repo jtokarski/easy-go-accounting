@@ -8,15 +8,15 @@ public class DocumentFullDto implements IDocumentFullDto {
 
     private final String controlNumber;
 
-    private final ZonedDateTime documentIssueDateTime;
+    private final ZonedDateTime issueDateTime;
 
     private final String description;
 
-    public DocumentFullDto(String externalId, String controlNumber, ZonedDateTime documentIssueDateTime,
+    public DocumentFullDto(String externalId, String controlNumber, ZonedDateTime issueDateTime,
                            String description) {
         this.externalId = externalId;
         this.controlNumber = controlNumber;
-        this.documentIssueDateTime = documentIssueDateTime;
+        this.issueDateTime = issueDateTime;
         this.description = description;
     }
 
@@ -28,8 +28,8 @@ public class DocumentFullDto implements IDocumentFullDto {
         return controlNumber;
     }
 
-    public ZonedDateTime getDocumentIssueDateTime() {
-        return documentIssueDateTime;
+    public ZonedDateTime getIssueDateTime() {
+        return issueDateTime;
     }
 
     public String getDescription() {

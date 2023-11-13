@@ -46,7 +46,8 @@ CREATE TABLE "${schemaNameFA}"."Document" (
   "id"                          NUMBER(19, 0) GENERATED ALWAYS AS IDENTITY (NOCACHE) NOT NULL,
   "ownershipUnitId"             NUMBER(19, 0) NOT NULL,
   "controlNumber"               VARCHAR2(100 CHAR),
-  "documentIssueDateTimeZulu"   DATE,
+  "typeKey"                     VARCHAR2(255 BYTE) NOT NULL,
+  "issueDateTimeZulu"           DATE,
   "description"                 VARCHAR2(500 CHAR),
   CONSTRAINT PK_Document PRIMARY KEY ("id"),
   CONSTRAINT FK_Document_OwnershipUnit_1 FOREIGN KEY ("ownershipUnitId")

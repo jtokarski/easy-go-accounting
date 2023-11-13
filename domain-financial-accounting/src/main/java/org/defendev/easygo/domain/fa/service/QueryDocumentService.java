@@ -71,7 +71,7 @@ public class QueryDocumentService implements IQueryDocumentService {
             (Document document) -> new DocumentMinDto(
                 String.valueOf(document.getId()),
                 document.getControlNumber(),
-                document.getDocumentIssueDateTimeZulu().atZone(ZULU_ZONE_ID)
+                document.getIssueDateTimeZulu().atZone(ZULU_ZONE_ID)
             )
         ).collect(Collectors.toList());
 

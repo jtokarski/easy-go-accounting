@@ -9,12 +9,12 @@ public class DocumentMinDto implements IDocumentMinDto {
 
     private final String controlNumber;
 
-    private final ZonedDateTime documentIssueDateTime;
+    private final ZonedDateTime issueDateTime;
 
-    public DocumentMinDto(String externalId, String controlNumber, ZonedDateTime documentIssueDateTime) {
+    public DocumentMinDto(String externalId, String controlNumber, ZonedDateTime issueDateTime) {
         this.externalId = externalId;
         this.controlNumber = controlNumber;
-        this.documentIssueDateTime = documentIssueDateTime;
+        this.issueDateTime = issueDateTime;
     }
 
     @Override
@@ -28,7 +28,7 @@ public class DocumentMinDto implements IDocumentMinDto {
     }
 
     @Override
-    public ZonedDateTime getDocumentIssueDateTime() {
-        return documentIssueDateTime;
+    public ZonedDateTime getIssueDateTime() {
+        return issueDateTime;
     }
 }

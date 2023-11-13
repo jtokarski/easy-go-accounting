@@ -2,6 +2,8 @@ package org.defendev.easygo.domain.fa.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -33,9 +35,13 @@ public class Document implements HasId<Long>, IOwnedBy<Long> {
     @Column(name = "controlNumber")
     private String controlNumber;
 
+    @Column(name = "typeKey")
+    @Enumerated(EnumType.STRING)
+    private DocumentType type;
+
     @XmlJavaTypeAdapter(LocalDateTimeXmlAdapter.class)
-    @Column(name = "documentIssueDateTimeZulu")
-    private LocalDateTime documentIssueDateTimeZulu;
+    @Column(name = "issueDateTimeZulu")
+    private LocalDateTime issueDateTimeZulu;
 
     @Column(name = "description")
     private String description;
@@ -67,12 +73,20 @@ public class Document implements HasId<Long>, IOwnedBy<Long> {
         this.controlNumber = controlNumber;
     }
 
-    public LocalDateTime getDocumentIssueDateTimeZulu() {
-        return documentIssueDateTimeZulu;
+    public DocumentType getType() {
+        return type;
     }
 
-    public void setDocumentIssueDateTimeZulu(LocalDateTime documentIssueDateTimeZulu) {
-        this.documentIssueDateTimeZulu = documentIssueDateTimeZulu;
+    public void setType(DocumentType type) {
+        this.type = type;
+    }
+
+    public LocalDateTime getIssueDateTimeZulu() {
+        return issueDateTimeZulu;
+    }
+
+    public void setIssueDateTimeZulu(LocalDateTime issueDateTimeZulu) {
+        this.issueDateTimeZulu = issueDateTimeZulu;
     }
 
     public String getDescription() {

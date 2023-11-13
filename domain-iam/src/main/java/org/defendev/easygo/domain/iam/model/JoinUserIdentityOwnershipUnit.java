@@ -1,5 +1,6 @@
 package org.defendev.easygo.domain.iam.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -32,6 +33,7 @@ public class JoinUserIdentityOwnershipUnit {
     @ManyToOne(fetch = FetchType.LAZY)
     private OwnershipUnit ownershipUnit;
 
+    @Column(name = "privilegeKey", nullable = false)
     @Enumerated(EnumType.STRING)
     private Privilege privilege;
 

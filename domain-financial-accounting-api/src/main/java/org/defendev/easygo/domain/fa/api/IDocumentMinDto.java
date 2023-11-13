@@ -10,6 +10,6 @@ public interface IDocumentMinDto extends IBaseDto {
 
     String getControlNumber();
 
-    ZonedDateTime getDocumentIssueDateTime();
+    ZonedDateTime getIssueDateTime();
 
 }

@@ -61,7 +61,7 @@ public class FindDocumentService implements IFindDocumentService {
         return new DocumentFullDto(
             String.valueOf(entity.getId()),
             entity.getControlNumber(),
-            entity.getDocumentIssueDateTimeZulu().atZone(ZULU_ZONE_ID),
+            entity.getIssueDateTimeZulu().atZone(ZULU_ZONE_ID),
             entity.getDescription()
         );
     };
