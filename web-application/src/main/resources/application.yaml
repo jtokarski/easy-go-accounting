@@ -60,3 +60,12 @@ management:
     info:
       enabled: true
 
+logging:
+  level:
+    org:
+      springframework:
+        security:
+          web:
+            csrf:
+              CsrfFilter: debug
+
