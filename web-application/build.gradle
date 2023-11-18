@@ -64,4 +64,5 @@ dependencies {
     implementation project(':domain-financial-accounting')
 
     testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test'
+    testImplementation group: 'org.springframework.security', name: 'spring-security-test'
 }
