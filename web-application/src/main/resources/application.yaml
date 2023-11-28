@@ -61,5 +61,5 @@ management:
       enabled: true
 
 logging.level:
-    org.springframework.security.web.csrf:.CsrfFilter: debug
+    org.springframework.security.web.csrf.CsrfFilter: debug
 
