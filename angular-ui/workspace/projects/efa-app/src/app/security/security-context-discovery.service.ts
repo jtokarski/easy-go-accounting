@@ -30,6 +30,10 @@ export class SecurityContextDiscoveryService {
     return this._securityContext.authentication.authenticated;
   }
 
+  public get username(): string {
+      return this._securityContext.authentication.principal.username;
+  }
+
   public get csrfToken(): string {
     return this._csrfToken;
   }
