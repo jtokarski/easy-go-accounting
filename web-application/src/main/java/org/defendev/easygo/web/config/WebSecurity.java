@@ -73,7 +73,8 @@ public class WebSecurity {
             .securityMatcher(AntPathRequestMatcher.antMatcher("/**"))
             .authorizeHttpRequests(
                 customizer -> customizer
-                    .requestMatchers("/", SIGN_IN_PATH, "/api/security-context", "/api/document/_browse").permitAll()
+                    .requestMatchers("/", SIGN_IN_PATH, "/api/security-context", "/api/document/_browse",
+                        "/api/last-visited").permitAll()
                     .requestMatchers(RegexRequestMatcher.regexMatcher(
                         "/[a-zA-Z0-9-\\.]+\\.(png|svg|gif|ico|js|css|ttf|woff2)")).permitAll()
                     .requestMatchers("/actuator", "/actuator/beans", "/actuator/env", "/actuator/health",
