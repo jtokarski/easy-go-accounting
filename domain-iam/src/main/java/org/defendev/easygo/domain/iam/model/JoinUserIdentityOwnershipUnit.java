@@ -10,7 +10,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
 import jakarta.persistence.Table;
-import org.defendev.easygo.domain.iam.api.Privilege;
+import org.defendev.common.domain.iam.Privilege;
 
 import java.util.Objects;
 

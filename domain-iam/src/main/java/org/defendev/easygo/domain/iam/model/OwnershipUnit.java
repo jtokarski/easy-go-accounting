@@ -17,7 +17,8 @@ import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlElementWrapper;
 import org.defendev.common.domain.HasId;
-import org.defendev.easygo.domain.iam.api.Privilege;
+import org.defendev.common.domain.iam.Privilege;
+
 import java.util.Set;
 
 

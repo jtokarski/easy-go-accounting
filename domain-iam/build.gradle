@@ -33,6 +33,7 @@ dependencies {
 //    annotationProcessor group: 'org.hibernate.orm', name: 'hibernate-jpamodelgen'
     implementation project(':domain-iam-api')
     testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test'
+    testImplementation libs.archunit
 }
 
 configurations {

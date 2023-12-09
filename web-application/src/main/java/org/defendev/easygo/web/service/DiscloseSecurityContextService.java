@@ -1,7 +1,8 @@
-package org.defendev.easygo.domain.iam.service;
+package org.defendev.easygo.web.service;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.defendev.common.domain.iam.IDefendevUserDetails;
 import org.defendev.common.domain.iam.service.api.IDiscloseSecurityContextService;
 import org.defendev.common.domain.iam.service.dto.AuthenticationDto;
 import org.defendev.common.domain.iam.service.dto.GrantedAuthorityDto;
@@ -11,7 +12,6 @@ import org.defendev.common.domain.iam.service.dto.ISecurityContextDto;
 import org.defendev.common.domain.iam.service.dto.IUserDetailsDto;
 import org.defendev.common.domain.iam.service.dto.SecurityContextDto;
 import org.defendev.common.domain.iam.service.dto.UserDetailsDto;
-import org.defendev.easygo.domain.iam.service.dto.IEasygoUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationTrustResolver;
 import org.springframework.security.authentication.AuthenticationTrustResolverImpl;
@@ -53,8 +53,8 @@ public class DiscloseSecurityContextService implements IDiscloseSecurityContextS
         if (principal instanceof String) {
             userDetailsDto = new UserDetailsDto((String) principal);
             isUsernameKnown = true;
-        } else if (principal instanceof IEasygoUserDetails) {
-            userDetailsDto = new UserDetailsDto(((IEasygoUserDetails) principal).getUsername());
+        } else if (principal instanceof IDefendevUserDetails) {
+            userDetailsDto = new UserDetailsDto(((IDefendevUserDetails) principal).getUsername());
             isUsernameKnown = true;
         } else {
             userDetailsDto = new UserDetailsDto("unknown");

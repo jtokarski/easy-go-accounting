@@ -54,7 +54,9 @@ dependencies {
      */
     providedRuntime group: 'org.springframework.boot', name: 'spring-boot-starter-tomcat'
     implementation group: 'com.oracle.database.jdbc', name: 'ojdbc11'
+    implementation libs.guava
     implementation libs.defendevCommonJdk
+    implementation libs.defendevCommonSpring6
     implementation project(':domain-iam-api')
     implementation project(':domain-financial-accounting-api')
     implementation project(':angular-ui')

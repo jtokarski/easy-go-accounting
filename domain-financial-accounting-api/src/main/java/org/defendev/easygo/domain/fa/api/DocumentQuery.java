@@ -2,10 +2,12 @@ package org.defendev.easygo.domain.fa.api;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.defendev.common.domain.iam.IDefendevUserDetails;
 import org.defendev.common.domain.query.Query;
 import org.defendev.common.domain.query.QueryFilter;
 import org.defendev.common.domain.query.QueryOwnedBy;
 import org.defendev.common.domain.query.QueryPageable;
+import org.defendev.common.domain.query.QueryRequestedBy;
 import org.defendev.common.domain.query.QuerySearchPhrase;
 import org.defendev.common.domain.query.QuerySort;
 import org.defendev.common.domain.query.filter.Filter;
@@ -19,7 +21,7 @@ import static java.util.Objects.nonNull;
 
 
 public class DocumentQuery extends Query
-    implements QueryPageable, QuerySearchPhrase, QueryFilter, QuerySort, QueryOwnedBy {
+    implements QueryPageable, QuerySearchPhrase, QueryFilter, QuerySort, QueryOwnedBy, QueryRequestedBy {
 
     private final int pageNumber;
 
@@ -31,11 +33,11 @@ public class DocumentQuery extends Query
 
     private final Filter filter;
 
-    private final boolean resolveOwnershipUnitsForRequestingUser;
-
     private final Set<String> ownershipUnitExternalIds;
 
     private final Set<Long> ownershipUnitIds;
+
+    private final IDefendevUserDetails requestedBy;
 
     @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
     public DocumentQuery(
@@ -44,8 +46,8 @@ public class DocumentQuery extends Query
         @JsonProperty("searchPhrase") String searchPhrase,
         @JsonProperty("sortOrders") List<SortOrder> sortOrders,
         @JsonProperty("filter") Filter filter,
-        @JsonProperty("resolveOwnershipUnitsForRequestingUser") boolean resolveOwnershipUnitsForRequestingUser,
-        @JsonProperty("ownershipUnitExternalIds") Set<String> ownershipUnitExternalIds
+        @JsonProperty("ownershipUnitExternalIds") Set<String> ownershipUnitExternalIds,
+        @JsonProperty("requestedBy") IDefendevUserDetails requestedBy
     ) {
         if (nonNull(pageNumber) && nonNull(pageSize)) {
             this.pageNumber = pageNumber;
@@ -57,23 +59,24 @@ public class DocumentQuery extends Query
         this.searchPhrase = searchPhrase;
         this.sortOrders = sortOrders;
         this.filter = filter;
-        this.resolveOwnershipUnitsForRequestingUser = resolveOwnershipUnitsForRequestingUser;
         this.ownershipUnitExternalIds = ownershipUnitExternalIds;
         this.ownershipUnitIds = Set.of();
+        this.requestedBy = requestedBy;
     }
 
     private DocumentQuery(int pageNumber, int pageSize, String searchPhrase, List<SortOrder> sortOrders,
-                          Filter filter, boolean resolveOwnershipUnitsForRequestingUser,
-                          Set<String> ownershipUnitExternalIds, Set<Long> ownershipUnitIds) {
+                          Filter filter, Set<String> ownershipUnitExternalIds, Set<Long> ownershipUnitIds,
+                          IDefendevUserDetails requestedBy) {
         this.pageNumber = pageNumber;
         this.pageSize = pageSize;
         this.searchPhrase = searchPhrase;
         this.sortOrders = sortOrders;
         this.filter = filter;
-        this.resolveOwnershipUnitsForRequestingUser = resolveOwnershipUnitsForRequestingUser;
         this.ownershipUnitExternalIds = ownershipUnitExternalIds;
         this.ownershipUnitIds = ownershipUnitIds;
+        this.requestedBy = requestedBy;
     }
+
 
     @Override
     public int getPageNumber() {
@@ -101,11 +104,6 @@ public class DocumentQuery extends Query
     }
 
     @Override
-    public boolean getResolveOwnershipUnitsForRequestingUser() {
-        return resolveOwnershipUnitsForRequestingUser;
-    }
-
-    @Override
     public Set<String> getOwnershipUnitExternalIds() {
         return ownershipUnitExternalIds;
     }
@@ -114,8 +112,19 @@ public class DocumentQuery extends Query
         return ownershipUnitIds;
     }
 
-    public DocumentQuery withOwnershipUnitIds(Set<Long> ownershipUnitIds) {
-        return new DocumentQuery(pageNumber, pageSize, searchPhrase, sortOrders, filter,
-                resolveOwnershipUnitsForRequestingUser, ownershipUnitExternalIds, ownershipUnitIds);
+    @Override
+    public IDefendevUserDetails getRequestedBy() {
+        return requestedBy;
     }
+
+    public DocumentQuery withRequestedBy(IDefendevUserDetails requestedBy) {
+        return new DocumentQuery(pageNumber, pageSize, searchPhrase, sortOrders, filter, ownershipUnitExternalIds,
+            ownershipUnitIds, requestedBy);
+    }
+
+    public DocumentQuery withOwnershipUnitIds(Set<Long> ownershipUnitIds) {
+        return new DocumentQuery(pageNumber, pageSize, searchPhrase, sortOrders, filter, ownershipUnitExternalIds,
+            ownershipUnitIds, requestedBy);
+    }
+
 }

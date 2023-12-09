@@ -2,7 +2,7 @@ package org.defendev.easygo.domain.iam.service;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.defendev.easygo.domain.iam.api.Privilege;
+import org.defendev.common.domain.iam.Privilege;
 import org.defendev.easygo.domain.iam.repository.OwnershipUnitRepo;
 import org.springframework.stereotype.Service;
 

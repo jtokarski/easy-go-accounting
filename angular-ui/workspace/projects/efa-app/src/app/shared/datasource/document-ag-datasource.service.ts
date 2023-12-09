@@ -63,7 +63,6 @@ export class DocumentAgDatasourceService extends BaseAgDatasource implements IDa
       pageSize: pageSize,
       sortOrders: sortOrders,
       filter: filter,
-      resolveOwnershipUnitsForRequestingUser: true,
     } as DocumentQuery;
 
     const rows$: Observable<HttpResponse<ICollectionResRep<DocumentMinDto>>> = this.httpClient

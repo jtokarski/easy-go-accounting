@@ -1,6 +1,6 @@
 package org.defendev.easygo.domain.iam.service;
 
-import org.defendev.easygo.domain.iam.api.Privilege;
+import org.defendev.common.domain.iam.Privilege;
 import org.defendev.easygo.domain.iam.model.UserIdentity;
 import org.defendev.easygo.domain.iam.repository.UserIdentityRepo;
 import org.defendev.easygo.domain.iam.service.dto.EasygoOidcUser;

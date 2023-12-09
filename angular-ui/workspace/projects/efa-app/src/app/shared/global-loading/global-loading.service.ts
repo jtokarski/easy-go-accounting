@@ -19,11 +19,11 @@ export class GlobalLoadingService {
 
   constructor() {
     this.tracker = {
-      _: new AsyncTasksLocalTracker(),
+      _own: new AsyncTasksLocalTracker(),
       documentMain: {
-        _: new AsyncTasksLocalTracker(),
+        _own: new AsyncTasksLocalTracker(),
         documentBrowse: {
-          _: new AsyncTasksLocalTracker(),
+          _own: new AsyncTasksLocalTracker(),
         }
       },
       _all: { } as AsyncTasksView,

@@ -1,6 +1,7 @@
 package org.defendev.easygo.domain.iam.service.dto;
 
-import org.defendev.easygo.domain.iam.api.Privilege;
+import org.defendev.common.domain.iam.IDefendevUserDetails;
+import org.defendev.common.domain.iam.Privilege;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
@@ -10,7 +11,7 @@ import java.util.Set;
 
 
 
-public class EasygoUserDetails extends User implements IEasygoUserDetails {
+public class EasygoUserDetails extends User implements IDefendevUserDetails {
 
     private long id;
 

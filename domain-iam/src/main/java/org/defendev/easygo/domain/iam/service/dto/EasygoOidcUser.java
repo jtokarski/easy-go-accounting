@@ -1,6 +1,7 @@
 package org.defendev.easygo.domain.iam.service.dto;
 
-import org.defendev.easygo.domain.iam.api.Privilege;
+import org.defendev.common.domain.iam.IDefendevUserDetails;
+import org.defendev.common.domain.iam.Privilege;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.core.oidc.OidcIdToken;
 import org.springframework.security.oauth2.core.oidc.OidcUserInfo;
@@ -14,7 +15,7 @@ import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 
 
-public class EasygoOidcUser extends DefaultOidcUser implements IEasygoUserDetails {
+public class EasygoOidcUser extends DefaultOidcUser implements IDefendevUserDetails {
 
     private Map<Privilege, Set<Long>> privilegeToOwnershipUnit;
 

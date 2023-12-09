@@ -2,10 +2,10 @@ package org.defendev.easygo.domain.iam.service;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.defendev.common.domain.iam.IDefendevUserDetails;
+import org.defendev.common.domain.iam.Privilege;
 import org.defendev.easygo.domain.iam.api.IQueryOwnershipUnitIdsWithPrivilegeService;
 import org.defendev.easygo.domain.iam.api.OwnershipUnitIdsWithPrivilegeQuery;
-import org.defendev.easygo.domain.iam.api.Privilege;
-import org.defendev.easygo.domain.iam.service.dto.IEasygoUserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -23,21 +23,17 @@ public class QueryOwnershipUnitIdsWithPrivilegeService implements IQueryOwnershi
 
     private final QueryAnonymousPrivilegeService queryAnonymousPrivilegeService;
 
-    private final ExtractLoggedInUserService extractLoggedInUserService;
-
-    public QueryOwnershipUnitIdsWithPrivilegeService(QueryAnonymousPrivilegeService queryAnonymousPrivilegeService,
-                                                     ExtractLoggedInUserService extractLoggedInUserService) {
+    public QueryOwnershipUnitIdsWithPrivilegeService(QueryAnonymousPrivilegeService queryAnonymousPrivilegeService) {
         this.queryAnonymousPrivilegeService = queryAnonymousPrivilegeService;
-        this.extractLoggedInUserService = extractLoggedInUserService;
     }
 
     @Override
     public Set<Long> query(OwnershipUnitIdsWithPrivilegeQuery query) {
         final Map<Privilege, Set<Long>> anonymousPrivilegeToOwnershipUnit = queryAnonymousPrivilegeService
             .queryPrivilegeToOwnershipUnit();
-        final IEasygoUserDetails userDetails = extractLoggedInUserService.extract();
-        final Map<Privilege, Set<Long>> privilegeToOwnershipUnit = nonNull(userDetails) ?
-            userDetails.getPrivilegeToOwnershipUnit()
+        final IDefendevUserDetails requestedBy = query.getRequestedBy();
+        final Map<Privilege, Set<Long>> privilegeToOwnershipUnit = nonNull(requestedBy) ?
+            requestedBy.getPrivilegeToOwnershipUnit()
             : Map.of();
 
         final Privilege privilege = query.getPrivilege();

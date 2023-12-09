@@ -190,7 +190,7 @@ export class DocumentBrowseComponent implements OnInit, OnDestroy {
       distinctUntilChanged(),
       mergeMap(
         (pageSize: number) => {
-          const taskId = this.globalLoading.tracker.documentMain.documentBrowse._.registerTask();
+          const taskId = this.globalLoading.tracker.documentMain.documentBrowse._own.registerTask();
           this.gridDisplayReloading = true;
           return forkJoin([
             of(pageSize),
@@ -212,7 +212,7 @@ export class DocumentBrowseComponent implements OnInit, OnDestroy {
       ),
       map(
         ([taskId, _]: [number, any]) => {
-          this.globalLoading.tracker.documentMain.documentBrowse._.clearTask(taskId);
+          this.globalLoading.tracker.documentMain.documentBrowse._own.clearTask(taskId);
           return;
         }
       ),

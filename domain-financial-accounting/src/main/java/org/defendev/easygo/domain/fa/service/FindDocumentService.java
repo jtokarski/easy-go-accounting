@@ -2,15 +2,16 @@ package org.defendev.easygo.domain.fa.service;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.defendev.common.domain.iam.IDefendevUserDetails;
+import org.defendev.common.domain.iam.Privilege;
 import org.defendev.common.domain.query.result.QueryResult;
-import org.defendev.easygo.domain.fa.api.IFindDocumentService;
 import org.defendev.easygo.domain.fa.api.DocumentFindQuery;
 import org.defendev.easygo.domain.fa.api.DocumentFullDto;
+import org.defendev.easygo.domain.fa.api.IFindDocumentService;
 import org.defendev.easygo.domain.fa.model.Document;
 import org.defendev.easygo.domain.fa.repository.DocumentRepo;
 import org.defendev.easygo.domain.iam.api.CheckObjectPrivilegeQuery;
 import org.defendev.easygo.domain.iam.api.ICheckObjectPrivilegeService;
-import org.defendev.easygo.domain.iam.api.Privilege;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,16 +41,17 @@ public class FindDocumentService implements IFindDocumentService {
     @Transactional(transactionManager = "financialAccountingJpaTransactionManager", readOnly = true)
     public QueryResult<DocumentFullDto> execute(DocumentFindQuery query) {
         final long id;
-
         try {
             id = Long.parseLong(query.getExternalId(), 10);
         } catch (NumberFormatException nfe) {
             return QueryResult.notFound();
         }
         final Optional<Document> documentOptional = documentRepo.findById(id);
-
+        final IDefendevUserDetails requestedBy = query.getRequestedBy();
         documentOptional.ifPresent(document -> {
-            checkObjectReadPrivilegeService.check(new CheckObjectPrivilegeQuery(Privilege.read, document));
+            final CheckObjectPrivilegeQuery privilegeQuery =
+                new CheckObjectPrivilegeQuery(Privilege.read, document, requestedBy);
+            checkObjectReadPrivilegeService.check(privilegeQuery);
         });
 
         return documentOptional.map(this::mapToFullDto)
