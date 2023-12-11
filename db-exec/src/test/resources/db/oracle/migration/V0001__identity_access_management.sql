@@ -75,18 +75,36 @@ GRANT DELETE ON "${schemaNameIAM}"."OwnershipUnit" TO "${schemaNameIAM}_UPDATE_R
 CREATE SYNONYM "${appUserNameIAM}"."OwnershipUnit" FOR "${schemaNameIAM}"."OwnershipUnit";
 
 
-CREATE TABLE "${schemaNameIAM}"."OwnershipUnitAnonymousPrivilege" (
-  "ownershipUnitId" NUMBER(19, 0) NOT NULL,
-  "privilegeKey" VARCHAR2(255 BYTE) NOT NULL,
-  CONSTRAINT PK_OwnershipUnitAnonymousPrivilege PRIMARY KEY ("ownershipUnitId", "privilegeKey"),
-  CONSTRAINT FK_OwnershipUnitAnonymousPrivilege_PrivilegeKey_1 FOREIGN KEY ("privilegeKey")
-    REFERENCES "${schemaNameIAM}"."PrivilegeKey" ("id")
+CREATE TABLE "${schemaNameIAM}"."CommonPrivilegeSubjectKey" (
+  "id"           VARCHAR2(255 BYTE),
+  CONSTRAINT PK_CommonPrivilegeSubjectKey PRIMARY KEY ("id")
 );
-GRANT SELECT ON "${schemaNameIAM}"."OwnershipUnitAnonymousPrivilege" TO "${schemaNameIAM}_READONLY_ROLE";
-GRANT INSERT ON "${schemaNameIAM}"."OwnershipUnitAnonymousPrivilege" TO "${schemaNameIAM}_UPDATE_ROLE";
-GRANT UPDATE ON "${schemaNameIAM}"."OwnershipUnitAnonymousPrivilege" TO "${schemaNameIAM}_UPDATE_ROLE";
-GRANT DELETE ON "${schemaNameIAM}"."OwnershipUnitAnonymousPrivilege" TO "${schemaNameIAM}_UPDATE_ROLE";
-CREATE SYNONYM "${appUserNameIAM}"."OwnershipUnitAnonymousPrivilege" FOR "${schemaNameIAM}"."OwnershipUnitAnonymousPrivilege";
+GRANT SELECT ON "${schemaNameIAM}"."CommonPrivilegeSubjectKey" TO "${schemaNameIAM}_READONLY_ROLE";
+GRANT INSERT ON "${schemaNameIAM}"."CommonPrivilegeSubjectKey" TO "${schemaNameIAM}_UPDATE_ROLE";
+GRANT UPDATE ON "${schemaNameIAM}"."CommonPrivilegeSubjectKey" TO "${schemaNameIAM}_UPDATE_ROLE";
+GRANT DELETE ON "${schemaNameIAM}"."CommonPrivilegeSubjectKey" TO "${schemaNameIAM}_UPDATE_ROLE";
+CREATE SYNONYM "${appUserNameIAM}"."CommonPrivilegeSubjectKey" FOR "${schemaNameIAM}"."PrivilegeKey";
+INSERT ALL
+  INTO "${schemaNameIAM}"."CommonPrivilegeSubjectKey"("id") VALUES ('anonymous_user')
+  INTO "${schemaNameIAM}"."CommonPrivilegeSubjectKey"("id") VALUES ('fully_authenticated_user')
+  SELECT 1 FROM DUAL;
+
+
+CREATE TABLE "${schemaNameIAM}"."CommonPrivilege" (
+  "ownershipUnitId" NUMBER(19, 0) NOT NULL,
+  "subjectKey" VARCHAR2(255 BYTE) NOT NULL,
+  "privilegeKey" VARCHAR2(255 BYTE) NOT NULL,
+  CONSTRAINT PK_CommonPrivilege PRIMARY KEY ("ownershipUnitId", "subjectKey", "privilegeKey"),
+  CONSTRAINT FK_CommonPrivilege_PrivilegeKey_1 FOREIGN KEY ("privilegeKey")
+    REFERENCES "${schemaNameIAM}"."PrivilegeKey" ("id"),
+  CONSTRAINT FK_CommonPrivilege_CommonPrivilegeSubjectKey_2 FOREIGN KEY ("subjectKey")
+    REFERENCES "${schemaNameIAM}"."CommonPrivilegeSubjectKey" ("id")
+);
+GRANT SELECT ON "${schemaNameIAM}"."CommonPrivilege" TO "${schemaNameIAM}_READONLY_ROLE";
+GRANT INSERT ON "${schemaNameIAM}"."CommonPrivilege" TO "${schemaNameIAM}_UPDATE_ROLE";
+GRANT UPDATE ON "${schemaNameIAM}"."CommonPrivilege" TO "${schemaNameIAM}_UPDATE_ROLE";
+GRANT DELETE ON "${schemaNameIAM}"."CommonPrivilege" TO "${schemaNameIAM}_UPDATE_ROLE";
+CREATE SYNONYM "${appUserNameIAM}"."CommonPrivilege" FOR "${schemaNameIAM}"."CommonPrivilege";
 
 
 CREATE TABLE "${schemaNameIAM}"."UserIdentity" (

@@ -5,6 +5,7 @@ import org.apache.logging.log4j.Logger;
 import org.defendev.common.domain.iam.IDefendevUserDetails;
 import org.defendev.common.domain.iam.Privilege;
 import org.defendev.easygo.domain.iam.api.CheckObjectPrivilegeQuery;
+import org.defendev.easygo.domain.iam.api.CommonPrivilegeQuery;
 import org.defendev.easygo.domain.iam.api.ICheckObjectPrivilegeService;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
@@ -19,16 +20,16 @@ public class CheckObjectPrivilegeService implements ICheckObjectPrivilegeService
 
     private static final Logger log = LogManager.getLogger();
 
-    private final QueryAnonymousPrivilegeService queryAnonymousPrivilegeService;
+    private final QueryCommonPrivilegeService queryCommonPrivilegeService;
 
-    public CheckObjectPrivilegeService(QueryAnonymousPrivilegeService queryAnonymousPrivilegeService) {
-        this.queryAnonymousPrivilegeService = queryAnonymousPrivilegeService;
+    public CheckObjectPrivilegeService(QueryCommonPrivilegeService queryCommonPrivilegeService) {
+        this.queryCommonPrivilegeService = queryCommonPrivilegeService;
     }
 
     @Override
     public void check(CheckObjectPrivilegeQuery query) {
-        final Map<Privilege, Set<Long>> anonymousPrivilegeToOwnershipUnit = queryAnonymousPrivilegeService
-            .queryPrivilegeToOwnershipUnit();
+        final Map<Privilege, Set<Long>> commonPrivilegeToOwnershipUnit = queryCommonPrivilegeService
+            .execute(new CommonPrivilegeQuery(query.getRequestedBy()));
 
         final IDefendevUserDetails requestedBy = query.getRequestedBy();
         final Map<Privilege, Set<Long>> privilegeToOwnershipUnit = requestedBy.getPrivilegeToOwnershipUnit();
@@ -41,8 +42,8 @@ public class CheckObjectPrivilegeService implements ICheckObjectPrivilegeService
                     privilegeToOwnershipUnit.get(anyPrivilege).contains(ownershipUnitId)) {
                 return;
             }
-            if (anonymousPrivilegeToOwnershipUnit.containsKey(anyPrivilege) &&
-                    anonymousPrivilegeToOwnershipUnit.get(anyPrivilege).contains(ownershipUnitId)) {
+            if (commonPrivilegeToOwnershipUnit.containsKey(anyPrivilege) &&
+                    commonPrivilegeToOwnershipUnit.get(anyPrivilege).contains(ownershipUnitId)) {
                 return;
             }
         }

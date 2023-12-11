@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.defendev.easygo.domain.iam.model.UserIdentity;
 import org.defendev.easygo.domain.iam.repository.UserIdentityRepo;
+import org.defendev.easygo.domain.iam.service.dto.EasygoRoles;
 import org.defendev.easygo.domain.iam.service.dto.EasygoUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,6 +12,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Set;
+
 
 
 @Component
@@ -26,7 +30,8 @@ public class EasygoUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         final UserIdentity userIdentity = userIdentityRepo.findByUsername(username)
             .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-        return new EasygoUserDetails(userIdentity.getId(), userIdentity.getUsername(), userIdentity.getPassword(),
+        return new EasygoUserDetails(userIdentity.getUsername(), userIdentity.getPassword(),
+            Set.of(EasygoRoles.fullyAuthenticated()), userIdentity.getId(),
             userIdentity.getPrivilegeToOwnershipUnit());
     }
 }

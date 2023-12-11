@@ -4,8 +4,8 @@ import org.defendev.common.domain.iam.Privilege;
 import org.defendev.easygo.domain.iam.model.UserIdentity;
 import org.defendev.easygo.domain.iam.repository.UserIdentityRepo;
 import org.defendev.easygo.domain.iam.service.dto.EasygoOidcUser;
+import org.defendev.easygo.domain.iam.service.dto.EasygoRoles;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserRequest;
 import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserService;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
@@ -15,9 +15,9 @@ import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
 
 
 @Component
@@ -52,7 +52,7 @@ public class EasygoOAuth2UserService extends OidcUserService {
             .map(UserIdentity::getPrivilegeToOwnershipUnit)
             .orElseGet(Map::of);
 
-        return new EasygoOidcUser(List.of(new SimpleGrantedAuthority("ROLE_USER")), idToken, userInfo,
+        return new EasygoOidcUser(idToken, userInfo, Set.of(EasygoRoles.fullyAuthenticated()),
             privilegeToOwnershipUnit);
     }
 

@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.defendev.common.domain.iam.DefendevUserDetailsDto;
 import org.defendev.common.domain.iam.IDefendevUserDetails;
+import org.defendev.easygo.domain.iam.service.dto.EasygoRoles;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.Set;
 
 
 @Service
@@ -30,7 +32,7 @@ public class ExtractLoggedInUserService {
         if (principal instanceof IDefendevUserDetails) {
             return (IDefendevUserDetails) principal;
         } else if (ANONYMOUS_USER.equals(principal)) {
-            return new DefendevUserDetailsDto(ANONYMOUS_USER, Map.of());
+            return new DefendevUserDetailsDto(ANONYMOUS_USER, Set.of(EasygoRoles.ROLE_ANONYMOUS), Map.of());
         } else {
             throw new AccessDeniedException("Unrecognized authentication principal");
         }

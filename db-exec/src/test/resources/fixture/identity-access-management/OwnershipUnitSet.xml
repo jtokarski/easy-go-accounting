@@ -4,9 +4,16 @@
     <ownershipUnit>
         <id>101</id>
         <name>pub</name>
-        <anonymousPrivilege>
-            <privilege>preview</privilege>
-        </anonymousPrivilege>
+        <commonPrivileges>
+            <commonPrivilege>
+                <subject>anonymous_user</subject>
+                <privilege>preview</privilege>
+            </commonPrivilege>
+            <commonPrivilege>
+                <subject>fully_authenticated_user</subject>
+                <privilege>read</privilege>
+            </commonPrivilege>
+        </commonPrivileges>
     </ownershipUnit>
 
     <ownershipUnit>

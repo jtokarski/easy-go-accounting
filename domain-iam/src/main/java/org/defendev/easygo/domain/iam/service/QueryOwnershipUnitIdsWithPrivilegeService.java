@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.defendev.common.domain.iam.IDefendevUserDetails;
 import org.defendev.common.domain.iam.Privilege;
+import org.defendev.easygo.domain.iam.api.CommonPrivilegeQuery;
 import org.defendev.easygo.domain.iam.api.IQueryOwnershipUnitIdsWithPrivilegeService;
 import org.defendev.easygo.domain.iam.api.OwnershipUnitIdsWithPrivilegeQuery;
 import org.springframework.stereotype.Service;
@@ -21,17 +22,17 @@ public class QueryOwnershipUnitIdsWithPrivilegeService implements IQueryOwnershi
 
     private static final Logger log = LogManager.getLogger();
 
-    private final QueryAnonymousPrivilegeService queryAnonymousPrivilegeService;
+    private final QueryCommonPrivilegeService queryCommonPrivilegeService;
 
-    public QueryOwnershipUnitIdsWithPrivilegeService(QueryAnonymousPrivilegeService queryAnonymousPrivilegeService) {
-        this.queryAnonymousPrivilegeService = queryAnonymousPrivilegeService;
+    public QueryOwnershipUnitIdsWithPrivilegeService(QueryCommonPrivilegeService queryCommonPrivilegeService) {
+        this.queryCommonPrivilegeService = queryCommonPrivilegeService;
     }
 
     @Override
     public Set<Long> query(OwnershipUnitIdsWithPrivilegeQuery query) {
-        final Map<Privilege, Set<Long>> anonymousPrivilegeToOwnershipUnit = queryAnonymousPrivilegeService
-            .queryPrivilegeToOwnershipUnit();
         final IDefendevUserDetails requestedBy = query.getRequestedBy();
+        final Map<Privilege, Set<Long>> commonPrivilegeToOwnershipUnit = queryCommonPrivilegeService
+            .execute(new CommonPrivilegeQuery(query.getRequestedBy()));
         final Map<Privilege, Set<Long>> privilegeToOwnershipUnit = nonNull(requestedBy) ?
             requestedBy.getPrivilegeToOwnershipUnit()
             : Map.of();
@@ -40,7 +41,7 @@ public class QueryOwnershipUnitIdsWithPrivilegeService implements IQueryOwnershi
 
         final Set<Long> ownershipUnitIds = new HashSet<>();
         for (Privilege anyPrivilege : privilege.getContainedIn()) {
-            ownershipUnitIds.addAll(anonymousPrivilegeToOwnershipUnit.getOrDefault(anyPrivilege, Set.of()));
+            ownershipUnitIds.addAll(commonPrivilegeToOwnershipUnit.getOrDefault(anyPrivilege, Set.of()));
             ownershipUnitIds.addAll(privilegeToOwnershipUnit.getOrDefault(anyPrivilege, Set.of()));
         }
 

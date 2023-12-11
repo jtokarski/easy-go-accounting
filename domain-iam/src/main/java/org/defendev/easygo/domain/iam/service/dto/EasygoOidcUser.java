@@ -7,11 +7,12 @@ import org.springframework.security.oauth2.core.oidc.OidcIdToken;
 import org.springframework.security.oauth2.core.oidc.OidcUserInfo;
 import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
 
-import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
+import static org.defendev.common.stream.Streams.stream;
 
 
 
@@ -19,9 +20,10 @@ public class EasygoOidcUser extends DefaultOidcUser implements IDefendevUserDeta
 
     private Map<Privilege, Set<Long>> privilegeToOwnershipUnit;
 
-    public EasygoOidcUser(Collection<? extends GrantedAuthority> authorities, OidcIdToken idToken,
-                          OidcUserInfo userInfo, Map<Privilege, Set<Long>> privilegeToOwnershipUnit) {
-        super(authorities, idToken, userInfo);
+    public EasygoOidcUser(OidcIdToken idToken, OidcUserInfo userInfo,
+                          Set<? extends GrantedAuthority> grantedAuthorities,
+                          Map<Privilege, Set<Long>> privilegeToOwnershipUnit) {
+        super(grantedAuthorities, idToken, userInfo);
         this.privilegeToOwnershipUnit = privilegeToOwnershipUnit;
     }
 
@@ -30,6 +32,11 @@ public class EasygoOidcUser extends DefaultOidcUser implements IDefendevUserDeta
         return isNotBlank(getPreferredUsername()) ?
             getPreferredUsername()
             : getEmail();
+    }
+
+    @Override
+    public Set<String> getRoles() {
+        return stream(getAuthorities()).map(GrantedAuthority::toString).collect(Collectors.toSet());
     }
 
     @Override
