@@ -12,7 +12,6 @@ import org.defendev.easygo.domain.fa.api.IFindDocumentService;
 import org.defendev.easygo.domain.fa.api.IQueryDocumentService;
 import org.defendev.easygo.web.service.ExtractLoggedInUserService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -48,7 +47,6 @@ public class DocumentController extends ApiBaseController {
         this.queryDocumentService = queryDocumentService;
     }
 
-    @PreAuthorize("isFullyAuthenticated()")
     @RequestMapping(path = DOCUMENT_PATH, method = RequestMethod.GET)
     public ResponseEntity<DocumentFullDto> findDocument(@PathVariable String externalId) {
         final IDefendevUserDetails requestedBy = extractLoggedInUserService.extract();

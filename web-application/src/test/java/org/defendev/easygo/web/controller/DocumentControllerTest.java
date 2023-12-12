@@ -13,18 +13,23 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import static org.defendev.easygo.web.controller.MockMvcUtil.mockEasygoUserDetailsAuthn;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.anonymous;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.authentication;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 
 
 @TestPropertySource(properties = {"spring.config.location=classpath:application-mockMvcTest.yaml"})
@@ -49,6 +54,26 @@ public class DocumentControllerTest {
             .webAppContextSetup(webApplicationContext)
             .apply(springSecurity())
             .build();
+    }
+
+    @Test
+    public void findDocumentEndpointRequiresAuthentication() throws Exception {
+        final MockHttpServletRequestBuilder mockRequestAnonymous = get("/api/document/1")
+            .with(anonymous())
+            .accept(MediaType.APPLICATION_JSON);
+        mockMvc.perform(mockRequestAnonymous)
+            .andExpect(status().is(302))
+            .andExpect(header().exists("Location"))
+            .andReturn();
+
+        final MockHttpServletRequestBuilder mockRequestAuthenticated = get("/api/document/1")
+            .with(authentication(mockEasygoUserDetailsAuthn()))
+            .accept(MediaType.APPLICATION_JSON);
+        final MvcResult mvcResult = mockMvc.perform(mockRequestAuthenticated)
+            .andExpect(status().is(200))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(jsonPath("$.externalId").value("1001"))
+            .andReturn();
     }
 
     @Test
