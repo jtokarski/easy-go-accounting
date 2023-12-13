@@ -4,6 +4,7 @@ import { Observable, map, Subject, takeUntil } from "rxjs";
 import { OBSERVE_RESPONSE_JSON } from "@/shared/observe-response-json";
 import { DocumentFullDto } from "@/shared/dto/document";
 import { LastVisitedDto } from '@/shared/dto/last-visited';
+import { SecurityContextDiscoveryService } from '@/security/security-context-discovery.service';
 
 
 
@@ -19,6 +20,7 @@ export class FinancialAccountingHomeComponent implements OnInit, OnDestroy {
   public dto$!: Observable<LastVisitedDto | null>;
 
   public constructor(
+    public securityService: SecurityContextDiscoveryService,
     private httpClient: HttpClient,
   ) { }
 

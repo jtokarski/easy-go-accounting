@@ -2,6 +2,7 @@
   <div class="col-12">
 
     <p>Welcome to Easygo Accounting application</p>
+    <p *ngIf="securityService.isAuthenticated">Welcome <strong>{{ securityService.username }}</strong></p>
     <p>Last visited: {{ (dto$ | async)?.lastVisited }}</p>
 
   </div>

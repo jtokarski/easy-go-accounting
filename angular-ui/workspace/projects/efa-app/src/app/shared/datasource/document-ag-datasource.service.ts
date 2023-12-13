@@ -6,6 +6,7 @@ import { BaseAgDatasource, SortOrder, Filter, Query, QueryPageable, QuerySearchP
   QueryOwnedBy, ICollectionResRep } from '@defendev/common-angular';
 import { OBSERVE_RESPONSE_JSON } from '@/shared/observe-response-json';
 import { DocumentMinDto } from '@/shared/dto/document';
+import { SecurityContextDiscoveryService, X_CSRF_TOKEN } from '@/security/security-context-discovery.service';
 
 export interface DocumentQuery extends Query, QueryPageable, QuerySearchPhrase, QuerySort, QueryFilter,
   QueryOwnedBy {}
@@ -20,6 +21,7 @@ export class DocumentAgDatasourceService extends BaseAgDatasource implements IDa
 
   constructor(
     private httpClient: HttpClient,
+    private securityService: SecurityContextDiscoveryService,
   ) {
     super();
   }
@@ -65,6 +67,7 @@ export class DocumentAgDatasourceService extends BaseAgDatasource implements IDa
 
     const rows$: Observable<HttpResponse<ICollectionResRep<DocumentMinDto>>> = this.httpClient
       .post<ICollectionResRep<DocumentMinDto>>(url, query, {
+        headers: new HttpHeaders({ [X_CSRF_TOKEN]: this.securityService.csrfToken }),
         ...OBSERVE_RESPONSE_JSON,
       });
 

@@ -14,6 +14,8 @@ import { InfiniteRowModelModule } from '@ag-grid-community/infinite-row-model';
 
 import { SharedModule } from '@/shared/shared.module';
 
+import { SecurityContextDiscoveryService, discoverSecurityContextFactory } from '@/security/security-context-discovery.service';
+
 import { FinancialAccountingHomeComponent } from './pages/financial-accounting-home/financial-accounting-home.component';
 import { DocumentMainComponent } from './pages/document-main/document-main.component';
 import { DocumentHomeComponent } from './pages/document-main/document-home/document-home.component';
@@ -47,6 +49,14 @@ ModuleRegistry.registerModules([
     NgbModule,
     AgGridModule,
     SharedModule,
+  ],
+  providers: [
+    {
+      provide: APP_INITIALIZER,
+      useFactory: discoverSecurityContextFactory,
+      deps: [SecurityContextDiscoveryService],
+      multi: true,
+    }
   ],
   bootstrap: [AppComponent]
 })
