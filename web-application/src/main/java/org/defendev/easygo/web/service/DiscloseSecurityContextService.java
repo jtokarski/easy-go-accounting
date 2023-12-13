@@ -19,7 +19,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -56,9 +55,6 @@ public class DiscloseSecurityContextService implements IDiscloseSecurityContextS
             isUsernameKnown = true;
         } else if (principal instanceof IDefendevUserDetails) {
             userDetailsDto = new UserDetailsDto(((IDefendevUserDetails) principal).getUsername());
-            isUsernameKnown = true;
-        } else if (principal instanceof User) {
-            userDetailsDto = new UserDetailsDto(((User) principal).getUsername());
             isUsernameKnown = true;
         } else {
             userDetailsDto = new UserDetailsDto("unknown");

@@ -32,6 +32,8 @@ dependencies {
     testImplementation libs.flywaydbOracle
     testImplementation libs.defendevCommonJdk
     testImplementation libs.defendevCommonFixtures
+    testImplementation project(':domain-iam-api')
+    testImplementation project(':domain-iam')
     testImplementation project(':domain-financial-accounting')
 }
 
