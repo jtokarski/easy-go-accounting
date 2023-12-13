@@ -10,8 +10,6 @@ import org.defendev.easygo.domain.fa.api.DocumentFullDto;
 import org.defendev.easygo.domain.fa.api.IFindDocumentService;
 import org.defendev.easygo.domain.fa.model.Document;
 import org.defendev.easygo.domain.fa.repository.DocumentRepo;
-import org.defendev.easygo.domain.iam.api.CheckObjectPrivilegeQuery;
-import org.defendev.easygo.domain.iam.api.ICheckObjectPrivilegeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,13 +27,9 @@ public class FindDocumentService implements IFindDocumentService {
 
     private final DocumentRepo documentRepo;
 
-    private final ICheckObjectPrivilegeService checkObjectReadPrivilegeService;
-
     @Autowired
-    public FindDocumentService(DocumentRepo documentRepo,
-                               ICheckObjectPrivilegeService checkObjectReadPrivilegeService) {
+    public FindDocumentService(DocumentRepo documentRepo) {
         this.documentRepo = documentRepo;
-        this.checkObjectReadPrivilegeService = checkObjectReadPrivilegeService;
     }
 
     @Transactional(transactionManager = "financialAccountingJpaTransactionManager", readOnly = true)
@@ -47,12 +41,6 @@ public class FindDocumentService implements IFindDocumentService {
             return QueryResult.notFound();
         }
         final Optional<Document> documentOptional = documentRepo.findById(id);
-        final IDefendevUserDetails requestedBy = query.getRequestedBy();
-        documentOptional.ifPresent(document -> {
-            final CheckObjectPrivilegeQuery privilegeQuery =
-                new CheckObjectPrivilegeQuery(Privilege.read, document, requestedBy);
-            checkObjectReadPrivilegeService.check(privilegeQuery);
-        });
 
         return documentOptional.map(this::mapToFullDto)
             .map(dto -> QueryResult.success(dto))

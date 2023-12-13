@@ -34,8 +34,6 @@ tasks.named('bootRun') {
 
 dependencies {
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web'
-    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security'
-    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-oauth2-client'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-actuator'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-log4j2'
@@ -57,12 +55,10 @@ dependencies {
     implementation libs.guava
     implementation libs.defendevCommonJdk
     implementation libs.defendevCommonSpring6
-    implementation project(':domain-iam-api')
     implementation project(':domain-financial-accounting-api')
     implementation project(':angular-ui')
 
     // todo: convert to runtimeOnly
-    implementation project(':domain-iam')
     implementation project(':domain-financial-accounting')
 
     testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test'

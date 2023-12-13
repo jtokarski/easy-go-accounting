@@ -7,14 +7,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.defendev.common.fixture.loader.FixturesLoader;
 import org.defendev.easygo.devops.config.DataSourceConfig;
-import org.defendev.easygo.devops.dbfixture.loader.OwnershipUnitFixturesLoader;
 import org.defendev.easygo.devops.dbfixture.loader.DocumentFixturesLoader;
-import org.defendev.easygo.devops.dbfixture.loader.UserIdentityFixturesLoader;
 import org.defendev.easygo.domain.fa.config.FinancialAccountingJpaConfig;
 import org.defendev.easygo.domain.fa.config.FinancialAccountingProperties;
-import org.defendev.easygo.domain.iam.config.PasswordEncoderConfig;
-import org.defendev.easygo.domain.iam.config.IamJpaConfig;
-import org.defendev.easygo.domain.iam.config.IamProperties;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -32,9 +27,9 @@ import java.util.List;
 
 
 @TestPropertySource(properties = { DataSourceConfig.DB_PROPERTY_LOCATIONS })
-@EnableConfigurationProperties({ IamProperties.class, FinancialAccountingProperties.class })
+@EnableConfigurationProperties({ FinancialAccountingProperties.class })
 @SpringJUnitConfig(
-    classes = { IamJpaConfig.class, PasswordEncoderConfig.class, FinancialAccountingJpaConfig.class },
+    classes = { FinancialAccountingJpaConfig.class },
     initializers = { ConfigDataApplicationContextInitializer.class }
 )
 public class LoadEasygoFixturesTest {
@@ -43,13 +38,6 @@ public class LoadEasygoFixturesTest {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
-
-    @PersistenceContext(unitName = "iamPersistenceUnit")
-    private EntityManager iamEm;
-
-    @Qualifier("iamTransactionTemplate")
-    @Autowired
-    private TransactionTemplate iamTransactionTemplate;
 
     @PersistenceContext(unitName = "financialAccountingPersistenceUnit")
     private EntityManager financialAccountingEm;
@@ -63,27 +51,9 @@ public class LoadEasygoFixturesTest {
 
         final List<FixturesLoader<?, ?>> loaders = new ArrayList<>();
 
-        final  OwnershipUnitFixturesLoader ownershipUnitFixturesLoader = new OwnershipUnitFixturesLoader(
-            "fixture/identity-access-management/OwnershipUnitSet.xml", iamEm);
-        loaders.add(ownershipUnitFixturesLoader);
-
-        final UserIdentityFixturesLoader userIdentityFixturesLoader = new UserIdentityFixturesLoader(
-            "fixture/identity-access-management/UserIdentitySet.xml", iamEm, passwordEncoder, ownershipUnitFixturesLoader);
-        loaders.add(userIdentityFixturesLoader);
-
         final DocumentFixturesLoader documentFixturesLoader = new DocumentFixturesLoader(
-            "fixture/financial-accounting/DocumentSet.xml", financialAccountingEm, ownershipUnitFixturesLoader);
+            "fixture/financial-accounting/DocumentSet.xml", financialAccountingEm);
         loaders.add(documentFixturesLoader);
-
-        iamTransactionTemplate.execute(status -> {
-            try {
-                ownershipUnitFixturesLoader.readFromResourceAndPersist();
-                userIdentityFixturesLoader.readFromResourceAndPersist();
-            } catch (JAXBException e) {
-                throw new RuntimeException(e);
-            }
-            return "I should return something smarter";
-        });
 
         financialAccountingTransactionTemplate.execute(status -> {
             try {

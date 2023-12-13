@@ -57,12 +57,6 @@ project(':angular-ui').name = 'angular-ui'
 include 'db-exec'
 project(':db-exec').name = 'db-exec'
 
-include 'domain-iam-api'
-project(':domain-iam-api').name = 'domain-iam-api'
-
-include 'domain-iam'
-project(':domain-iam').name = 'domain-iam'
-
 include 'domain-financial-accounting-api'
 project(':domain-financial-accounting-api').name = 'domain-financial-accounting-api'
 

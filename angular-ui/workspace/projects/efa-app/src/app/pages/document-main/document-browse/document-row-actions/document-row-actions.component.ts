@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { Router } from "@angular/router";
 import { ICellRendererAngularComp } from "@ag-grid-community/angular";
 import { ICellRendererParams } from "@ag-grid-community/core";
-import { SecurityContextDiscoveryService } from "@/security/security-context-discovery.service";
 import { DocumentMinDto } from '@/shared/dto/document';
 
 
@@ -18,7 +17,6 @@ export class DocumentRowActionsComponent implements ICellRendererAngularComp {
 
   public constructor(
     private router: Router,
-    public securityService: SecurityContextDiscoveryService,
   ) { }
 
   public agInit(params: ICellRendererParams<DocumentMinDto>): void {
