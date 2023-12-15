@@ -26,8 +26,10 @@ import org.springframework.security.oauth2.core.oidc.IdTokenClaimNames;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RegexRequestMatcher;
+
 
 
 @Import({ PasswordEncoderConfig.class })
@@ -65,6 +67,7 @@ public class WebSecurity {
         throws Exception {
 
         final LoginUrlAuthenticationEntryPoint authnEntryPoint = new LoginUrlAuthenticationEntryPoint(SIGN_IN_PATH);
+        final SimpleUrlAuthenticationSuccessHandler authnHandler = new SimpleUrlAuthenticationSuccessHandler("/");
         final SimpleUrlAuthenticationFailureHandler authnFailureHandler = new SimpleUrlAuthenticationFailureHandler(
             SIGN_IN_PATH);
         authnFailureHandler.setUseForward(false);
@@ -87,12 +90,13 @@ public class WebSecurity {
             .formLogin(
                 customizer -> customizer
                     .loginProcessingUrl(SIGN_IN_PATH)
+                    .successHandler(authnHandler)
                     .failureHandler(authnFailureHandler)
             )
             .oauth2Login(
                 customizer -> customizer.userInfoEndpoint(
                     userInfoEndpointCustomizer -> userInfoEndpointCustomizer.oidcUserService(easygoOAuth2UserService)
-                )
+                ).successHandler(authnHandler)
             )
             .logout(
                 customizer -> customizer
