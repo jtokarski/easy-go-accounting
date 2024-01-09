@@ -13,6 +13,9 @@ easygo:
       google:
         client-id: "000000000000-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.apps.googleusercontent.com"
         client-secret: "aaaaaa-aaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      github:
+        client-id: "000000000000-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.apps.googleusercontent.com"
+        client-secret: "aaaaaa-aaaaaaaaaaaaaaaaaaaaaaaaaaaa"
 
 
 

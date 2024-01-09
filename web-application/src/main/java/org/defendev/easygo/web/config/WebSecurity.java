@@ -2,6 +2,8 @@ package org.defendev.easygo.web.config;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.defendev.easygo.domain.iam.api.IEasygoOAuth2UserService;
+import org.defendev.easygo.domain.iam.api.IEasygoOidcUserService;
 import org.defendev.easygo.domain.iam.config.PasswordEncoderConfig;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,7 +18,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.oauth2.client.CommonOAuth2Provider;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserService;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
@@ -44,9 +45,11 @@ public class WebSecurity {
 
     public static final String SIGN_OUT_PATH = "/sign-out";
 
+    public static final String OAUTH2_REGISTRATION_ID_GOOGLE = "google";
+
     public static final String OAUTH2_REGISTRATION_ID_AZURE = "azure";
 
-    public static final String OAUTH2_REGISTRATION_ID_GOOGLE = "google";
+    public static final String OAUTH2_REGISTRATION_ID_GITHUB = "github";
 
     @Bean
     public AuthenticationManager globalAuthenticationManager(HttpSecurity http,
@@ -63,7 +66,8 @@ public class WebSecurity {
 
     @Bean
     public SecurityFilterChain buildSecurityFilterChain(HttpSecurity http,
-                                                        OidcUserService easygoOAuth2UserService)
+                                                        IEasygoOAuth2UserService easygoOAuth2UserService,
+                                                        IEasygoOidcUserService easygoOidcUserService)
         throws Exception {
 
         final LoginUrlAuthenticationEntryPoint authnEntryPoint = new LoginUrlAuthenticationEntryPoint(SIGN_IN_PATH);
@@ -95,7 +99,9 @@ public class WebSecurity {
             )
             .oauth2Login(
                 customizer -> customizer.userInfoEndpoint(
-                    userInfoEndpointCustomizer -> userInfoEndpointCustomizer.oidcUserService(easygoOAuth2UserService)
+                    userInfoEndpointCustomizer -> userInfoEndpointCustomizer
+                        .userService(easygoOAuth2UserService)
+                        .oidcUserService(easygoOidcUserService)
                 ).successHandler(authnHandler)
             )
             .logout(
@@ -108,11 +114,6 @@ public class WebSecurity {
 
     @Bean
     public ClientRegistrationRepository buildClientRegistrationRepository(WebApplicationProperties webProps) {
-        final ClientRegistration googleRegistration = CommonOAuth2Provider.GOOGLE.getBuilder(OAUTH2_REGISTRATION_ID_GOOGLE)
-            .clientId(webProps.getOidc().getGoogle().getClientId())
-            .clientSecret(webProps.getOidc().getGoogle().getClientSecret())
-            .build();
-
         final ClientRegistration azureRegistration = ClientRegistration.withRegistrationId(OAUTH2_REGISTRATION_ID_AZURE)
             .clientId(webProps.getOidc().getAzure().getClientId())
             .clientSecret(webProps.getOidc().getAzure().getClientSecret())
@@ -127,7 +128,18 @@ public class WebSecurity {
             .jwkSetUri(webProps.getOidc().getAzure().getJwkSetUri())
             .clientName("Azure")
             .build();
-        return new InMemoryClientRegistrationRepository(azureRegistration, googleRegistration);
+
+        final ClientRegistration githubRegistration = CommonOAuth2Provider.GITHUB.getBuilder(OAUTH2_REGISTRATION_ID_GITHUB)
+            .clientId(webProps.getOidc().getGithub().getClientId())
+            .clientSecret(webProps.getOidc().getGithub().getClientSecret())
+            .build();
+
+        final ClientRegistration googleRegistration = CommonOAuth2Provider.GOOGLE.getBuilder(OAUTH2_REGISTRATION_ID_GOOGLE)
+            .clientId(webProps.getOidc().getGoogle().getClientId())
+            .clientSecret(webProps.getOidc().getGoogle().getClientSecret())
+            .build();
+
+        return new InMemoryClientRegistrationRepository(azureRegistration, githubRegistration, googleRegistration);
     }
 
 }

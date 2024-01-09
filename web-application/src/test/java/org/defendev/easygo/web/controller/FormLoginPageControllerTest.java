@@ -52,6 +52,7 @@ public class FormLoginPageControllerTest {
             .andExpect(view().name("static/loginPage.th"))
             .andExpect(model().attribute("azureSignInLink", "oauth2/authorization/azure"))
             .andExpect(model().attribute("googleSignInLink", "oauth2/authorization/google"))
+            .andExpect(model().attribute("githubSignInLink", "oauth2/authorization/github"))
             .andExpect(model().attribute("loginErrorMessage", "false"))
             .andExpect(unauthenticated())
             .andReturn();

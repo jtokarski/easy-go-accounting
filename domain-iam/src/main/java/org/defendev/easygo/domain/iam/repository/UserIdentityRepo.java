@@ -13,10 +13,10 @@ public interface UserIdentityRepo extends JpaRepository<UserIdentity, Long> {
 
     Optional<UserIdentity> findByUsername(String username);
 
-    @Query("SELECT ui FROM UserIdentity ui WHERE ui.oidcProvider = :oidcProvider AND ui.oidcSub = :oidcSub")
-    Optional<UserIdentity> findOidcSub(
-        @Param("oidcProvider") String oidcProvider,
-        @Param("oidcSub") String oidcSub
+    @Query("SELECT ui FROM UserIdentity ui WHERE ui.oauthProvider = :oauthProvider AND ui.oauthUsername = :oauthUsername")
+    Optional<UserIdentity> findOAuth(
+        @Param("oauthProvider") String oauthProvider,
+        @Param("oauthUsername") String oauthUsername
     );
 
 }

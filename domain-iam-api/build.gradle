@@ -1,6 +1,8 @@
 
 plugins {
     id 'java-library'
+    alias libs.plugins.springDependencyManagementPlugin
+    alias libs.plugins.springBootPlugin
 }
 
 group = 'org.defendev'
@@ -10,7 +12,12 @@ java {
     targetCompatibility = JavaVersion.VERSION_17
 }
 
+bootJar {
+    enabled = false
+}
+
 dependencies {
+    implementation group: 'org.springframework.security', name: 'spring-security-oauth2-client'
     implementation libs.defendevCommonJdk
 }
 

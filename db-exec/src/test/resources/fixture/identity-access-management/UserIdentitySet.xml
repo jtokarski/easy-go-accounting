@@ -29,20 +29,4 @@
         </ownershipUnits>
     </userIdentity>
 
-    <userIdentity>
-        <id>3</id>
-        <username>Abc 2</username>
-        <password>-</password>
-        <oidcProvider>azure</oidcProvider>
-        <oidcSub>UpCEpGZgQsqeBPpecPclSgy6-G8Z98CvuvwgXwpgh5U</oidcSub>
-        <ownershipUnits>
-            <joinUserIdentityOwnershipUnit>
-                <ownershipUnit>
-                    <id>104</id>
-                </ownershipUnit>
-                <privilege>own</privilege>
-            </joinUserIdentityOwnershipUnit>
-        </ownershipUnits>
-    </userIdentity>
-
 </userIdentitySet>

@@ -4,14 +4,16 @@ import org.defendev.common.domain.query.result.QueryResult;
 import org.defendev.common.domain.resrep.CollectionMeta;
 import org.defendev.common.domain.resrep.ICollectionMeta;
 import org.defendev.common.time.ClockManager;
+import org.defendev.common.time.IClockManager;
 import org.defendev.easygo.domain.fa.api.DocumentCollectionResRep;
 import org.defendev.easygo.domain.fa.api.DocumentFullDto;
 import org.defendev.easygo.domain.fa.api.IFindDocumentService;
 import org.defendev.easygo.domain.fa.api.IQueryDocumentService;
+import org.defendev.easygo.domain.iam.api.IEasygoOAuth2UserService;
+import org.defendev.easygo.domain.iam.api.IEasygoOidcUserService;
 import org.mockito.Mockito;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserService;
 
 import java.time.Clock;
 import java.time.Instant;
@@ -26,24 +28,28 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 
-
 public class MockRootContext {
 
     @Bean
-    public ClockManager mockClockManager() {
+    public IClockManager mockClockManager() {
         final Instant mockNow = ZonedDateTime.of(LocalDate.of(2023, Month.DECEMBER, 15), LocalTime.of(21, 48),
             ZULU_ZONE_ID).toInstant();
         return new ClockManager(Clock.fixed(mockNow, ZULU_ZONE_ID));
     }
 
     @Bean
-    public OidcUserService mockOidcUserService() {
-        return Mockito.mock(OidcUserService.class);
+    public UserDetailsService mockUserDetailsService() {
+        return Mockito.mock(UserDetailsService.class);
     }
 
     @Bean
-    public UserDetailsService mockUserDetailsService() {
-        return Mockito.mock(UserDetailsService.class);
+    public IEasygoOAuth2UserService mockEasygoOAuth2UserService() {
+        return Mockito.mock(IEasygoOAuth2UserService.class);
+    }
+
+    @Bean
+    public IEasygoOidcUserService mockEasygoOidcUserService() {
+        return Mockito.mock(IEasygoOidcUserService.class);
     }
 
     @Bean

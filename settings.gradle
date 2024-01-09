@@ -16,7 +16,7 @@ dependencyResolutionManagement {
             version('guava.version', '32.1.3-jre')
             version('flywaydb.version', '10.2.0')
             version('archunit.version', '1.2.1')
-            version('defendev-common-jdk.version', '0.0.8')
+            version('defendev-common-jdk.version', '0.0.9')
             version('defendev-common-fixtures.version', '0.0.2')
             version('defendev-common-spring6.version', '0.0.3')
 

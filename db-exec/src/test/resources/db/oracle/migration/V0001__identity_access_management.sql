@@ -108,11 +108,11 @@ CREATE SYNONYM "${appUserNameIAM}"."CommonPrivilege" FOR "${schemaNameIAM}"."Com
 
 
 CREATE TABLE "${schemaNameIAM}"."UserIdentity" (
-  "id"           NUMBER(19, 0) GENERATED ALWAYS AS IDENTITY (NOCACHE) NOT NULL,
-  "username"     VARCHAR2(255 BYTE),
-  "password"     VARCHAR2(255 BYTE),
-  "oidcProvider" VARCHAR2(255 BYTE),
-  "oidcSub"      VARCHAR2(255 BYTE),
+  "id"             NUMBER(19, 0) GENERATED ALWAYS AS IDENTITY (NOCACHE) NOT NULL,
+  "username"       VARCHAR2(255 BYTE),
+  "password"       VARCHAR2(255 BYTE),
+  "oauthProvider"  VARCHAR2(255 BYTE),
+  "oauthUsername"  VARCHAR2(255 BYTE),
   CONSTRAINT PK_UserIdentity PRIMARY KEY ("id")
 );
 GRANT SELECT ON "${schemaNameIAM}"."UserIdentity" TO "${schemaNameIAM}_READONLY_ROLE";

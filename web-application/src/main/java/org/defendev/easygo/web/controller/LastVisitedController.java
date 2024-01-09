@@ -4,7 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.defendev.common.time.ClockManager;
+import org.defendev.common.time.IClockManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -26,10 +26,10 @@ public class LastVisitedController extends ApiBaseController {
 
     private static final String LAST_VISITED_KEY = "lastVisited";
 
-    private final ClockManager clockManager;
+    private final IClockManager clockManager;
 
     @Autowired
-    public LastVisitedController(ClockManager clockManager) {
+    public LastVisitedController(IClockManager clockManager) {
         this.clockManager = clockManager;
     }
 

@@ -41,11 +41,11 @@ public class UserIdentity implements HasId<Long> {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "oidcProvider")
-    private String oidcProvider;
+    @Column(name = "oauthProvider")
+    private String oauthProvider;
 
-    @Column(name = "oidcSub")
-    private String oidcSub;
+    @Column(name = "oauthUsername")
+    private String oauthUsername;
 
     @XmlElementWrapper(name = "ownershipUnits")
     @XmlElement(name = "joinUserIdentityOwnershipUnit")
@@ -76,6 +76,22 @@ public class UserIdentity implements HasId<Long> {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getOauthProvider() {
+        return oauthProvider;
+    }
+
+    public void setOauthProvider(String oauthProvider) {
+        this.oauthProvider = oauthProvider;
+    }
+
+    public String getOauthUsername() {
+        return oauthUsername;
+    }
+
+    public void setOauthUsername(String oauthUsername) {
+        this.oauthUsername = oauthUsername;
     }
 
     public List<JoinUserIdentityOwnershipUnit> getOwnershipUnits() {
