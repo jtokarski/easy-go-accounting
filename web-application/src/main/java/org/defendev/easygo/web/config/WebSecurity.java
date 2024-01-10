@@ -3,6 +3,7 @@ package org.defendev.easygo.web.config;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.defendev.easygo.domain.iam.api.IEasygoOAuth2UserService;
+import org.defendev.easygo.domain.iam.api.IEasygoOidcUserService;
 import org.defendev.easygo.domain.iam.config.PasswordEncoderConfig;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,6 +21,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
+import org.springframework.security.oauth2.core.AuthorizationGrantType;
+import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
+import org.springframework.security.oauth2.core.oidc.IdTokenClaimNames;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
@@ -41,6 +45,8 @@ public class WebSecurity {
 
     public static final String SIGN_OUT_PATH = "/sign-out";
 
+    public static final String OAUTH2_REGISTRATION_ID_AZURE = "azure";
+
     public static final String OAUTH2_REGISTRATION_ID_GITHUB = "github";
 
     @Bean
@@ -58,7 +64,8 @@ public class WebSecurity {
 
     @Bean
     public SecurityFilterChain buildSecurityFilterChain(HttpSecurity http,
-                                                        IEasygoOAuth2UserService easygoOAuth2UserService)
+                                                        IEasygoOAuth2UserService easygoOAuth2UserService,
+                                                        IEasygoOidcUserService easygoOidcUserService)
         throws Exception {
 
         final LoginUrlAuthenticationEntryPoint authnEntryPoint = new LoginUrlAuthenticationEntryPoint(SIGN_IN_PATH);
@@ -92,6 +99,7 @@ public class WebSecurity {
                 customizer -> customizer.userInfoEndpoint(
                     userInfoEndpointCustomizer -> userInfoEndpointCustomizer
                         .userService(easygoOAuth2UserService)
+                        .oidcUserService(easygoOidcUserService)
                 ).successHandler(authnHandler)
             )
             .logout(
@@ -104,13 +112,27 @@ public class WebSecurity {
 
     @Bean
     public ClientRegistrationRepository buildClientRegistrationRepository(WebApplicationProperties webProps) {
+        final ClientRegistration azureRegistration = ClientRegistration.withRegistrationId(OAUTH2_REGISTRATION_ID_AZURE)
+            .clientId(webProps.getOidc().getAzure().getClientId())
+            .clientSecret(webProps.getOidc().getAzure().getClientSecret())
+            .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
+            .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
+            .redirectUri("{baseUrl}/login/oauth2/code/{registrationId}")
+            .scope("openid", "profile", "email", "address", "phone")
+            .authorizationUri(webProps.getOidc().getAzure().getAuthorizationUri())
+            .tokenUri(webProps.getOidc().getAzure().getTokenUri())
+            .userInfoUri(webProps.getOidc().getAzure().getUserInfoUri())
+            .userNameAttributeName(IdTokenClaimNames.SUB)
+            .jwkSetUri(webProps.getOidc().getAzure().getJwkSetUri())
+            .clientName("Azure")
+            .build();
 
         final ClientRegistration githubRegistration = CommonOAuth2Provider.GITHUB.getBuilder(OAUTH2_REGISTRATION_ID_GITHUB)
             .clientId(webProps.getOidc().getGithub().getClientId())
             .clientSecret(webProps.getOidc().getGithub().getClientSecret())
             .build();
 
-        return new InMemoryClientRegistrationRepository(githubRegistration);
+        return new InMemoryClientRegistrationRepository(azureRegistration, githubRegistration);
     }
 
 }
