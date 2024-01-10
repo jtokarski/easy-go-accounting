@@ -50,6 +50,7 @@ public class FormLoginPageControllerTest {
         mockMvc.perform(get("/sign-in").with(anonymous()))
             .andExpect(status().isOk())
             .andExpect(view().name("static/loginPage.th"))
+            .andExpect(model().attribute("githubSignInLink", "oauth2/authorization/github"))
             .andExpect(model().attribute("loginErrorMessage", "false"))
             .andExpect(unauthenticated())
             .andReturn();

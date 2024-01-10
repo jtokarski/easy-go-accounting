@@ -9,6 +9,7 @@ import org.defendev.easygo.domain.fa.api.DocumentCollectionResRep;
 import org.defendev.easygo.domain.fa.api.DocumentFullDto;
 import org.defendev.easygo.domain.fa.api.IFindDocumentService;
 import org.defendev.easygo.domain.fa.api.IQueryDocumentService;
+import org.defendev.easygo.domain.iam.api.IEasygoOAuth2UserService;
 import org.mockito.Mockito;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -38,6 +39,11 @@ public class MockRootContext {
     @Bean
     public UserDetailsService mockUserDetailsService() {
         return Mockito.mock(UserDetailsService.class);
+    }
+
+    @Bean
+    public IEasygoOAuth2UserService mockEasygoOAuth2UserService() {
+        return Mockito.mock(IEasygoOAuth2UserService.class);
     }
 
     @Bean
