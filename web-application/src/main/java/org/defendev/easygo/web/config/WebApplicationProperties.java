@@ -72,6 +72,29 @@ public class WebApplicationProperties {
             }
         }
 
+        public static class Google {
+
+            private String clientId;
+
+            private String clientSecret;
+
+            public String getClientId() {
+                return clientId;
+            }
+
+            public void setClientId(String clientId) {
+                this.clientId = clientId;
+            }
+
+            public String getClientSecret() {
+                return clientSecret;
+            }
+
+            public void setClientSecret(String clientSecret) {
+                this.clientSecret = clientSecret;
+            }
+        }
+
         public static class Github {
 
             private String clientId;
@@ -97,6 +120,8 @@ public class WebApplicationProperties {
 
         private Azure azure;
 
+        private Google google;
+
         private Github github;
 
         public Azure getAzure() {
@@ -105,6 +130,14 @@ public class WebApplicationProperties {
 
         public void setAzure(Azure azure) {
             this.azure = azure;
+        }
+
+        public Google getGoogle() {
+            return google;
+        }
+
+        public void setGoogle(Google google) {
+            this.google = google;
         }
 
         public Github getGithub() {

@@ -45,6 +45,8 @@ public class WebSecurity {
 
     public static final String SIGN_OUT_PATH = "/sign-out";
 
+    public static final String OAUTH2_REGISTRATION_ID_GOOGLE = "google";
+
     public static final String OAUTH2_REGISTRATION_ID_AZURE = "azure";
 
     public static final String OAUTH2_REGISTRATION_ID_GITHUB = "github";
@@ -132,7 +134,12 @@ public class WebSecurity {
             .clientSecret(webProps.getOidc().getGithub().getClientSecret())
             .build();
 
-        return new InMemoryClientRegistrationRepository(azureRegistration, githubRegistration);
+        final ClientRegistration googleRegistration = CommonOAuth2Provider.GOOGLE.getBuilder(OAUTH2_REGISTRATION_ID_GOOGLE)
+            .clientId(webProps.getOidc().getGoogle().getClientId())
+            .clientSecret(webProps.getOidc().getGoogle().getClientSecret())
+            .build();
+
+        return new InMemoryClientRegistrationRepository(azureRegistration, githubRegistration, googleRegistration);
     }
 
 }

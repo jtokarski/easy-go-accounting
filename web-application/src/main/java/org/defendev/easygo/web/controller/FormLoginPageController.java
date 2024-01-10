@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 import static java.util.Objects.isNull;
 import static org.apache.commons.lang3.StringUtils.removeStart;
 import static org.defendev.easygo.web.config.WebSecurity.OAUTH2_REGISTRATION_ID_AZURE;
+import static org.defendev.easygo.web.config.WebSecurity.OAUTH2_REGISTRATION_ID_GOOGLE;
 import static org.defendev.easygo.web.config.WebSecurity.OAUTH2_REGISTRATION_ID_GITHUB;
 import static org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter.DEFAULT_AUTHORIZATION_REQUEST_BASE_URI;
 import static org.springframework.security.web.WebAttributes.AUTHENTICATION_EXCEPTION;
@@ -32,6 +33,10 @@ public class FormLoginPageController {
         final String azureSignInLink = removeStart(DEFAULT_AUTHORIZATION_REQUEST_BASE_URI, "/") + "/" +
             OAUTH2_REGISTRATION_ID_AZURE;
         mav.getModel().put("azureSignInLink", azureSignInLink);
+
+        final String googleSignInLink = removeStart(DEFAULT_AUTHORIZATION_REQUEST_BASE_URI, "/") + "/" +
+            OAUTH2_REGISTRATION_ID_GOOGLE;
+        mav.getModel().put("googleSignInLink", googleSignInLink);
 
         final String githubSignInLink = removeStart(DEFAULT_AUTHORIZATION_REQUEST_BASE_URI, "/") + "/" +
             OAUTH2_REGISTRATION_ID_GITHUB;
