@@ -1,0 +1,165 @@
+= Workshop 2024-01-11: Web Security with OAuth2/OpenId Connect
+
+== Goals of this workshop
+
+Demonstrate selected features of OAuth2/OpenID Connect protocols. For that, we will implement authentication in our web application by integrating with external identity providers.
+
+== Non-goals of this workshop
+
+This *is not* our goal to explore all features of OAuth2/OpenID Connect protocols. In particular, we will not be implementing *Resource Server* endpoints in our application.
+
+== Assumptions
+
+We will be working on the following specific scenario:
+
+* incorporate *Authorization Code* flow (grant type), which is most common for Web applications. Our Java application will be acting as Confidential Client.
+
+* neither *access token* nor *ID token* will be exposed outside the Java application. The Frontend (Angular) application will rely on session maintained by `JSESSIONID`
+
+* integration with various authorization servers (identity providers): Azure AD, Github, Google. We will see how standarization makes this process straightforward.
+
+
+
+== Step 1
+
+Starting branch `workshop_20240111_0` - let's take a look again at standalone security.
+
+Interesting breakpoints:
+
+* `org.springframework.security.web.FilterChainProxy.doFilter()` in `this.filterChains` you can notice filters configured by Spring Security
+
+== Step 2
+
+Starting branch `workshop_20240111_1` - implementing authentication with *OAuth2* provider - *Github*
+
+Main additions in this branch:
+
+* library dependency `spring-security-oauth2-client` - note that it's a _client_
+* `EasygoOAuth2UserService` - service to produce user object after authentication. This time it doesn't use SQL database but data got from OAuth2 provider. Note that it extends `DefaultOAuth2UserService`
+* `WebSecurity`
+
+Interesting breakpoints:
+
+* `org.springframework.security.web.FilterChainProxy.doFilter()` in `this.filterChains` notice new filters in our filter chain
+* `org.springframework.security.oauth2.client.authentication.OAuth2AuthorizationCodeAuthenticationProvider.authenticate()` - in browser Dev Tools note the *Authorization Code* (e.g. `384dee4a0e494c120dee`) sent in redirect URL from Github
+* `org.springframework.security.oauth2.client.endpoint.DefaultAuthorizationCodeTokenResponseClient.getResponse()` - note the exchange of *Authorization Code* for *Access Token*
++
+----
+{
+  "access_token":"thu_saialkVuGkzk9jGwmBs1TYl9yHIt1K65qCqE",
+  "expires_in":28800,
+  "refresh_token":"thr_3ccPiN1wYsTcWlVGe0jK4XMMT3lrKP61i1fmcGeCYyhNu0mnCBgOWDhH0Aka3sTKoow4E89LKLA1",
+  "refresh_token_expires_in":15724800,
+  "token_type":"bearer",
+  "scope":""
+}
+----
++
+note, the *Access Token* is not JWT
+* `org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService.getResponse()` - note request to *User Info* endpoint with *Access Token* to get details of the user. Observe response like:
++
+----
+{
+  "login": "jtokarski",
+  "id": 7215048,
+  "node_id": "XlMD6VNQcjQyMDE4NTc=",
+  "avatar_url": "https://avatars.githubusercontent.com/u/7215048?v=4",
+  "gravatar_id": "",
+  "url": "https://api.github.com/users/jtokarski",
+  "html_url": "https://github.com/jtokarski",
+  "followers_url": "https://api.github.com/users/jtokarski/followers",
+  "following_url": "https://api.github.com/users/jtokarski/following{/other_user}",
+  "gists_url": "https://api.github.com/users/jtokarski/gists{/gist_id}",
+  "starred_url": "https://api.github.com/users/jtokarski/starred{/owner}{/repo}",
+  "subscriptions_url": "https://api.github.com/users/jtokarski/subscriptions",
+  "organizations_url": "https://api.github.com/users/jtokarski/orgs",
+  "repos_url": "https://api.github.com/users/jtokarski/repos",
+  "events_url": "https://api.github.com/users/jtokarski/events{/privacy}",
+  "received_events_url": "https://api.github.com/users/jtokarski/received_events",
+  "type": "User",
+  "site_admin": false,
+  "name": "Józef Tokarski",
+  "company": null,
+  "blog": "",
+  "location": "Rzeszów, Poland",
+  "email": null,
+  "hireable": null,
+  "bio": null,
+  "twitter_username": null,
+  "public_repos": 6,
+  "public_gists": 1,
+  "followers": 3,
+  "following": 5,
+  "created_at": "2013-04-19T13:35:44Z",
+  "updated_at": "2023-11-10T20:38:34Z"
+}
+----
++
+In this case we have to know how specific OAuth2 provider specifies user detail, in particular - unique identifier. See: `org.springframework.security.config.oauth2.client.CommonOAuth2Provider.GITHUB`
+
+== Step 3
+
+Starting branch `workshop_20240111_2` - implementing authentication with *OpenID Connect* provider - *Azure*
+
+Main additions in this branch:
+
+* `EasygoOidcUserService` - service to produce user object after authentication. This time it doesn't use SQL database but data got from OpenID Connect provider. Note that it extends `OidcUserService`
+* `WebSecurity`
+
+Interesting breakpoints:
+
+* `org.springframework.security.oauth2.client.oidc.authentication.OidcAuthorizationCodeAuthenticationProvider.authenticate()` - in browser Dev Tools note the *Authorization Code* (e.g. `0.AUsALf_T2i2IyXLU8sOEesc9iCVrJQs3GPJElY...`) sent in redirect URL from Azure
+
+* `org.springframework.security.oauth2.client.endpoint.DefaultAuthorizationCodeTokenResponseClient.getResponse()` - note (as before) the exchange of *Authorization Code* for *Access Token*
++
+[%nowrap]
+----
+{
+  "token_type": "Bearer",
+  "scope": "email openid profile",
+  "expires_in": 4277,
+  "ext_expires_in": 4277,
+  "access_token": "eyJ0eXAiOiJKV1QiLCJub25jZSI6IlhHOHZjZUMtNHV6blBObGtwVjJZdG5MbkNieS1pZVdhNUc2S0dNYTl0dE0iLCJhbGciOiJSUzI1NiIsIng1dCI6IjVCM25SeHRRN2ppOGVORGMzRnkwNUtmOTdaRSIsImtpZCI6IjVCM25SeHRRN2ppOGVORGMzRnkwNUtmOTdaRSJ9.eyJhdWQiOiIwMDAwMDAwMy0wMDAwLTAwMDAtYzAwMC0wMDAwMDAwMDAwMDAiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC9kOWQzZmYyZC1kN2NhLTQ4MjEtYmQwOS1lZDk1M2FjMjZjMTMvIiwiaWF0IjoxNzA0OTc1NzE0LCJuYmYiOjE3MDQ5NzU3MTQsImV4cCI6MTcwNDk4MDI5MiwiYWNjdCI6MCwiYWNyIjoiMSIsImFpbyI6IkFUUUF5LzhWQUFBQWpkRERNMXZIb1JGTnVXeVF2SjdIdTJiT1o2b2dhVlFSRTkvdVB0aDQ0Rjc5T1lCMjRHbXdLYmNkdDlZYzh5bjciLCJhbXIiOlsicHdkIl0sImFwcF9kaXNwbGF5bmFtZSI6IkRlZmVuZGV2IEF6dXJlIiwiYXBwaWQiOiIwYjJkYmMyOC0xODM3LTQ0ZjItOTU4Yy1kNzYwNDliZjUzZmIiLCJhcHBpZGFjciI6IjEiLCJmYW1pbHlfbmFtZSI6IkF1cmVsaXVzIiwiZ2l2ZW5fbmFtZSI6Ik1hcmN1cyIsImlkdHlwIjoidXNlciIsImlwYWRkciI6IjkxLjIyNS4xMzUuNTAiLCJuYW1lIjoiTWFyY3VzIEF1cmVsaXVzIiwib2lkIjoiYTUxNWNlNjgtYTBjMy00ZDk2LTliNzQtMWI3ZGVlNTA2NmIyIiwicGxhdGYiOiIzIiwicHVpZCI6IjEwMDMyMDAyRDQ4MTYzMjIiLCJyaCI6IjAuQVVzQUxmX1QyY3JYSVVpOUNlMlZPc0pzRXdNQUFBQUFBQUFBd0FBQUFBQUFBQUJMQURzLiIsInNjcCI6ImVtYWlsIG9wZW5pZCBwcm9maWxlIiwic3ViIjoieGM4OXVuYTFfWURyWjR0QnM4aFI3dk1qdUtVTDhhdGplLXhlRjJGblBMNCIsInRlbmFudF9yZWdpb25fc2NvcGUiOiJFVSIsInRpZCI6ImQ5ZDNmZjJkLWQ3Y2EtNDgyMS1iZDA5LWVkOTUzYWMyNmMxMyIsInVuaXF1ZV9uYW1lIjoiTWFyY3VzX0F1cmVsaXVzQGprdG9rYXJza2lqdHNpLm9ubWljcm9zb2Z0LmNvbSIsInVwbiI6Ik1hcmN1c19BdXJlbGl1c0Bqa3Rva2Fyc2tpanRzaS5vbm1pY3Jvc29mdC5jb20iLCJ1dGkiOiIwLTJEbDludFFFbVVOdi01LUFmM0JRIiwidmVyIjoiMS4wIiwid2lkcyI6WyJiNzlmYmY0ZC0zZWY5LTQ2ODktODE0My03NmIxOTRlODU1MDkiXSwieG1zX3N0Ijp7InN1YiI6Ikd3V3Y0NDg2U1dwUzdUNkNhUjNidzU2REdpaTc3cV9pbnFCazNvcmhlbUEifSwieG1zX3RjZHQiOjE2ODUyMTg0MzAsInhtc190ZGJyIjoiRVUifQ.QP--fK_4eZaGmGchCfT60UVNQXpU9vv2Rdrv7yIuhIgIN47DBDPQ6yje55jWhtJWwz3mAfQw4DaYGRXi9nqBxENuEGw8CLbk61zmlm80zokYbB093mPQrefhWyAorqmZXr7eSIvzx5LFqlSy-ziZEnZtfV0y8pDnA7O3KdpKuLLdx8iXmOfF2mxx8EuLGOMK8m26TuxgmCa9lgXcwNyGOBQgM4GUq7-8jpCfZ6NiXWfUlioVIEz5pAqdQ75rRcW4O15qbtS75zxe4lJNLbOpiFmlZs3eFqYShoEoaBfZWVoUNYMknKUInxXW_rRGe27i8fvNRIkcaBqCEQtBXHH3RA",
+  "id_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjVCM25SeHRRN2ppOGVORGMzRnkwNUtmOTdaRSJ9.eyJhdWQiOiIwYjJkYmMyOC0xODM3LTQ0ZjItOTU4Yy1kNzYwNDliZjUzZmIiLCJpc3MiOiJodHRwczovL2xvZ2luLm1pY3Jvc29mdG9ubGluZS5jb20vZDlkM2ZmMmQtZDdjYS00ODIxLWJkMDktZWQ5NTNhYzI2YzEzL3YyLjAiLCJpYXQiOjE3MDQ5NzU3MTQsIm5iZiI6MTcwNDk3NTcxNCwiZXhwIjoxNzA0OTc5NjE0LCJuYW1lIjoiTWFyY3VzIEF1cmVsaXVzIiwibm9uY2UiOiJfTzdfVjhkZGtOeEM0NkJ3dmdlQWU1RE8yY3dxQlNkWnpaTW5fY0RBV1A4Iiwib2lkIjoiYTUxNWNlNjgtYTBjMy00ZDk2LTliNzQtMWI3ZGVlNTA2NmIyIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiTWFyY3VzX0F1cmVsaXVzQGprdG9rYXJza2lqdHNpLm9ubWljcm9zb2Z0LmNvbSIsInJoIjoiMC5BVXNBTGZfVDJjclhJVWk5Q2UyVk9zSnNFeWk4TFFzM0dQSkVsWXpYWUVtX1VfdExBRHMuIiwic3ViIjoiR3dXdjQ0ODZTV3BTN1Q2Q2FSM2J3NTZER2lpNzdxX2lucUJrM29yaGVtQSIsInRpZCI6ImQ5ZDNmZjJkLWQ3Y2EtNDgyMS1iZDA5LWVkOTUzYWMyNmMxMyIsInV0aSI6IjAtMkRsOW50UUVtVU52LTUtQWYzQlEiLCJ2ZXIiOiIyLjAifQ.gNiKn2ApA3Au1q8rCJ-ZPPZZUsveEKZ56t8pKAR_gAzUe4TUNh_7mVeMY1SvNtZxS1jfCrPTUjx_xIASVtGykunH2toe-leGse9VMaZfZBUxS7t227p4mIdUuRgf1kiL6mLHcDxaQuyD7CrkoPeVr1wHJyKQhD3L5B2_A26PjtvrljDBZYoAPA-7MOH4JE6rb8_VQCKYBNGP7nSme_TiDPHTjZ5nysFWaHfvnWvKQdr1lgUqkdOdyrNbJIKNBRNYInsxftL5Vk-s9dyZVisWfbmsw9vh3kqyhYOm1wjlDBwIRNSmMDEbH2mrhYyAe-9z7t1OoUI5Un5iJgMXlUcN8A"
+}
+----
++
+Note new field `id_token` in access token. It's JWT. Let's decode it &rarr; https://jwt.io/[jwt.io]. See the `sub` standard claim.
+* `org.springframework.security.oauth2.jwt.NimbusJwtDecoder.JwkSetUriJwtDecoderBuilder.RestOperationsResourceRetriever.getResponse()` - obtaining keys for verification of JWT signatures
+* `org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService.getResponse()`  - note request to *User Info* endpoint with *Access Token* to get details of the user. Observe response like:
++
+----
+{
+  "sub": "GwWv6WTw3bR8G45DSa76C4Sp6ii77q_inqBk3orhemA",
+  "name": "Marcus Aurelius",
+  "family_name": "Aurelius",
+  "given_name": "Marcus",
+  "picture": "https://graph.microsoft.com/v1.0/me/photo/$value"
+}
+----
+
+== Step 4
+
+Starting branch `workshop_20240111_3` - adding next OpenID Connect provider.
+
+Compare branches and see how easy this is.
+
+
+
+== General
+
+* breakpoint in `org.springframework.web.client.RestTemplate.doExecute()` may be useful for extracting raw responses. For that use
++
+----
+new String(response.getBody().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8)
+----
+
+
+
+
+
+
+
+
+
+
