@@ -49,4 +49,9 @@
     <Environment name="easygo.web-application.oidc.google.client-secret"
       value="${EASYGO_WEBAPP_OIDC_GOOGLE_CLIENT_SECRET}" type="java.lang.String" override="false" />
 
+    <Environment name="easygo.web-application.oidc.github.client-id"
+      value="${EASYGO_WEBAPP_OAUTH2_GOOGLE_CLIENT_ID}" type="java.lang.String" override="false" />
+    <Environment name="easygo.web-application.oidc.github.client-secret"
+      value="${EASYGO_WEBAPP_OAUTH2_GOOGLE_CLIENT_SECRET}" type="java.lang.String" override="false" />
+
 </Context>
