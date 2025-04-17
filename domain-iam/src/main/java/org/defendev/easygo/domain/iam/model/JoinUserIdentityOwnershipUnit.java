@@ -81,14 +81,13 @@ public class JoinUserIdentityOwnershipUnit {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         JoinUserIdentityOwnershipUnit that = (JoinUserIdentityOwnershipUnit) o;
-        return Objects.equals(userIdentity, that.userIdentity) && Objects.equals(ownershipUnit, that.ownershipUnit);
+        return Objects.equals(id, that.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userIdentity, ownershipUnit);
+        return Objects.hashCode(id);
     }
 }

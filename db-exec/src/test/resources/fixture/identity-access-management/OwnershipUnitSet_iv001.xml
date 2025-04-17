@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ownershipUnitSet>
+
+    <ownershipUnit>
+        <id>102</id>
+        <name>client A</name>
+    </ownershipUnit>
+
+    <ownershipUnit>
+        <id>103</id>
+        <name>client B</name>
+    </ownershipUnit>
+
+</ownershipUnitSet>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<documentSet>
+
+    <document>
+        <id>1</id>
+        <controlNumber>EXCHGAS-00U1</controlNumber>
+        <type>STATEMENT</type>
+        <issueDateTimeZulu>2019-08-31T14:29:59</issueDateTimeZulu>
+        <description>Maarika Lewis sent acceptance</description>
+        <ownershipUnitId>102</ownershipUnitId>
+    </document>
+
+    <document>
+        <id>2</id>
+        <controlNumber>EXCHGAS-00U2</controlNumber>
+        <type>STATEMENT</type>
+        <issueDateTimeZulu>2020-09-11T14:00:15</issueDateTimeZulu>
+        <description>required by account opening</description>
+        <ownershipUnitId>102</ownershipUnitId>
+    </document>
+
+    <document>
+        <id>3</id>
+        <controlNumber>EXCHGAS-00U3</controlNumber>
+        <type>STATEMENT</type>
+        <issueDateTimeZulu>2023-08-01T07:55:51</issueDateTimeZulu>
+        <description>signature suspicious</description>
+        <ownershipUnitId>102</ownershipUnitId>
+    </document>
+
+    <document>
+        <id>4</id>
+        <controlNumber>GDPRC-00C1</controlNumber>
+        <type>AGREEMENT</type>
+        <issueDateTimeZulu>2019-11-30T10:56:49</issueDateTimeZulu>
+        <description>GDPR consent for retail banking</description>
+        <ownershipUnitId>103</ownershipUnitId>
+    </document>
+
+    <document>
+        <id>5</id>
+        <controlNumber>GDPRC-00C2</controlNumber>
+        <type>AGREEMENT</type>
+        <issueDateTimeZulu>2017-07-23T10:16:28</issueDateTimeZulu>
+        <description>incomplete</description>
+        <ownershipUnitId>102</ownershipUnitId>
+    </document>
+
+    <document>
+        <id>35</id>
+        <controlNumber>MAN-06224</controlNumber>
+        <type>OTHER</type>
+        <issueDateTimeZulu>2016-07-25T09:38:02</issueDateTimeZulu>
+        <description>Accounting - internal procedures</description>
+        <ownershipUnitId>103</ownershipUnitId>
+    </document>
+
+</documentSet>

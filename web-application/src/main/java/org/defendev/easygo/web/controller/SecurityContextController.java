@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.defendev.common.domain.iam.service.api.IDiscloseSecurityContextService;
 import org.defendev.common.domain.iam.service.dto.ISecurityContextDto;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
@@ -17,8 +18,9 @@ public class SecurityContextController extends ApiBaseController {
 
     private static final Logger log = LogManager.getLogger();
 
-    private IDiscloseSecurityContextService discloseSecurityContextService;
+    private final IDiscloseSecurityContextService discloseSecurityContextService;
 
+    @Autowired
     public SecurityContextController(IDiscloseSecurityContextService discloseSecurityContextService) {
         this.discloseSecurityContextService = discloseSecurityContextService;
     }
