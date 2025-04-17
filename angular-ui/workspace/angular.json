@@ -72,11 +72,11 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "efa-app:build:production"
+              "buildTarget": "efa-app:build:production"
             },
             "development": {
-              "browserTarget": "efa-app:build:development",
-              "proxyConfig": "proxy.conf.mjs"
+              "proxyConfig": "proxy.conf.mjs",
+              "buildTarget": "efa-app:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -84,7 +84,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "efa-app:build"
+            "buildTarget": "efa-app:build"
           }
         },
         "test": {
