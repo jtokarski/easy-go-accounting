@@ -8,7 +8,8 @@ import { SecurityContextDiscoveryService } from '@/security/security-context-dis
 @Component({
   selector: 'ea-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  standalone: false,
 })
 export class AppComponent implements OnInit {
 

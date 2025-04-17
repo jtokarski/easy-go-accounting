@@ -10,7 +10,8 @@ import { DocumentFullDto } from "@/shared/dto/document";
 @Component({
   selector: 'ea-document-details',
   templateUrl: './document-details.component.html',
-  styleUrls: ['./document-details.component.scss']
+  styleUrls: ['./document-details.component.scss'],
+  standalone: false,
 })
 export class DocumentDetailsComponent implements OnInit, OnDestroy {
 

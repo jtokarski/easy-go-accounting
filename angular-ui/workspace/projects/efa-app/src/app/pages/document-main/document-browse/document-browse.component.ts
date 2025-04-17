@@ -36,6 +36,7 @@ const INITIAL_PAGE_SIZE = 10;
       useClass: DocumentAgDatasourceService,
     }
   ],
+  standalone: false,
 })
 export class DocumentBrowseComponent implements OnInit, OnDestroy {
 

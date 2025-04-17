@@ -10,7 +10,8 @@ import { DocumentMinDto } from '@/shared/dto/document';
 @Component({
   selector: 'ea-document-row-actions',
   templateUrl: './document-row-actions.component.html',
-  styleUrls: ['./document-row-actions.component.scss']
+  styleUrls: ['./document-row-actions.component.scss'],
+  standalone: false,
 })
 export class DocumentRowActionsComponent implements ICellRendererAngularComp {
 
