@@ -88,11 +88,7 @@ public class QueryDocumentService implements IQueryDocumentService {
                 (int) documentsPage.getTotalElements()
             );
         } else {
-            collectionMeta = new CollectionMeta(
-                ICollectionMeta.NO_SUCH_PAGE,
-                0,
-                ICollectionMeta.TOTAL_ELEMENTS_UNKNOWN
-            );
+            collectionMeta = new CollectionMeta(ICollectionMeta.NO_SUCH_PAGE, 0, 0);
         }
 
         return new DocumentCollectionResRep(collectionMeta, dtos);

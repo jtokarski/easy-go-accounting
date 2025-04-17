@@ -48,7 +48,7 @@ public class FinancialAccountingJpaConfig {
         final HibernateJpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
         emfFactoryBean.setJpaVendorAdapter(jpaVendorAdapter);
         final Properties jpaProperties = new Properties();
-        jpaProperties.put("hibernate.dialect", "org.hibernate.dialect.Oracle12cDialect");
+        jpaProperties.put("hibernate.dialect", "org.hibernate.dialect.OracleDialect");
         jpaProperties.put("hibernate.hbm2ddl.auto", "none");
         jpaProperties.put("hibernate.globally_quoted_identifiers", Boolean.TRUE);
         jpaProperties.put("hibernate.show_sql", Boolean.FALSE);
