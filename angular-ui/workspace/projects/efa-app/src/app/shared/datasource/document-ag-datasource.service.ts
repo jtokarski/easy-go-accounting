@@ -3,10 +3,9 @@ import { HttpClient, HttpResponse, HttpHeaders } from "@angular/common/http";
 import { Observable, Subject } from 'rxjs';
 import { IDatasource, IGetRowsParams, SortModelItem } from '@ag-grid-community/core';
 import { BaseAgDatasource, SortOrder, Filter, Query, QueryPageable, QuerySearchPhrase, QuerySort, QueryFilter,
-  QueryOwnedBy, ICollectionResRep } from '@defendev/common-angular';
+  QueryOwnedBy, ICollectionResRep, SecurityContextDiscoveryService, X_CSRF_TOKEN } from '@defendev/common-angular';
 import { OBSERVE_RESPONSE_JSON } from '@/shared/observe-response-json';
 import { DocumentMinDto } from '@/shared/dto/document';
-import { SecurityContextDiscoveryService, X_CSRF_TOKEN } from '@/security/security-context-discovery.service';
 
 export interface DocumentQuery extends Query, QueryPageable, QuerySearchPhrase, QuerySort, QueryFilter,
   QueryOwnedBy {}
@@ -38,9 +37,7 @@ export class DocumentAgDatasourceService extends BaseAgDatasource implements IDa
   public getRows(params: IGetRowsParams): void {
     const startRow = params.startRow;
     const endRow = params.endRow;
-    if (false === this.validPaginationParams(startRow, endRow, params.failCallback)) {
-      return;
-    }
+    this.validPaginationParams(startRow, endRow, params.failCallback)
     const pageSize = endRow - startRow;
     const pageNumber = startRow / pageSize;
 

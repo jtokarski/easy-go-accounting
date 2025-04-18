@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { Router } from "@angular/router";
-import { ICellRendererAngularComp } from "@ag-grid-community/angular";
-import { ICellRendererParams } from "@ag-grid-community/core";
-import { SecurityContextDiscoveryService } from "@/security/security-context-discovery.service";
+import { Router } from '@angular/router';
+import { ICellRendererAngularComp } from '@ag-grid-community/angular';
+import { ICellRendererParams } from '@ag-grid-community/core';
+import { SecurityContextDiscoveryService } from '@defendev/common-angular';
 import { DocumentMinDto } from '@/shared/dto/document';
 
 

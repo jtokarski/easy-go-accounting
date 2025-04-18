@@ -73,7 +73,7 @@ export class DocumentBrowseComponent implements OnInit, OnDestroy {
   }
 
   public paginationSetPageSize(newSize: number) {
-    this.gridApi.paginationSetPageSize(newSize);
+    this.gridApi.setGridOption('paginationPageSize', newSize);
   }
 
   public paginationPageOnFocus(event: FocusEvent) {
@@ -130,7 +130,7 @@ export class DocumentBrowseComponent implements OnInit, OnDestroy {
 
   private onPaginationChanged = (event: PaginationChangedEvent<DocumentMinDto>) => {
     const gridApi: GridApi<DocumentMinDto> = event.api;
-    const paginationPageSize: number = gridApi.paginationGetPageSize();
+    const paginationPageSize: number = gridApi.getGridOption('paginationPageSize') || -1;
     const paginationCurrentPage: number = gridApi.paginationGetCurrentPage() + 1;
     this.totalPages = gridApi.paginationGetTotalPages();
     this.externalPaginationFg.setValue({

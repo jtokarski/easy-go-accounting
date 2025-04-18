@@ -67,7 +67,7 @@ public class MockRootContext {
         final IQueryDocumentService mock = Mockito.mock(IQueryDocumentService.class);
         when(mock.execute(any())).thenReturn(
             QueryResult.success(new DocumentCollectionResRep(
-                new CollectionMeta(ICollectionMeta.NO_SUCH_PAGE, 0, ICollectionMeta.TOTAL_ELEMENTS_UNKNOWN),
+                new CollectionMeta(ICollectionMeta.NO_SUCH_PAGE, 0, 0),
                 List.of()
             ))
         );

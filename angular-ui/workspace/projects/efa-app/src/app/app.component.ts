@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
-import { isRouteActive } from '@defendev/common-angular';
-import { SecurityContextDiscoveryService } from '@/security/security-context-discovery.service';
+import { SecurityContextDiscoveryService, isRouteActive } from '@defendev/common-angular';
 
 
 

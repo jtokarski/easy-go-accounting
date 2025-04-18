@@ -1,10 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpClient, HttpResponse } from "@angular/common/http";
 import { Observable, map, Subject, takeUntil } from "rxjs";
+import { SecurityContextDiscoveryService } from '@defendev/common-angular';
 import { OBSERVE_RESPONSE_JSON } from "@/shared/observe-response-json";
 import { DocumentFullDto } from "@/shared/dto/document";
 import { LastVisitedDto } from '@/shared/dto/last-visited';
-import { SecurityContextDiscoveryService } from '@/security/security-context-discovery.service';
 
 
 
