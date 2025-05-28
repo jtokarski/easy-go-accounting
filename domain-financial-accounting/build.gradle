@@ -5,7 +5,7 @@ plugins {
     alias libs.plugins.springBootPlugin
 }
 
-group = 'org.defendev'
+group = 'org.defendev.easygo'
 
 java {
     sourceCompatibility = JavaVersion.VERSION_17

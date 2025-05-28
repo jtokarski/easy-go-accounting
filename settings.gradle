@@ -54,8 +54,11 @@ rootProject.name = 'easy-go-accounting'
 include 'angular-ui'
 project(':angular-ui').name = 'angular-ui'
 
-include 'db-exec'
-project(':db-exec').name = 'db-exec'
+include 'database'
+project(':database').name = 'database'
+
+include 'fixtures'
+project(':fixtures').name = 'fixtures'
 
 include 'domain-iam-api'
 project(':domain-iam-api').name = 'domain-iam-api'

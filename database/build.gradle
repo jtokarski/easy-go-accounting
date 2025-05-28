@@ -1,0 +1,114 @@
+
+/*
+ * This 'database' subproject is incarnation of the concept that
+ *   Development of database schema is indeed a separable work stream of the whole project.
+ *   It produces its own production code that is publishable and reusable.
+ *   Therefore it should be treated as something more prominent than just set of ad-hoc scripts.
+ *
+ * Besides conceptual layer, following practical use/reuse scenarios:
+ *   - the 'database' subproject has its own database maintenance tests. For this reason
+ *     it has DataSourceConfig in 'test' source set but not in main source set.
+ *   - the 'database' subproject potentially can be used as dependency in other projects that
+ *     do some maintenance. But such project has to provide DataSource to Spring Context
+ *   - the 'database' subproject can be testImplementation dependency of 'domain' project
+ *     for executing Testcontainers based functional test that build database from scratch.
+ *
+ *
+ */
+
+plugins {
+    id 'java'
+    alias libs.plugins.springDependencyManagementPlugin
+}
+
+group = 'org.defendev.easygo'
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.boot:spring-boot-dependencies:${libs.versions.springBootVersion.get()}"
+    }
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+dependencies {
+    implementation group: 'org.springframework', name: 'spring-context'
+    implementation group: 'org.springframework', name: 'spring-jdbc'
+    implementation libs.apacheCommonsText
+    implementation libs.flywaydb
+    implementation libs.flywaydbOracle
+    testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test'
+    testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-jdbc'
+    testImplementation group: 'com.oracle.database.jdbc', name: 'ojdbc11'
+    testImplementation "org.springframework.boot:spring-boot-starter-log4j2"
+    modules {
+        module("org.springframework.boot:spring-boot-starter-logging") {
+            replacedBy("org.springframework.boot:spring-boot-starter-log4j2", "Use Log4j2 instead of Logback")
+        }
+    }
+    testImplementation libs.defendevCommonJdk
+}
+
+test {
+    useJUnitPlatform()
+    /*
+     * By default, no test should be executed for global 'gradle test'. In this sub-project tests
+     * are more of on-demand, maintanence batch jobs that should be run selectively.
+     */
+    onlyIf { false }
+}
+
+sourceSets {
+    test {
+        resources {
+            srcDir rootDir.toString() + '/config'
+        }
+    }
+}
+
+
+tasks.register('createEasygoSysSchema', org.gradle.api.tasks.testing.Test) {
+    useJUnitPlatform()
+    /*
+     * This is an equivalent to running from command line:
+     *   ./gradlew test --tests "org.defendev.easygo.devops.dbexec.DatabaseMaintananceTest.createEasygoSysSchema"
+     *
+     */
+    setTestNameIncludePatterns(['org.defendev.easygo.devops.dbexec.DatabaseMaintananceTest.createEasygoSysSchema'])
+    outputs.upToDateWhen { false }
+}
+
+tasks.register('dropTenantSchemas', org.gradle.api.tasks.testing.Test) {
+    useJUnitPlatform()
+    setTestNameIncludePatterns(['org.defendev.easygo.devops.dbexec.DatabaseMaintananceTest.dropTenantSchemas'])
+    outputs.upToDateWhen { false }
+}
+
+tasks.register('dropEasygoSysSchema', org.gradle.api.tasks.testing.Test) {
+    useJUnitPlatform()
+    setTestNameIncludePatterns(['org.defendev.easygo.devops.dbexec.DatabaseMaintananceTest.dropEasygoSysSchema'])
+    outputs.upToDateWhen { false }
+}
+
+def oracleBaselineTask = tasks.register('oracleBaseline', org.gradle.api.tasks.testing.Test) {
+    useJUnitPlatform()
+    setTestNameIncludePatterns(['org.defendev.easygo.devops.dbmigration.FlywayMigrationTest.oracleBaseline'])
+    outputs.upToDateWhen { false }
+}
+
+def oracleMigrateTask = tasks.register('oracleMigrate', org.gradle.api.tasks.testing.Test) {
+    useJUnitPlatform()
+    setTestNameIncludePatterns(['org.defendev.easygo.devops.dbmigration.FlywayMigrationTest.oracleMigrate'])
+    outputs.upToDateWhen { false }
+}
+oracleMigrateTask.configure { Test task -> task.mustRunAfter(oracleBaselineTask) }
+
+tasks.register('oracleBaselineAndMigrate', org.gradle.api.DefaultTask) {
+    dependsOn oracleBaselineTask
+    dependsOn oracleMigrateTask
+    outputs.upToDateWhen { false }
+}
+

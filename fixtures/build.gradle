@@ -1,0 +1,66 @@
+
+plugins {
+    id 'java'
+    alias libs.plugins.springDependencyManagementPlugin
+}
+
+group = 'org.defendev.easygo'
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.boot:spring-boot-dependencies:${libs.versions.springBootVersion.get()}"
+    }
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+dependencies {
+    implementation group: 'org.springframework', name: 'spring-context'
+    implementation group: 'org.springframework', name: 'spring-tx'
+    implementation group: 'org.springframework', name: 'spring-orm'
+    implementation group: 'org.springframework.security', name: 'spring-security-core'
+    implementation group: 'org.hibernate.orm', name: 'hibernate-core'
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-api'
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-core'
+    implementation libs.defendevCommonJdk
+    implementation libs.defendevCommonFixtures
+    implementation project(':domain-iam-api')
+    implementation project(':domain-iam')
+    implementation project(':domain-financial-accounting')
+    testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test'
+    testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-jdbc'
+    testImplementation "org.springframework.boot:spring-boot-starter-log4j2"
+    modules {
+        module("org.springframework.boot:spring-boot-starter-logging") {
+            replacedBy("org.springframework.boot:spring-boot-starter-log4j2", "Use Log4j2 instead of Logback")
+        }
+    }
+    testImplementation group: 'com.oracle.database.jdbc', name: 'ojdbc11'
+}
+
+test {
+    useJUnitPlatform()
+    /*
+     * By default, no test should be executed for global 'gradle test'. In this sub-project tests
+     * are more of on-demand, maintanence batch jobs that should be run selectively.
+     */
+    onlyIf { false }
+}
+
+sourceSets {
+    test {
+        resources {
+            srcDir rootDir.toString() + '/config'
+        }
+    }
+}
+
+tasks.register('loadFixtures', org.gradle.api.tasks.testing.Test) {
+    useJUnitPlatform()
+    setTestNameIncludePatterns(['org.defendev.easygo.devops.dbfixture.LoadEasygoFixturesTest.loadFixtures'])
+    outputs.upToDateWhen { false }
+}
+

@@ -7,7 +7,7 @@ plugins {
     alias libs.plugins.gitPropertiesPlugin
 }
 
-group = 'org.defendev'
+group = 'org.defendev.easygo'
 
 java {
     sourceCompatibility = JavaVersion.VERSION_17
