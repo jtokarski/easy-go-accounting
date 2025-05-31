@@ -24,6 +24,7 @@ import org.springframework.security.oauth2.client.registration.InMemoryClientReg
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
 import org.springframework.security.oauth2.core.oidc.IdTokenClaimNames;
+import org.springframework.security.oauth2.core.oidc.OidcScopes;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
@@ -45,11 +46,15 @@ public class WebSecurity {
 
     public static final String SIGN_OUT_PATH = "/sign-out";
 
+    public static final String CLIENT_NAME = "easy-go-accounting";
+
     public static final String OAUTH2_REGISTRATION_ID_GOOGLE = "google";
 
     public static final String OAUTH2_REGISTRATION_ID_AZURE = "azure";
 
     public static final String OAUTH2_REGISTRATION_ID_GITHUB = "github";
+
+    public static final String OAUTH2_REGISTRATION_ID_SPRING_AUTHZ_SERVER = "sprin6authz";
 
     @Bean
     public AuthenticationManager globalAuthenticationManager(HttpSecurity http,
@@ -114,32 +119,58 @@ public class WebSecurity {
 
     @Bean
     public ClientRegistrationRepository buildClientRegistrationRepository(WebApplicationProperties webProps) {
-        final ClientRegistration azureRegistration = ClientRegistration.withRegistrationId(OAUTH2_REGISTRATION_ID_AZURE)
+        final ClientRegistration azureRegistration = ClientRegistration
+            .withRegistrationId(OAUTH2_REGISTRATION_ID_AZURE)
+            .clientName(CLIENT_NAME)
             .clientId(webProps.getOidc().getAzure().getClientId())
             .clientSecret(webProps.getOidc().getAzure().getClientSecret())
             .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
             .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
-            .redirectUri("{baseUrl}/login/oauth2/code/{registrationId}")
-            .scope("openid", "profile", "email", "address", "phone")
             .authorizationUri(webProps.getOidc().getAzure().getAuthorizationUri())
+            .redirectUri("{baseUrl}/login/oauth2/code/{registrationId}")
+            .scope(OidcScopes.OPENID, OidcScopes.PROFILE, OidcScopes.EMAIL, OidcScopes.PROFILE, OidcScopes.PHONE)
             .tokenUri(webProps.getOidc().getAzure().getTokenUri())
             .userInfoUri(webProps.getOidc().getAzure().getUserInfoUri())
             .userNameAttributeName(IdTokenClaimNames.SUB)
             .jwkSetUri(webProps.getOidc().getAzure().getJwkSetUri())
-            .clientName("Azure")
             .build();
 
         final ClientRegistration githubRegistration = CommonOAuth2Provider.GITHUB.getBuilder(OAUTH2_REGISTRATION_ID_GITHUB)
+            .clientName(CLIENT_NAME)
             .clientId(webProps.getOidc().getGithub().getClientId())
             .clientSecret(webProps.getOidc().getGithub().getClientSecret())
             .build();
 
         final ClientRegistration googleRegistration = CommonOAuth2Provider.GOOGLE.getBuilder(OAUTH2_REGISTRATION_ID_GOOGLE)
+            .clientName(CLIENT_NAME)
             .clientId(webProps.getOidc().getGoogle().getClientId())
             .clientSecret(webProps.getOidc().getGoogle().getClientSecret())
             .build();
 
-        return new InMemoryClientRegistrationRepository(azureRegistration, githubRegistration, googleRegistration);
+        final ClientRegistration sprin6authzRegistration = ClientRegistration
+            .withRegistrationId(OAUTH2_REGISTRATION_ID_SPRING_AUTHZ_SERVER)
+            .clientName(CLIENT_NAME)
+            .clientId(webProps.getOidc().getSpring().getClientId())
+            .clientSecret(webProps.getOidc().getSpring().getClientSecret())
+            .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
+            .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
+            .redirectUri("{baseUrl}/login/oauth2/code/{registrationId}")
+            .authorizationUri(webProps.getOidc().getSpring().getAuthorizationUri())
+            .scope(OidcScopes.OPENID, OidcScopes.PROFILE)
+            /*
+             * Protocol Endpoint information is available on Authorization Server:
+             *   http://localhost:8010/defendev-authz/.well-known/oauth-authorization-server
+             *   http://localhost:8010/defendev-authz/.well-known/openid-configuration
+             *
+             */
+            .tokenUri(webProps.getOidc().getSpring().getTokenUri())
+            .userInfoUri(webProps.getOidc().getSpring().getUserInfoUri())
+            .userNameAttributeName(IdTokenClaimNames.SUB)
+            .jwkSetUri(webProps.getOidc().getSpring().getJwkSetUri())
+            .build();
+
+        return new InMemoryClientRegistrationRepository(azureRegistration, githubRegistration, googleRegistration,
+            sprin6authzRegistration);
     }
 
 }

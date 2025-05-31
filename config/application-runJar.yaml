@@ -29,7 +29,17 @@ easygo:
         token-uri: "https://login.microsoftonline.com/00000000-0000-0000-0000-000000000000/oauth2/v2.0/token"
         user-info-uri: "https://graph.microsoft.com/oidc/userinfo"
         jwk-set-uri: "https://login.microsoftonline.com/00000000-0000-0000-0000-000000000000/discovery/v2.0/keys"
+      github:
+        client-id: "aA0.aaaaaaaaaaaaaaaa"
+        client-secret: "0000000000000000000000000123456789abcdef"
       google:
         client-id: "000000000000-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.apps.googleusercontent.com"
         client-secret: "aaaaaa-aaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      spring:
+        client-id: "0000000aA1"
+        client-secret: "000000000000zZ9"
+        authorization-uri: "http://localhost:8010/defendev-authz/oauth2/authorize"
+        token-uri: "http://localhost:8010/defendev-authz/oauth2/token"
+        user-info-uri: "http://localhost:8010/defendev-authz/userinfo"
+        jwk-set-uri: "http://localhost:8010/defendev-authz/oauth2/jwks"
 

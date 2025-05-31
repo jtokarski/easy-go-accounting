@@ -23,15 +23,15 @@ plugins {
 
 group = 'org.defendev.easygo'
 
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
 dependencyManagement {
     imports {
         mavenBom "org.springframework.boot:spring-boot-dependencies:${libs.versions.springBootVersion.get()}"
     }
-}
-
-java {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
 }
 
 dependencies {
