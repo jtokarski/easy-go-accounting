@@ -29,7 +29,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.servlet.util.matcher.PathPatternRequestMatcher;
 import org.springframework.security.web.util.matcher.RegexRequestMatcher;
 
 
@@ -82,7 +82,7 @@ public class WebSecurity {
         authnFailureHandler.setUseForward(false);
 
         return http
-            .securityMatcher(AntPathRequestMatcher.antMatcher("/**"))
+            .securityMatcher(PathPatternRequestMatcher.withDefaults().matcher("/**"))
             .authorizeHttpRequests(
                 customizer -> customizer
                     .requestMatchers("/", SIGN_IN_PATH, "/api/security-context", "/api/document/_browse",
@@ -91,7 +91,7 @@ public class WebSecurity {
                         "/[a-zA-Z0-9-\\.]+\\.(png|svg|gif|ico|js|css|css\\.map|ttf|woff2)")).permitAll()
                     .requestMatchers("/actuator", "/actuator/beans", "/actuator/env", "/actuator/health",
                         "/actuator/info").permitAll()
-                    .requestMatchers(AntPathRequestMatcher.antMatcher("/**")).fullyAuthenticated()
+                    .requestMatchers(PathPatternRequestMatcher.withDefaults().matcher("/**")).fullyAuthenticated()
             )
             .exceptionHandling(
                 customizer -> customizer.authenticationEntryPoint(authnEntryPoint)
@@ -111,7 +111,9 @@ public class WebSecurity {
             )
             .logout(
                 customizer -> customizer
-                    .logoutRequestMatcher(AntPathRequestMatcher.antMatcher(HttpMethod.GET, SIGN_OUT_PATH))
+                    .logoutRequestMatcher(
+                        PathPatternRequestMatcher.withDefaults().matcher(HttpMethod.GET, SIGN_OUT_PATH)
+                    )
                     .logoutSuccessUrl("/")
             )
             .build();

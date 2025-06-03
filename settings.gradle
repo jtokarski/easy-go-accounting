@@ -8,7 +8,7 @@ dependencyResolutionManagement {
 
     versionCatalogs {
         libs {
-            version('springBootVersion', '3.4.4')
+            version('springBootVersion', '3.5.0')
             version('springDependencyManagementPluginVersion', '1.1.7')
             version('gitPropertiesPluginVersion', '2.5.0')
             version('oracleJdbcBomVersion', '23.7.0.25.01')
